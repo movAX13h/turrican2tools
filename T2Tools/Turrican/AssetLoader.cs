@@ -11,7 +11,7 @@ namespace T2Tools.Turrican
     {
         public static TOC Load(byte[] exeData)
         {
-            TOC toc = new TOC { Entries = new Dictionary<string, TOCEntry>() };
+            List<TOCEntry> entries = new List<TOCEntry>();
 
             // locate the packed TOC in the binary
             if(BitConverter.ToInt32(exeData, exeData.Length - 4) != 0x53464945) // "EIFS"
@@ -21,20 +21,19 @@ namespace T2Tools.Turrican
 
             // unpack the TOC and parse it
             var tocBuffer = new byte[10000];
-            int length = UnpackBlock(tocBuffer, exeData.SubArray(packedTocPos, packedTocLength + 6));
+            int length = UnpackBlock(tocBuffer, exeData.SubArray(packedTocPos, packedTocLength));
             if(length < 1)
                 throw new Exception("error unpacking toc");
-            ParseToc(toc, tocBuffer);
+            ParseToc(entries, tocBuffer);
 
             // unpack all files
             var buffer = new byte[1024];
-            foreach(var pair in toc.Entries)
+            foreach(var entry in entries)
             {
-                var entry = pair.Value;
                 entry.Data = new byte[entry.Size];
                 
                 // keep reading packed blocks until we reach the end pointer
-                // a block produces 1KB of unpacked data at max!
+                // a block produces 1024 bytes of unpacked data at max!
                 for(int readPos = entry.PackedStart, writePos = 0; readPos < entry.PackedEnd; )
                 {
                     int blockLength = exeData[readPos] + exeData[readPos + 1] * 256;
@@ -47,6 +46,10 @@ namespace T2Tools.Turrican
                 }
             }
 
+            var toc = new TOC();
+            toc.Entries = new Dictionary<string, TOCEntry>();
+            foreach(var entry in entries)
+                toc.Entries.Add(entry.Name, entry);
             return toc;
         }
 
@@ -55,7 +58,7 @@ namespace T2Tools.Turrican
             return Load(File.ReadAllBytes(exePath));
         }
 
-        static TOC ParseToc(TOC toc, byte[] data)
+        static void ParseToc(List<TOCEntry> toc, byte[] data)
         {
             using(var f = new BinaryReader(new MemoryStream(data)))
             {
@@ -64,18 +67,15 @@ namespace T2Tools.Turrican
                     var nameBytes = f.ReadBytes(12);
                     if(nameBytes[0] == 0)
                         break;
-
-                    var name = Encoding.ASCII.GetString(nameBytes).Trim();
-                    toc.Entries.Add(name, new TOCEntry
+                    toc.Add(new TOCEntry
                     {
-                        Name = name,
+                        Name = Encoding.ASCII.GetString(nameBytes).Trim(),
                         Size = f.ReadInt32(),
                         PackedStart = f.ReadInt32(),
                         PackedEnd = f.ReadInt32()
                     });
                 }
             }
-            return toc;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace T2Tools.Turrican
         /// <param name="unpacked">output buffer</param>
         /// <param name="packed">input buffer</param>
         /// <param name="offset">(original parameter, for due diligence)</param>
-        /// <returns></returns>
+        /// <returns>number of bytes written to the output buffer</returns>
         static int UnpackBlock(byte[] unpacked, byte[] packed, ushort offset = 0)
         {
             int inputLength = packed[offset] + packed[offset + 1] * 256;
@@ -136,19 +136,12 @@ namespace T2Tools.Turrican
 
                         if(cmd1 == 0)
                         {
-                            //continue;
-                            // i am uncertain about this part
-                            // it appears to be a command for filling the same input byte into the output, a given number of times (and deciphering it)
-                            // when decoding the TOC, this block gets called once, at the very end
-                            // it fills in 1967 bytes of 0x22, making the whole decoded output exactly 7200 bytes long
-                            // this might be on purpose, to initialize memory in the game
+                            // repeat an input byte in the output, a given number of times (and deciphering it)
 
                             int cnt = cmd2 * 256 + (packed[offset + readPos + 1] + 16);
                             readPos += 2;
 
-                            // why does "offset" appear twice in the calculation?
-                            int A = offset + readPos;
-                            int data = packed[offset + 2 + A] ^ 0x6B;
+                            int data = packed[offset + readPos] ^ 0x6B;
                             for(int i = 0; i < cnt; ++i)
                             {
                                 unpacked[writePos + i] = (byte)data;
