@@ -3,16 +3,43 @@ Tools for the MS-DOS version of Turrican II.
 
 ## EIFS - Executable Integrated File System
 
-### Meta information
+All data of the game is packed and appended to the main game executable in form of EIFS blocks. The last EIFS block is ready first by the game and contains a TOC for all other files.
+
+### Identification
 6 bytes at end of file/section:
-- 2 bytes ... length of section
-- 4 bytes ... signature "EIFS"
+```
+2 bytes ... length of section
+4 bytes ... signature "EIFS"
+```
 
 ### Unpacker
 
-todo
+Translated to C# from disassembly.
+?
+
+### Table Of Contents (TOC)
+
+Consists of a list of 24 byte entries.
+```
+12 byte ... filename, space-padded right
+ 4 byte ... ? 
+ 4 byte ... ?
+ 4 byte ... ?
+```
 
 
+## File Types
+ 
+The game uses the following file types:
+
+| Name | Extension | Description |
+| ---- |:---------:|:----------- |
+| Static Sprite    | ?      | asfsdf sadffdfads ffsfdsfkjaöfj öljkaölj sdölkfj dsölkjsd öjödlj döljk ölkjsdö jödsl dkljösdlkj sdöjdsö ljdsölk asödlj sdölkj döslkjö jödlkj dklj ölkjö lkjöalkdj ödslkj ölkjasdf  fasd |
+| Animated Sprite  | ?      |  |
+| Palette          | ?      |  |
+| Music            | ?      |  |
+| Sound            | ?      |  |
+| Text             | ?      |  |
 
 
 ## History

@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace T2Tools
+namespace T2Tools.Turrican
 {
-    public class Turrican2
+    class Game
     {
-        public byte[] Data { get; private set; }
         public string Error { get; private set; } = "";
+        public TOC Assets { get; private set; }
 
         private string inputFile;
 
-        public Turrican2(string file)
+        public Game(string file)
         {
             inputFile = file;
         }
@@ -26,11 +22,16 @@ namespace T2Tools
                 Error = $"input file '{inputFile}' not found";
                 return false;
             }
-
-            Data = File.ReadAllBytes(inputFile);
             
-
-
+            try
+            {
+                Assets = AssetLoader.Load(inputFile);
+            }
+            catch(Exception e)
+            {
+                Error = e.Message;
+                return false;
+            }            
 
             return true;
         }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using TT;
 
-namespace T2Tools
+namespace T2Tools.Turrican
 {
     class AssetLoader
     {
@@ -17,26 +14,25 @@ namespace T2Tools
             var toc = LoadToc(tocBuffer);
 
             var buffer = new byte[1024];
-            foreach(var entry in toc.Entries)
+            foreach(var pair in toc.Entries)
             {
+                var entry = pair.Value;
                 entry.Data = new byte[entry.Size];
 
                 int at = entry.PackedStart, wp = 0;
                 while(at < entry.PackedEnd)
                 {
                     int blockLength = exeData[at] + exeData[at + 1] * 256;
-
                     var unp = UnpackChunk(buffer, exeData.SubArray(at, exeData.Length - at));
                     Array.Copy(buffer, 0, entry.Data, wp, unp);
-
                     wp += unp;
-
                     at += blockLength + 2;
                 }
             }
 
             return toc;
         }
+
         public static TOC Load(string exePath)
         {
             return Load(File.ReadAllBytes(exePath));
@@ -44,18 +40,19 @@ namespace T2Tools
 
         static TOC LoadToc(byte[] data)
         {
-            TOC toc = new TOC { Entries = new List<TOCEntry>() };
+            TOC toc = new TOC { Entries = new Dictionary<string, TOCEntry>() };
 
             using(var f = new BinaryReader(new MemoryStream(data)))
             {
                 while(f.BaseStream.Position < f.BaseStream.Length)
                 {
                     var nameBytes = f.ReadBytes(12);
-                    if(nameBytes[0] == 0)
-                        break;
-                    toc.Entries.Add(new TOCEntry
+                    if(nameBytes[0] == 0) break;
+                    var name = Encoding.ASCII.GetString(nameBytes).Trim();
+
+                    toc.Entries.Add(name, new TOCEntry
                     {
-                        Name = Encoding.ASCII.GetString(nameBytes).Trim(),
+                        Name = name,
                         Size = f.ReadInt32(),
                         PackedStart = f.ReadInt32(),
                         PackedEnd = f.ReadInt32()
@@ -161,10 +158,6 @@ namespace T2Tools
 
                 return writePos; // return the number of bytes that were written to the output
             }
-
-
-
         }
-
     }
 }
