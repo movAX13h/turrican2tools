@@ -3,7 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace T2Tools.Turrican
 {
-    public enum TOCEntryType { Unknown, Text, StaticSprite, AnimatedSprite, Font, Palette, Music, Sound, Executable, Map, DAT, DIR }
+    public enum TOCEntryType { Unknown, Text, Language, StaticSprite, AnimatedSprite, Font, Palette,
+        Music, Sound, Executable, Map, DAT, DIR }
 
     public class TOCEntry
     {
@@ -19,6 +20,7 @@ namespace T2Tools.Turrican
                 switch(Path.GetExtension(Name).ToLower())
                 {
                     case ".txt": return TOCEntryType.Text;
+                    case ".lng": return TOCEntryType.Language;
                     case ".pcx": return TOCEntryType.StaticSprite;
                     case ".bob": return TOCEntryType.AnimatedSprite;
                     case ".fnt": return TOCEntryType.Font;

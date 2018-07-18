@@ -23,7 +23,8 @@ namespace T2Tools.Controls
             //sizeItem.Font = new System.Drawing.Font("Consolas", 10);
 
             var handledTypes = new List<TOCEntryType>() {
-                TOCEntryType.Text
+                TOCEntryType.Text,
+                TOCEntryType.Language
             };
 
             if (!handledTypes.Contains(Entry.Type))

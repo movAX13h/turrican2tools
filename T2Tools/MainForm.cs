@@ -59,6 +59,7 @@ namespace T2Tools
             switch (entry.Type)
             {
                 case TOCEntryType.Text:
+                case TOCEntryType.Language:
                     txtOutput.Text = Encoding.ASCII.GetString(entry.Data);
                     txtPanel.Visible = true;
                     break;
