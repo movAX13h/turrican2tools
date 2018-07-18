@@ -8,8 +8,16 @@ namespace T2Tools
 {
     class TOCEntry
     {
-        public uint Number;
+        public string Name;
+        public int Size;
+        public int PackedStart, PackedEnd;
+
         public byte[] Data;
-        
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }
