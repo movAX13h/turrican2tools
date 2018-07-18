@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools
 {
-    class TOCEntry
+    public class TOCEntry
     {
         public string Name;
         public int Size;

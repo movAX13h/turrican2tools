@@ -11,6 +11,7 @@ namespace T2Tools
     {
         public byte[] Data { get; private set; }
         public string Error { get; private set; } = "";
+        public TOC TOC { get; private set; }
 
         private string inputFile;
 
@@ -28,8 +29,8 @@ namespace T2Tools
             }
 
             Data = File.ReadAllBytes(inputFile);
-            
 
+            TOC = AssetLoader.Load(Data);
 
 
             return true;

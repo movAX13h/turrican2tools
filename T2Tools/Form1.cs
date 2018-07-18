@@ -31,6 +31,14 @@ namespace T2Tools
 
             // fill TOC list
             
+            for(int i = 0; i < game.TOC.Entries.Count; ++i)
+            {
+                var entry = game.TOC.Entries[i];
+                var item = new ListViewItem(i.ToString());
+                item.SubItems.Add(entry.Name);
+                item.SubItems.Add(entry.Size.ToString());
+                listView1.Items.Add(item);
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools
 {
-    class TOC
+    public class TOC
     {
         public List<TOCEntry> Entries;
     }

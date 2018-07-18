@@ -12,40 +12,51 @@ namespace T2Tools
     {
         public static TOC Load(byte[] exeData)
         {
-            var tocBuffer = new byte[10000];
-            UnpackChunk(tocBuffer, exeData.SubArray(0x2B09D9, 3816)); // TD: do properly
-            var toc = LoadToc(tocBuffer);
+            TOC toc = new TOC { Entries = new List<TOCEntry>() };
 
+            // locate the packed TOC in the binary
+            if(BitConverter.ToInt32(exeData, exeData.Length - 4) != 0x53464945) // "EIFS"
+                throw new Exception("error loading toc");
+            int packedTocLength = BitConverter.ToInt16(exeData, exeData.Length - 6);
+            int packedTocPos = exeData.Length - 6 - packedTocLength;
+
+            // unpack the TOC and parse it
+            var tocBuffer = new byte[10000];
+            int length = UnpackBlock(tocBuffer, exeData.SubArray(packedTocPos, packedTocLength + 6));
+            if(length < 1)
+                throw new Exception("error unpacking toc");
+            ParseToc(toc, tocBuffer);
+
+            // unpack all files
             var buffer = new byte[1024];
             foreach(var entry in toc.Entries)
             {
                 entry.Data = new byte[entry.Size];
-
-                int at = entry.PackedStart, wp = 0;
-                while(at < entry.PackedEnd)
+                
+                // keep reading packed blocks until we reach the end pointer
+                // a block produces 1KB of unpacked data at max!
+                for(int readPos = entry.PackedStart, writePos = 0; readPos < entry.PackedEnd; )
                 {
-                    int blockLength = exeData[at] + exeData[at + 1] * 256;
+                    int blockLength = exeData[readPos] + exeData[readPos + 1] * 256;
 
-                    var unp = UnpackChunk(buffer, exeData.SubArray(at, exeData.Length - at));
-                    Array.Copy(buffer, 0, entry.Data, wp, unp);
+                    var numBytes = UnpackBlock(buffer, exeData.SubArray(readPos, blockLength + 6));
+                    Array.Copy(buffer, 0, entry.Data, writePos, numBytes);
 
-                    wp += unp;
-
-                    at += blockLength + 2;
+                    writePos += numBytes;
+                    readPos += blockLength + 2;
                 }
             }
 
             return toc;
         }
+
         public static TOC Load(string exePath)
         {
             return Load(File.ReadAllBytes(exePath));
         }
 
-        static TOC LoadToc(byte[] data)
+        static TOC ParseToc(TOC toc, byte[] data)
         {
-            TOC toc = new TOC { Entries = new List<TOCEntry>() };
-
             using(var f = new BinaryReader(new MemoryStream(data)))
             {
                 while(f.BaseStream.Position < f.BaseStream.Length)
@@ -72,7 +83,7 @@ namespace T2Tools
         /// <param name="packed">input buffer</param>
         /// <param name="offset">(original parameter, for due diligence)</param>
         /// <returns></returns>
-        static int UnpackChunk(byte[] unpacked, byte[] packed, ushort offset = 0)
+        static int UnpackBlock(byte[] unpacked, byte[] packed, ushort offset = 0)
         {
             int inputLength = packed[offset] + packed[offset + 1] * 256;
 
