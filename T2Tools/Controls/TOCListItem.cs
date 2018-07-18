@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using T2Tools.Turrican;
 
@@ -19,7 +20,15 @@ namespace T2Tools.Controls
             typeItem = SubItems.Add(new ListViewSubItem());
             sizeItem = SubItems.Add(new ListViewSubItem());
 
-            //sizeItem.Font = new System.Drawing.Font("Consolas", 10);
+            var handledTypes = new List<TOCEntryType>() {
+                TOCEntryType.Text,
+                TOCEntryType.Language
+            };
+
+            if (!handledTypes.Contains(Entry.Type))
+            {
+                typeItem.BackColor = Color.LightGray;
+            }
 
             /*
             switch(entry.Type)
@@ -59,7 +68,7 @@ namespace T2Tools.Controls
         {
 
             Text = Entry.Name;
-            typeItem.Text = "?";
+            typeItem.Text = Entry.TypeString;
             sizeItem.Text = Entry.Size.ToString();
         }
 
