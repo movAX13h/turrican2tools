@@ -20,8 +20,6 @@ namespace T2Tools.Controls
             typeItem = SubItems.Add(new ListViewSubItem());
             sizeItem = SubItems.Add(new ListViewSubItem());
 
-            //sizeItem.Font = new System.Drawing.Font("Consolas", 10);
-
             var handledTypes = new List<TOCEntryType>() {
                 TOCEntryType.Text,
                 TOCEntryType.Language
