@@ -98,7 +98,7 @@ namespace T2Tools.Turrican
                 // simple XOR-cipher decoder:
                 for(int i = 1, w = 0, r = offset + 1; i < inputLength; ++w, ++r, ++i)
                 {
-                    unpacked[w] = (byte)(packed[offset + 2 + r] ^ 0x6B);
+                    unpacked[w] = (byte)(packed[offset + -2 + r] ^ 0x6B);
                 }
                 return inputLength - 1;
             }
