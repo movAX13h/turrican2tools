@@ -8,5 +8,6 @@ namespace T2Tools
 {
     class TOC
     {
+        public List<TOCEntry> Entries;
     }
 }
