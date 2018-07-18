@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace T2Tools.Turrican
 {
@@ -9,24 +11,39 @@ namespace T2Tools.Turrican
     {
         public static TOC Load(byte[] exeData)
         {
-            var tocBuffer = new byte[10000];
-            UnpackChunk(tocBuffer, exeData.SubArray(0x2B09D9, 3816)); // TD: do properly
-            var toc = LoadToc(tocBuffer);
+            TOC toc = new TOC { Entries = new Dictionary<string, TOCEntry>() };
 
+            // locate the packed TOC in the binary
+            if(BitConverter.ToInt32(exeData, exeData.Length - 4) != 0x53464945) // "EIFS"
+                throw new Exception("error loading toc");
+            int packedTocLength = BitConverter.ToInt16(exeData, exeData.Length - 6);
+            int packedTocPos = exeData.Length - 6 - packedTocLength;
+
+            // unpack the TOC and parse it
+            var tocBuffer = new byte[10000];
+            int length = UnpackBlock(tocBuffer, exeData.SubArray(packedTocPos, packedTocLength + 6));
+            if(length < 1)
+                throw new Exception("error unpacking toc");
+            ParseToc(toc, tocBuffer);
+
+            // unpack all files
             var buffer = new byte[1024];
             foreach(var pair in toc.Entries)
             {
                 var entry = pair.Value;
                 entry.Data = new byte[entry.Size];
-
-                int at = entry.PackedStart, wp = 0;
-                while(at < entry.PackedEnd)
+                
+                // keep reading packed blocks until we reach the end pointer
+                // a block produces 1KB of unpacked data at max!
+                for(int readPos = entry.PackedStart, writePos = 0; readPos < entry.PackedEnd; )
                 {
-                    int blockLength = exeData[at] + exeData[at + 1] * 256;
-                    var unp = UnpackChunk(buffer, exeData.SubArray(at, exeData.Length - at));
-                    Array.Copy(buffer, 0, entry.Data, wp, unp);
-                    wp += unp;
-                    at += blockLength + 2;
+                    int blockLength = exeData[readPos] + exeData[readPos + 1] * 256;
+
+                    var numBytes = UnpackBlock(buffer, exeData.SubArray(readPos, blockLength + 6));
+                    Array.Copy(buffer, 0, entry.Data, writePos, numBytes);
+
+                    writePos += numBytes;
+                    readPos += blockLength + 2;
                 }
             }
 
@@ -38,18 +55,17 @@ namespace T2Tools.Turrican
             return Load(File.ReadAllBytes(exePath));
         }
 
-        static TOC LoadToc(byte[] data)
+        static TOC ParseToc(TOC toc, byte[] data)
         {
-            TOC toc = new TOC { Entries = new Dictionary<string, TOCEntry>() };
-
             using(var f = new BinaryReader(new MemoryStream(data)))
             {
                 while(f.BaseStream.Position < f.BaseStream.Length)
                 {
                     var nameBytes = f.ReadBytes(12);
-                    if(nameBytes[0] == 0) break;
-                    var name = Encoding.ASCII.GetString(nameBytes).Trim();
+                    if(nameBytes[0] == 0)
+                        break;
 
+                    var name = Encoding.ASCII.GetString(nameBytes).Trim();
                     toc.Entries.Add(name, new TOCEntry
                     {
                         Name = name,
@@ -69,7 +85,7 @@ namespace T2Tools.Turrican
         /// <param name="packed">input buffer</param>
         /// <param name="offset">(original parameter, for due diligence)</param>
         /// <returns></returns>
-        static int UnpackChunk(byte[] unpacked, byte[] packed, ushort offset = 0)
+        static int UnpackBlock(byte[] unpacked, byte[] packed, ushort offset = 0)
         {
             int inputLength = packed[offset] + packed[offset + 1] * 256;
 
@@ -158,6 +174,10 @@ namespace T2Tools.Turrican
 
                 return writePos; // return the number of bytes that were written to the output
             }
+
+
+
         }
+
     }
 }

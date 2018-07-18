@@ -1,6 +1,6 @@
 ﻿namespace T2Tools.Turrican
 {
-    class TOCEntry
+    public class TOCEntry
     {
         public string Name;
         public int Size;
