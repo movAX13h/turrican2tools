@@ -93,7 +93,7 @@ namespace T2Tools
                 case TOCEntryType.Unknown:
                 case TOCEntryType.StaticSprite:
                 case TOCEntryType.AnimatedSprite:
-                case TOCEntryType.Font:
+                case TOCEntryType.PixelFont:
                 case TOCEntryType.Palette:
                 case TOCEntryType.Music:
                 case TOCEntryType.Sound:
