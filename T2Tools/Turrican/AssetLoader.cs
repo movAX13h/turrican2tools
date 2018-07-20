@@ -16,7 +16,7 @@ namespace T2Tools.Turrican
             // locate the packed TOC in the binary
             if(BitConverter.ToInt32(exeData, exeData.Length - 4) != 0x53464945) // "EIFS"
                 throw new Exception("error loading toc");
-            int packedTocLength = BitConverter.ToInt16(exeData, exeData.Length - 6);
+            int packedTocLength = BitConverter.ToUInt16(exeData, exeData.Length - 6);
             int packedTocPos = exeData.Length - 6 - packedTocLength;
 
             // unpack the TOC and parse it
@@ -31,19 +31,31 @@ namespace T2Tools.Turrican
             foreach(var entry in entries)
             {
                 entry.Data = new byte[entry.Size];
-                
+
                 // keep reading packed blocks until we reach the end pointer
                 // a block produces 1024 bytes of unpacked data at max!
-                for(int readPos = entry.PackedStart, writePos = 0; readPos < entry.PackedEnd; )
+                int readPos = entry.PackedStart;
+                int writePos = 0;
+                int numStreamRead = 0;
+                for(; readPos < entry.PackedEnd; )
                 {
                     int blockLength = exeData[readPos] + exeData[readPos + 1] * 256;
 
                     var numBytes = UnpackBlock(buffer, exeData.SubArray(readPos, blockLength + 6));
                     Array.Copy(buffer, 0, entry.Data, writePos, numBytes);
 
+                    numStreamRead += blockLength;
                     writePos += numBytes;
                     readPos += blockLength + 2;
                 }
+
+                if(writePos != entry.Size)
+                    throw new Exception("unpacking error");
+
+                int length2 = BitConverter.ToUInt16(exeData, readPos); readPos += 2;
+
+                //if(BitConverter.ToUInt32(exeData, readPos) != 0x53464945) // "EIFS"
+                //    throw new Exception("bad magic id");
             }
 
             var toc = new TOC();
@@ -62,6 +74,7 @@ namespace T2Tools.Turrican
         {
             using(var f = new BinaryReader(new MemoryStream(data)))
             {
+                int index = 0;
                 while(f.BaseStream.Position < f.BaseStream.Length)
                 {
                     var nameBytes = f.ReadBytes(12);
@@ -69,6 +82,7 @@ namespace T2Tools.Turrican
                         break;
                     toc.Add(new TOCEntry
                     {
+                        Index = index++,
                         Name = Encoding.ASCII.GetString(nameBytes).Trim(),
                         Size = f.ReadInt32(),
                         PackedStart = f.ReadInt32(),
@@ -77,6 +91,75 @@ namespace T2Tools.Turrican
                 }
             }
         }
+
+        static byte[] GenerateToc(TOCEntry[] entries)
+        {
+            byte[] data = new byte[7200];
+            var f = new BinaryWriter(new MemoryStream(data));
+            for(int i = 0; i < entries.Length; ++i)
+            {
+                var entry = entries[i];
+
+                if(entry.Name.Length > 12)
+                    throw new Exception("filename must not be more than 12 characters");
+
+                f.Write(Encoding.ASCII.GetBytes(entry.Name.PadRight(12, ' ')));
+                f.Write(entry.Size);
+                f.Write(entry.PackedStart);
+                f.Write(entry.PackedEnd);
+            }
+            return data;
+        }
+
+        public static byte[] GenerateEXE(byte[] startupProgramData, TOC assets)
+        {
+            if(startupProgramData.Length != 12832)
+                throw new Exception("startup program must be 12832 bytes long");
+
+            TOCEntry[] entries = assets.Entries.Values.ToArray();
+            Array.Sort(entries, (a, b) => a.Index.CompareTo(b.Index));
+
+            var f = new BinaryWriter(new MemoryStream());
+            f.Write(startupProgramData);
+
+            foreach(var entry in entries)
+            {
+                entry.PackedStart = (int)f.BaseStream.Position;
+                PackFile(f, entry.Data, 1024);
+                entry.PackedEnd = (int)f.BaseStream.Position - 6;
+            }
+
+            PackFile(f, GenerateToc(entries), int.MaxValue);
+            
+            var buffer = ((MemoryStream)f.BaseStream).GetBuffer();
+            Array.Resize(ref buffer, (int)f.BaseStream.Position);
+            return buffer;
+        }
+
+        static void PackFile(BinaryWriter f, byte[] data, int blockSize)
+        {
+            var start = f.BaseStream.Position;
+            for(int pos = 0; pos < data.Length; )
+            {
+                int plainBlockSize = Math.Min(blockSize, data.Length - pos);
+
+                PackBlock(f, data, pos, plainBlockSize);
+
+                pos += plainBlockSize;
+            }
+            f.Write((ushort)(f.BaseStream.Position - start));
+            f.Write(0x53464945); // "EIFS"
+        }
+
+        static void PackBlock(BinaryWriter f, byte[] data, int offset, int length)
+        {
+            f.Write((ushort)(length + 1));
+            f.Write((byte)128); // select uncompressed stream
+            for(var i = 0; i < length; ++i)
+                f.Write((byte)(data[i + offset] ^ 0x6B));
+        }
+
+
 
         /// <summary>
         /// The unpacking function extracted from T2.EXE assembly.
