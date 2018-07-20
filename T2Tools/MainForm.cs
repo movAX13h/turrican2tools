@@ -31,11 +31,11 @@ namespace T2Tools
             hexBox.SelectionLengthChanged += HexBox_SelectionLengthChanged;
 
             hexEditorPanel.Controls.Add(hexBox);
-            hexPanel.Top = 12;
+            hexPanel.Top = 34;
             hexPanel.Visible = false;
             
             txtPanel.Visible = false;
-            txtPanel.Top = 12;
+            txtPanel.Top = 34;
         }
 
         private void MainForm_Load(object sender, EventArgs e)

@@ -3,7 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace T2Tools.Turrican
 {
-    public enum TOCEntryType { Unknown, Text, Language, StaticSprite, AnimatedSprite, Picture, Bitmap, PixelFont, TextmodeFont, Palette,
+    public enum TOCEntryType { Unknown, Text, Language, StaticSprite, AnimatedSprite,
+        Picture, Bitmap, PixelFont, TextmodeFont, Palette,
         Music, Sound, Executable, Map, DAT, DIR }
 
     public class TOCEntry
