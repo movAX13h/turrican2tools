@@ -7,6 +7,7 @@ namespace T2Tools.Turrican
     {
         public string Error { get; private set; } = "";
         public TOC Assets { get; private set; }
+        public int TotalSize { get; private set; }
 
         private string inputFile;
 
@@ -22,7 +23,9 @@ namespace T2Tools.Turrican
                 Error = $"input file '{inputFile}' not found";
                 return false;
             }
-            
+
+            TotalSize = (int)(new FileInfo(inputFile)).Length;
+
             try
             {
                 Assets = AssetLoader.Load(inputFile);

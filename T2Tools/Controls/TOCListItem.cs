@@ -11,6 +11,8 @@ namespace T2Tools.Controls
 
         private ListViewSubItem typeItem;
         private ListViewSubItem sizeItem;
+        private ListViewSubItem startItem;
+        private ListViewSubItem endItem;
 
         public TOCListItem(TOCEntry entry)
         {
@@ -19,6 +21,8 @@ namespace T2Tools.Controls
             
             typeItem = SubItems.Add(new ListViewSubItem());
             sizeItem = SubItems.Add(new ListViewSubItem());
+            startItem = SubItems.Add(new ListViewSubItem());
+            endItem = SubItems.Add(new ListViewSubItem());
 
             var handledTypes = new List<TOCEntryType>() {
                 TOCEntryType.Text,
@@ -66,10 +70,11 @@ namespace T2Tools.Controls
 
         private void updateCaptions()
         {
-
             Text = Entry.Name;
             typeItem.Text = Entry.TypeString;
             sizeItem.Text = Entry.Size.ToString();
+            startItem.Text = Entry.PackedStart.ToString();
+            endItem.Text = Entry.PackedEnd.ToString();
         }
 
         

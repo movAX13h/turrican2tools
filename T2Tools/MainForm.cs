@@ -1,5 +1,6 @@
 ﻿using Be.Windows.Forms;
 using System;
+using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using T2Tools.Controls;
@@ -11,6 +12,7 @@ namespace T2Tools
     {
         private Game game;
         private HexBox hexBox;
+        private TOCEntry selectedEntry;
 
         public MainForm()
         {
@@ -31,11 +33,11 @@ namespace T2Tools
             hexBox.SelectionLengthChanged += HexBox_SelectionLengthChanged;
 
             hexEditorPanel.Controls.Add(hexBox);
-            hexPanel.Top = 34;
+            hexPanel.Dock = DockStyle.Fill;
             hexPanel.Visible = false;
             
             txtPanel.Visible = false;
-            txtPanel.Top = 34;
+            txtPanel.Dock = DockStyle.Fill;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -79,6 +81,7 @@ namespace T2Tools
         #region TOC List
         private void fileSelected(TOCEntry entry)
         {
+            selectedEntry = entry;
             hexPanel.Visible = false;
             txtPanel.Visible = false;
 
@@ -106,6 +109,8 @@ namespace T2Tools
                     hexPanel.Visible = true;
                     break;
             }
+
+            sectionsPanel.Invalidate();
         }
 
         private void tocList_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -141,5 +146,49 @@ namespace T2Tools
         }
 
         #endregion
+
+        private void sectionsPanel_Paint(object sender, PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            if (game.Assets.Entries == null) return;
+
+            SolidBrush brush = new SolidBrush(Color.White);
+            Random rand = new Random(123456);
+
+            int start, end;
+            float w = sectionsPanel.Width;
+            float scale = w / game.TotalSize;
+
+            foreach (var pair in game.Assets.Entries)
+            {
+                TOCEntry entry = pair.Value;
+
+                start = (int)(scale * entry.PackedStart);
+                end = (int)(scale * entry.PackedEnd);
+
+                int r = 80;
+                int a = r * rand.Next(1, 3);
+                int b = r * rand.Next(1, 3);
+                int c = r * rand.Next(1, 3);
+                brush.Color = Color.FromArgb(255, 50 + a, 50 + b, 80 + c);
+
+                e.Graphics.FillRectangle(brush, start, 0, Math.Max(2, end - start), sectionsPanel.Height);
+            }
+
+            if (selectedEntry == null) return;
+
+            start = (int)(scale * selectedEntry.PackedStart);
+            end = (int)(scale * selectedEntry.PackedEnd);
+            brush.Color = Color.Black;
+            e.Graphics.FillRectangle(brush, start, 0, Math.Max(3, end - start), sectionsPanel.Height);
+            //Pen pen = new Pen(Color.Black, 2);
+            //e.Graphics.DrawLine(pen, pos, 0, pos, sectionsPanel.Height);
+        }
+
+        private void sectionsPanel_Resize(object sender, EventArgs e)
+        {
+            sectionsPanel.Invalidate();
+        }
     }
 }
