@@ -81,13 +81,12 @@
             // typeHeader
             // 
             this.typeHeader.Text = "Type";
-            this.typeHeader.Width = 64;
+            this.typeHeader.Width = 105;
             // 
             // sizeHeader
             // 
             this.sizeHeader.Text = "Size";
             this.sizeHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.sizeHeader.Width = 76;
             // 
             // hexPanel
             // 
@@ -142,12 +141,14 @@
             // startHeader
             // 
             this.startHeader.Text = "Start";
-            this.startHeader.Width = 67;
+            this.startHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.startHeader.Width = 65;
             // 
             // endHeader
             // 
             this.endHeader.Text = "End";
-            this.endHeader.Width = 73;
+            this.endHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.endHeader.Width = 66;
             // 
             // splitContainer1
             // 
