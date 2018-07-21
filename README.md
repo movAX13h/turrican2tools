@@ -19,12 +19,12 @@ Translated to C# from disassembly.
 
 ### Table Of Contents (TOC)
 
-Consists of a list of 24 byte entries.
+Consists of a list of 24-byte entries. The list has a fixed maximum size, holding space for 300 entries (7200 bytes). Empty entries are filled with 00.
 ```
-12 byte ... filename, space-padded right
- 4 byte ... ? 
- 4 byte ... ?
- 4 byte ... ?
+12 byte ... filename, maximum 12 characters, padded with whitespace characters (0x20)
+ 4 byte ... unpacked file length
+ 4 byte ... packed stream start position (counted from the beginning of the exe file)
+ 4 byte ... packed stream end position (counted from the beginning of the exe file)
 ```
 
 
@@ -34,12 +34,12 @@ The game uses the following file types:
 
 | Name | Extension | Description |
 | ---- |:---------:|:----------- |
-| Static Sprite    | ?      | asfsdf sadffdfads ffsfdsfkjaöfj öljkaölj sdölkfj dsölkjsd öjödlj döljk ölkjsdö jödsl dkljösdlkj sdöjdsö ljdsölk asödlj sdölkj döslkjö jödlkj dklj ölkjö lkjöalkdj ödslkj ölkjasdf  fasd |
-| Animated Sprite  | ?      |  |
-| Palette          | ?      |  |
-| Music            | ?      |  |
-| Sound            | ?      |  |
-| Text             | ?      |  |
+| Static Sprite    | ?             | asfsdf sadffdfads ffsfdsfkjaöfj öljkaölj sdölkfj dsölkjsd öjödlj döljk ölkjsdö jödsl dkljösdlkj sdöjdsö ljdsölk asödlj sdölkj döslkjö jödlkj dklj ölkjö lkjöalkdj ödslkj ölkjasdf  fasd |
+| Animated Sprite  | ?             |  |
+| Palette          | ?             |  |
+| Music            | *.SAM, *.TFX  | [TFMX tracker module](https://www.exotica.org.uk/wiki/TFMX) |
+| Sound            | *.SAM         | raw 8-bit signed mono PCM data, containing every sample, per game-level |
+| Text             | ?             |  |
 
 
 ## History
