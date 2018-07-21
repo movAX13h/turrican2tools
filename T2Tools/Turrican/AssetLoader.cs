@@ -88,7 +88,7 @@ namespace T2Tools.Turrican
                 for(int i = 0; i + 1 < tmp.Count; ++i)
                 {
                     var gap = new TOCEntry();
-                    gap.Name = tmp[i].Name + " gap";
+                    gap.Name = tmp[i].Name + ".gap";
                     gap.Index = tmp[i].Index;
                     gap.PackedStart = tmp[i]._BATEnd;
                     gap.PackedEnd = tmp[i + 1].PackedStart;
@@ -170,7 +170,7 @@ namespace T2Tools.Turrican
 
             List<TOCEntry> entries = new List<TOCEntry>();
             foreach(var asset in assets.Entries)
-                if(!asset.Value.Name.EndsWith(" gap"))
+                if(!asset.Value.Name.EndsWith(".gap"))
                     entries.Add(asset.Value);
             entries.Sort((a, b) => a.Index.CompareTo(b.Index));
 

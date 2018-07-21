@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace T2Tools.Turrican
 {
-    public enum TOCEntryType { Unknown, Text, Language, StaticSprite, AnimatedSprite,
+    public enum TOCEntryType { Unknown, Gap, Text, Language, StaticSprite, AnimatedSprite,
         Picture, Bitmap, PixelFont, TextmodeFont, Palette,
         Music, Sound, Executable, Map, DAT, DIR }
 
@@ -37,6 +37,7 @@ namespace T2Tools.Turrican
                     case ".pcm": return TOCEntryType.Map;
                     case ".dat": return TOCEntryType.DAT;
                     case ".dir": return TOCEntryType.DIR;
+                    case ".gap": return TOCEntryType.Gap;
                     default:     return TOCEntryType.Unknown;
                 }                
             }
