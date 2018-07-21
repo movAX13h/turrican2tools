@@ -26,11 +26,16 @@ namespace T2Tools.Turrican
                 throw new Exception("error unpacking toc");
             ParseToc(entries, tocBuffer);
 
+            //var fff = new StreamWriter("debug.txt");
+            //int numGood = 0;
+
             // unpack all files
             var buffer = new byte[1024];
             foreach(var entry in entries)
             {
                 entry.Data = new byte[entry.Size];
+
+                List<BlockInfo> blockInfos = new List<BlockInfo>();
 
                 // keep reading packed blocks until we reach the end pointer
                 // a block produces 1024 bytes of unpacked data at max!
@@ -41,6 +46,8 @@ namespace T2Tools.Turrican
                 {
                     int blockLength = exeData[readPos] + exeData[readPos + 1] * 256;
 
+                    blockInfos.Add(new BlockInfo { Position = readPos, Length = blockLength });
+
                     var numBytes = UnpackBlock(buffer, exeData.SubArray(readPos, blockLength + 6));
                     Array.Copy(buffer, 0, entry.Data, writePos, numBytes);
 
@@ -48,14 +55,30 @@ namespace T2Tools.Turrican
                     writePos += numBytes;
                     readPos += blockLength + 2;
                 }
+                blockInfos.Add(new BlockInfo { Position = readPos, Length = 0 });
 
                 if(writePos != entry.Size)
                     throw new Exception("unpacking error");
+
+                // verify the block-address table:
+                for(int i = 0; i < blockInfos.Count; ++i)
+                {
+                    int address = BitConverter.ToInt32(exeData, readPos);
+                    if(address != blockInfos[i].Position)
+                        throw new Exception("bad BAT entry");
+                    readPos += 4;
+                }
+
+                entry._BATEnd = readPos;
 
                 // int length2 = BitConverter.ToUInt16(exeData, readPos); readPos += 2;
                 //if(BitConverter.ToUInt32(exeData, readPos) != 0x53464945) // "EIFS"
                 //    throw new Exception("bad magic id");
             }
+
+            //fff.WriteLine(numGood + " good out of " + entries.Count);
+
+            //fff.Flush();
 
             if(gapsAsEntries)
             {
@@ -67,10 +90,10 @@ namespace T2Tools.Turrican
                     var gap = new TOCEntry();
                     gap.Name = tmp[i].Name + " gap";
                     gap.Index = tmp[i].Index;
-                    gap.PackedStart = tmp[i].PackedEnd;
+                    gap.PackedStart = tmp[i]._BATEnd;
                     gap.PackedEnd = tmp[i + 1].PackedStart;
 
-                    gap.Data = exeData.SubArray(tmp[i].PackedEnd, tmp[i + 1].PackedStart - tmp[i].PackedEnd);
+                    gap.Data = exeData.SubArray(tmp[i]._BATEnd, tmp[i + 1].PackedStart - tmp[i]._BATEnd);
                     gap.Size = gap.Data.Length;
 
                     entries.Add(gap);
@@ -82,6 +105,16 @@ namespace T2Tools.Turrican
             foreach(var entry in entries)
                 toc.Entries.Add(entry.Name, entry);
             return toc;
+        }
+
+        struct BlockInfo
+        {
+            public int Position;
+            public int Length;
+            public override string ToString()
+            {
+                return Position.ToString();
+            }
         }
 
         public static TOC Load(string exePath, bool gapsAsEntries = false)
@@ -135,8 +168,11 @@ namespace T2Tools.Turrican
             if(startupProgramData.Length != 12832)
                 throw new Exception("startup program must be 12832 bytes long");
 
-            TOCEntry[] entries = assets.Entries.Values.ToArray();
-            Array.Sort(entries, (a, b) => (a.Index * 2 + (a.Name.EndsWith("gap") ? 1 : 0)).CompareTo(b.Index * 2 + (b.Name.EndsWith("gap") ? 1 : 0)));
+            List<TOCEntry> entries = new List<TOCEntry>();
+            foreach(var asset in assets.Entries)
+                if(!asset.Value.Name.EndsWith(" gap"))
+                    entries.Add(asset.Value);
+            entries.Sort((a, b) => a.Index.CompareTo(b.Index));
 
             var f = new BinaryWriter(new MemoryStream());
             f.Write(startupProgramData);
@@ -144,11 +180,14 @@ namespace T2Tools.Turrican
             foreach(var entry in entries)
             {
                 entry.PackedStart = (int)f.BaseStream.Position;
-                PackFile(f, entry.Data, 1024);
-                entry.PackedEnd = (int)f.BaseStream.Position - 6;
+                var bat = PackFile2(f, entry.Data, 1024);
+                entry.PackedEnd = (int)f.BaseStream.Position;
+
+                foreach(var batEntry in bat)
+                    f.Write(batEntry);
             }
 
-            PackFile(f, GenerateToc(entries), int.MaxValue);
+            PackFile(f, GenerateToc(entries.ToArray()), int.MaxValue);
             
             var buffer = ((MemoryStream)f.BaseStream).GetBuffer();
             Array.Resize(ref buffer, (int)f.BaseStream.Position);
@@ -168,6 +207,22 @@ namespace T2Tools.Turrican
             }
             f.Write((ushort)(f.BaseStream.Position - start));
             f.Write(0x53464945); // "EIFS"
+        }
+
+        static List<int> PackFile2(BinaryWriter f, byte[] data, int blockSize)
+        {
+            List<int> bat = new List<int>();
+            var start = f.BaseStream.Position;
+            for(int pos = 0; pos < data.Length;)
+            {
+                int plainBlockSize = Math.Min(blockSize, data.Length - pos);
+                bat.Add((int)f.BaseStream.Position);
+                PackBlock(f, data, pos, plainBlockSize);
+
+                pos += plainBlockSize;
+            }
+            bat.Add((int)f.BaseStream.Position);
+            return bat;
         }
 
         static void PackBlock(BinaryWriter f, byte[] data, int offset, int length)

@@ -13,6 +13,7 @@ namespace T2Tools.Turrican
         public string Name;
         public int Size;
         public int PackedStart, PackedEnd;
+        public int _BATEnd;
         public byte[] Data;
 
         public TOCEntryType Type
