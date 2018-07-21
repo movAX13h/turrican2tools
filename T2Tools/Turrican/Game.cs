@@ -28,7 +28,7 @@ namespace T2Tools.Turrican
 
             try
             {
-                Assets = AssetLoader.Load(inputFile);
+                Assets = AssetLoader.Load(inputFile, true);
             }
             catch(Exception e)
             {

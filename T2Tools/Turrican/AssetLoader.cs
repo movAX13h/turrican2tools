@@ -9,7 +9,7 @@ namespace T2Tools.Turrican
 {
     class AssetLoader
     {
-        public static TOC Load(byte[] exeData)
+        public static TOC Load(byte[] exeData, bool gapsAsEntries = false)
         {
             List<TOCEntry> entries = new List<TOCEntry>();
 
@@ -52,10 +52,29 @@ namespace T2Tools.Turrican
                 if(writePos != entry.Size)
                     throw new Exception("unpacking error");
 
-                int length2 = BitConverter.ToUInt16(exeData, readPos); readPos += 2;
-
+                // int length2 = BitConverter.ToUInt16(exeData, readPos); readPos += 2;
                 //if(BitConverter.ToUInt32(exeData, readPos) != 0x53464945) // "EIFS"
                 //    throw new Exception("bad magic id");
+            }
+
+            if(gapsAsEntries)
+            {
+                List<TOCEntry> tmp = new List<TOCEntry>(entries);
+                tmp.Sort((a, b) => a.PackedStart.CompareTo(b.PackedStart));
+
+                for(int i = 0; i + 1 < tmp.Count; ++i)
+                {
+                    var gap = new TOCEntry();
+                    gap.Name = tmp[i].Name + " gap";
+                    gap.Index = tmp[i].Index;
+                    gap.PackedStart = tmp[i].PackedEnd;
+                    gap.PackedEnd = tmp[i + 1].PackedStart;
+
+                    gap.Data = exeData.SubArray(tmp[i].PackedEnd, tmp[i + 1].PackedStart - tmp[i].PackedEnd);
+                    gap.Size = gap.Data.Length;
+
+                    entries.Add(gap);
+                }
             }
 
             var toc = new TOC();
@@ -65,9 +84,9 @@ namespace T2Tools.Turrican
             return toc;
         }
 
-        public static TOC Load(string exePath)
+        public static TOC Load(string exePath, bool gapsAsEntries = false)
         {
-            return Load(File.ReadAllBytes(exePath));
+            return Load(File.ReadAllBytes(exePath), gapsAsEntries);
         }
 
         static void ParseToc(List<TOCEntry> toc, byte[] data)
@@ -117,7 +136,7 @@ namespace T2Tools.Turrican
                 throw new Exception("startup program must be 12832 bytes long");
 
             TOCEntry[] entries = assets.Entries.Values.ToArray();
-            Array.Sort(entries, (a, b) => a.Index.CompareTo(b.Index));
+            Array.Sort(entries, (a, b) => (a.Index * 2 + (a.Name.EndsWith("gap") ? 1 : 0)).CompareTo(b.Index * 2 + (b.Name.EndsWith("gap") ? 1 : 0)));
 
             var f = new BinaryWriter(new MemoryStream());
             f.Write(startupProgramData);
