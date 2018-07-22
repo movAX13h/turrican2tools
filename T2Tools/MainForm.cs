@@ -68,6 +68,12 @@ namespace T2Tools
             var hidePages = new TabPage[] { txtPage, palPage, imgPage };
             foreach(TabPage page in hidePages) if (displayTabs.TabPages.Contains(page)) displayTabs.TabPages.Remove(page);
 
+            if (currentBitmap != null)
+            {
+                currentBitmap.Dispose();
+                currentBitmap = null;
+            }
+
             hexBox.ByteProvider = new DynamicByteProvider(item.Entry.Data);
 
             switch (item.Entry.Type)

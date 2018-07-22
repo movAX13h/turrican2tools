@@ -9,7 +9,8 @@ namespace T2Tools.Controls
     {
         private static List<TOCEntryType> handledTypes = new List<TOCEntryType>() {
                 TOCEntryType.Text,
-                TOCEntryType.Language
+                TOCEntryType.Language,
+                TOCEntryType.StaticSprite
         };
 
         public TOCEntry Entry { get; private set; }
