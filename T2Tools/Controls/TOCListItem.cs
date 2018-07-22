@@ -10,7 +10,8 @@ namespace T2Tools.Controls
         private static List<TOCEntryType> handledTypes = new List<TOCEntryType>() {
                 TOCEntryType.Text,
                 TOCEntryType.Language,
-                TOCEntryType.StaticSprite
+                TOCEntryType.StaticSprite,
+                TOCEntryType.Palette
         };
 
         public TOCEntry Entry { get; private set; }

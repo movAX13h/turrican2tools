@@ -88,15 +88,22 @@ namespace T2Tools
                 case TOCEntryType.StaticSprite:
                     PCXImage img = new PCXImage();
                     img.Load(item.Entry.Data);
+                    currentImgZoom = 3;
                     currentBitmap = img.Bitmap;
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
                     break;
 
+                case TOCEntryType.Palette:
+                    currentImgZoom = 14;
+                    currentBitmap = Palette.ToBitmap(item.Entry.Data);
+                    displayTabs.TabPages.Add(imgPage);
+                    displayTabs.SelectedTab = imgPage;                    
+                    break;
+
                 case TOCEntryType.Unknown:                
                 case TOCEntryType.AnimatedSprite:
                 case TOCEntryType.PixelFont:
-                case TOCEntryType.Palette:
                 case TOCEntryType.Music:
                 case TOCEntryType.Sound:
                 case TOCEntryType.Executable:

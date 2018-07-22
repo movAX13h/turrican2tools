@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formats\Palette.cs" />
     <Compile Include="Formats\PCXImage.cs" />
     <Compile Include="Turrican\AssetLoader.cs" />
     <Compile Include="Controls\TOCListItem.cs" />
