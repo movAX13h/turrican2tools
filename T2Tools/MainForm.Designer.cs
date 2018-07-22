@@ -41,18 +41,20 @@
             this.hexSelectionLabel = new System.Windows.Forms.Label();
             this.sectionsPanel = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.displayTabs = new System.Windows.Forms.TabControl();
+            this.hexPage = new System.Windows.Forms.TabPage();
+            this.txtPage = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
-            this.displayTab = new System.Windows.Forms.TabControl();
-            this.hexPage = new System.Windows.Forms.TabPage();
-            this.txtPage = new System.Windows.Forms.TabPage();
+            this.palPage = new System.Windows.Forms.TabPage();
+            this.imgPage = new System.Windows.Forms.TabPage();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.displayTab.SuspendLayout();
+            this.displayTabs.SuspendLayout();
             this.hexPage.SuspendLayout();
             this.txtPage.SuspendLayout();
             this.SuspendLayout();
@@ -172,10 +174,46 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.displayTab);
+            this.splitContainer1.Panel2.Controls.Add(this.displayTabs);
             this.splitContainer1.Size = new System.Drawing.Size(788, 410);
             this.splitContainer1.SplitterDistance = 425;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // displayTabs
+            // 
+            this.displayTabs.Controls.Add(this.hexPage);
+            this.displayTabs.Controls.Add(this.txtPage);
+            this.displayTabs.Controls.Add(this.palPage);
+            this.displayTabs.Controls.Add(this.imgPage);
+            this.displayTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.displayTabs.Location = new System.Drawing.Point(0, 0);
+            this.displayTabs.Name = "displayTabs";
+            this.displayTabs.SelectedIndex = 0;
+            this.displayTabs.Size = new System.Drawing.Size(359, 410);
+            this.displayTabs.TabIndex = 5;
+            // 
+            // hexPage
+            // 
+            this.hexPage.Controls.Add(this.hexEditorPanel);
+            this.hexPage.Controls.Add(this.panel1);
+            this.hexPage.Location = new System.Drawing.Point(4, 22);
+            this.hexPage.Name = "hexPage";
+            this.hexPage.Padding = new System.Windows.Forms.Padding(3);
+            this.hexPage.Size = new System.Drawing.Size(351, 384);
+            this.hexPage.TabIndex = 0;
+            this.hexPage.Text = "HEX Editor";
+            this.hexPage.UseVisualStyleBackColor = true;
+            // 
+            // txtPage
+            // 
+            this.txtPage.Controls.Add(this.txtOutput);
+            this.txtPage.Location = new System.Drawing.Point(4, 22);
+            this.txtPage.Name = "txtPage";
+            this.txtPage.Padding = new System.Windows.Forms.Padding(3);
+            this.txtPage.Size = new System.Drawing.Size(351, 384);
+            this.txtPage.TabIndex = 1;
+            this.txtPage.Text = "Text";
+            this.txtPage.UseVisualStyleBackColor = true;
             // 
             // txtOutput
             // 
@@ -205,39 +243,26 @@
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
             // 
-            // displayTab
+            // palPage
             // 
-            this.displayTab.Controls.Add(this.hexPage);
-            this.displayTab.Controls.Add(this.txtPage);
-            this.displayTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.displayTab.Location = new System.Drawing.Point(0, 0);
-            this.displayTab.Name = "displayTab";
-            this.displayTab.SelectedIndex = 0;
-            this.displayTab.Size = new System.Drawing.Size(359, 410);
-            this.displayTab.TabIndex = 5;
+            this.palPage.Location = new System.Drawing.Point(4, 22);
+            this.palPage.Name = "palPage";
+            this.palPage.Padding = new System.Windows.Forms.Padding(3);
+            this.palPage.Size = new System.Drawing.Size(351, 384);
+            this.palPage.TabIndex = 2;
+            this.palPage.Text = "Palette";
+            this.palPage.UseVisualStyleBackColor = true;
             // 
-            // hexPage
+            // imgPage
             // 
-            this.hexPage.Controls.Add(this.hexEditorPanel);
-            this.hexPage.Controls.Add(this.panel1);
-            this.hexPage.Location = new System.Drawing.Point(4, 22);
-            this.hexPage.Name = "hexPage";
-            this.hexPage.Padding = new System.Windows.Forms.Padding(3);
-            this.hexPage.Size = new System.Drawing.Size(351, 384);
-            this.hexPage.TabIndex = 0;
-            this.hexPage.Text = "HEX Editor";
-            this.hexPage.UseVisualStyleBackColor = true;
-            // 
-            // txtPage
-            // 
-            this.txtPage.Controls.Add(this.txtOutput);
-            this.txtPage.Location = new System.Drawing.Point(4, 22);
-            this.txtPage.Name = "txtPage";
-            this.txtPage.Padding = new System.Windows.Forms.Padding(3);
-            this.txtPage.Size = new System.Drawing.Size(351, 384);
-            this.txtPage.TabIndex = 1;
-            this.txtPage.Text = "Text";
-            this.txtPage.UseVisualStyleBackColor = true;
+            this.imgPage.Location = new System.Drawing.Point(4, 22);
+            this.imgPage.Name = "imgPage";
+            this.imgPage.Padding = new System.Windows.Forms.Padding(3);
+            this.imgPage.Size = new System.Drawing.Size(351, 384);
+            this.imgPage.TabIndex = 3;
+            this.imgPage.Text = "Image";
+            this.imgPage.UseVisualStyleBackColor = true;
+            this.imgPage.Paint += new System.Windows.Forms.PaintEventHandler(this.imgPage_Paint);
             // 
             // MainForm
             // 
@@ -256,7 +281,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.displayTab.ResumeLayout(false);
+            this.displayTabs.ResumeLayout(false);
             this.hexPage.ResumeLayout(false);
             this.txtPage.ResumeLayout(false);
             this.txtPage.PerformLayout();
@@ -281,9 +306,11 @@
         private System.Windows.Forms.Button writeExeButton;
         private System.Windows.Forms.SaveFileDialog saveExeDialog;
         private System.Windows.Forms.Button applyChangesButton;
-        private System.Windows.Forms.TabControl displayTab;
+        private System.Windows.Forms.TabControl displayTabs;
         private System.Windows.Forms.TabPage hexPage;
         private System.Windows.Forms.TabPage txtPage;
+        private System.Windows.Forms.TabPage palPage;
+        private System.Windows.Forms.TabPage imgPage;
     }
 }
 
