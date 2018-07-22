@@ -15,6 +15,7 @@ namespace T2Tools.Turrican
         public int PackedStart, PackedEnd;
         public int _BATEnd;
         public byte[] Data;
+        public bool Dirty = false;
 
         public TOCEntryType Type
         {

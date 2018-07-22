@@ -1,6 +1,7 @@
 ﻿using Be.Windows.Forms;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using T2Tools.Controls;
@@ -12,7 +13,7 @@ namespace T2Tools
     {
         private Game game;
         private HexBox hexBox;
-        private TOCEntry selectedEntry;
+        private TOCListItem selectedItem;
 
         public MainForm()
         {
@@ -20,25 +21,22 @@ namespace T2Tools
             fileList.ListViewItemSorter = new ListViewColumnSorter();
 
             hexBox = new HexBox();
-            hexBox.Width = hexPanel.Width;
-            hexBox.Height = hexPanel.Height;
             hexBox.GroupSize = 4;
             hexBox.Dock = DockStyle.Fill;
             hexBox.GroupSeparatorVisible = true;
             hexBox.VScrollBarVisible = true;
             hexBox.LineInfoVisible = true;
-            hexBox.Font = new System.Drawing.Font("Consolas", 8);
+            hexBox.Font = new Font("Consolas", 8);
+            hexBox.KeyUp += HexBox_KeyUp;
             
             hexBox.SelectionStartChanged += HexBox_SelectionStartChanged;
             hexBox.SelectionLengthChanged += HexBox_SelectionLengthChanged;
 
             hexEditorPanel.Controls.Add(hexBox);
-            hexPanel.Dock = DockStyle.Fill;
-            hexPanel.Visible = false;
+
             
-            txtPanel.Visible = false;
-            txtPanel.Dock = DockStyle.Fill;
         }
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -60,7 +58,7 @@ namespace T2Tools
             if (fileList.Items.Count > 0) fileList.Items[0].Selected = true;
         }
 
-        #region HEX preview
+        #region HEX editor
         private void updateHexSelectionLabel()
         {
             hexSelectionLabel.Text = "Selection offset: " + hexBox.SelectionStart.ToString();
@@ -76,21 +74,29 @@ namespace T2Tools
         {
             updateHexSelectionLabel();
         }
+
+        private void HexBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            applyChangesButton.Visible = true;
+        }
         #endregion
 
         #region TOC List
-        private void fileSelected(TOCEntry entry)
+        private void fileSelected(TOCListItem item)
         {
-            selectedEntry = entry;
-            hexPanel.Visible = false;
-            txtPanel.Visible = false;
+            selectedItem = item;
+            applyChangesButton.Visible = false;
 
-            switch (entry.Type)
+            if (displayTab.TabPages.Contains(txtPage)) displayTab.TabPages.Remove(txtPage);
+            hexBox.ByteProvider = new DynamicByteProvider(item.Entry.Data);
+
+            switch (item.Entry.Type)
             {
                 case TOCEntryType.Text:
                 case TOCEntryType.Language:                    
-                    txtOutput.Text = Encoding.GetEncoding("437").GetString(entry.Data);
-                    txtPanel.Visible = true;
+                    txtOutput.Text = Encoding.GetEncoding("437").GetString(item.Entry.Data);
+                    displayTab.TabPages.Add(txtPage);
+                    displayTab.SelectedTab = txtPage;
                     break;
 
                 case TOCEntryType.Unknown:
@@ -103,10 +109,7 @@ namespace T2Tools
                 case TOCEntryType.Executable:
                 case TOCEntryType.DAT:
                 case TOCEntryType.DIR:
-
-                default:
-                    hexBox.ByteProvider = new DynamicByteProvider(entry.Data);
-                    hexPanel.Visible = true;
+                default:                   
                     break;
             }
 
@@ -142,7 +145,7 @@ namespace T2Tools
             if (fileList.SelectedItems.Count == 0) return;
 
             TOCListItem item = (TOCListItem)(fileList.SelectedItems[0]);
-            fileSelected(item.Entry);
+            fileSelected(item);
         }
 
         #endregion
@@ -158,7 +161,7 @@ namespace T2Tools
 
             int start, end;
             float w = sectionsPanel.Width;
-            float scale = w / game.TotalSize;
+            float scale = w / game.NumBytesLoaded;
 
             foreach (var pair in game.Assets.Entries)
             {
@@ -176,19 +179,54 @@ namespace T2Tools
                 e.Graphics.FillRectangle(brush, start, 0, Math.Max(2, end - start), sectionsPanel.Height);
             }
 
-            if (selectedEntry == null) return;
+            if (selectedItem == null) return;
 
-            start = (int)(scale * selectedEntry.PackedStart);
-            end = (int)(scale * selectedEntry.PackedEnd);
+            start = (int)(scale * selectedItem.Entry.PackedStart);
+            end = (int)(scale * selectedItem.Entry.PackedEnd);
             brush.Color = Color.Black;
             e.Graphics.FillRectangle(brush, start, 0, Math.Max(3, end - start), sectionsPanel.Height);
-            //Pen pen = new Pen(Color.Black, 2);
-            //e.Graphics.DrawLine(pen, pos, 0, pos, sectionsPanel.Height);
         }
 
         private void sectionsPanel_Resize(object sender, EventArgs e)
         {
             sectionsPanel.Invalidate();
+        }
+
+        private void writeExeButton_Click(object sender, EventArgs e)
+        {
+            if (!game.Assets.Dirty)
+            {
+                MessageBox.Show("No changes made to any file.", "Nothing to do!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (saveExeDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    byte[] data = AssetLoader.GenerateEXE(game.LoadedData.SubArray(0, 12832), game.Assets);
+                    File.WriteAllBytes(saveExeDialog.FileName, data);
+
+                    foreach (TOCListItem item in fileList.Items)
+                    {
+                        item.Entry.Dirty = false;
+                        item.Update();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to generate new EXE file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }                
+            }
+        }
+
+        private void applyChangesButton_Click(object sender, EventArgs e)
+        {
+            selectedItem.Entry.Data = (hexBox.ByteProvider as DynamicByteProvider).Bytes.ToArray();
+            selectedItem.Entry.Dirty = true;
+            selectedItem.Update();
+            applyChangesButton.Visible = false;
         }
     }
 }

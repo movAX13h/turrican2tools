@@ -7,6 +7,11 @@ namespace T2Tools.Controls
 {
     class TOCListItem : ListViewItem
     {
+        private static List<TOCEntryType> handledTypes = new List<TOCEntryType>() {
+                TOCEntryType.Text,
+                TOCEntryType.Language
+        };
+
         public TOCEntry Entry { get; private set; }
 
         private ListViewSubItem typeItem;
@@ -24,52 +29,19 @@ namespace T2Tools.Controls
             startItem = SubItems.Add(new ListViewSubItem());
             endItem = SubItems.Add(new ListViewSubItem());
 
-            var handledTypes = new List<TOCEntryType>() {
-                TOCEntryType.Text,
-                TOCEntryType.Language
-            };
+            updateCaptions();
+        }
 
-            if (!handledTypes.Contains(Entry.Type))
-            {
-                typeItem.BackColor = Color.LightGray;
-            }
-
-            /*
-            switch(entry.Type)
-            {
-                case DatFileEntry.DataType.Image:
-                    BackColor = Color.FromArgb(255, 220, 255, 220);
-                    break;
-                case DatFileEntry.DataType.Map:
-                    BackColor = Color.FromArgb(255, 220, 220, 255);
-                    break;
-                case DatFileEntry.DataType.Music:
-                    BackColor = Color.FromArgb(255, 255, 255, 220);
-                    break;
-                case DatFileEntry.DataType.SoundFX:
-                    BackColor = Color.FromArgb(255, 255, 255, 180);
-                    break;
-                case DatFileEntry.DataType.SpeakerSound:
-                    BackColor = Color.FromArgb(255, 255, 255, 140);
-                    break;
-                case DatFileEntry.DataType.Sprite:
-                    BackColor = Color.FromArgb(255, 180, 255, 180);
-                    break;
-                case DatFileEntry.DataType.Text:
-                    BackColor = Color.FromArgb(255, 220, 220, 220);
-                    break;
-                case DatFileEntry.DataType.Unknown:
-                default:
-                    BackColor = Color.FromArgb(255, 255, 0, 0);
-                    break;
-            }
-            */
-
+        public void Update()
+        {
             updateCaptions();
         }
 
         private void updateCaptions()
         {
+            if (!handledTypes.Contains(Entry.Type)) typeItem.BackColor = Color.LightGray;
+            ForeColor = Entry.Dirty ? Color.Red : Color.Black;
+
             Text = Entry.Name;
             typeItem.Text = Entry.TypeString;
             sizeItem.Text = Entry.Size.ToString();

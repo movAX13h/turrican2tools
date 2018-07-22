@@ -7,7 +7,9 @@ namespace T2Tools.Turrican
     {
         public string Error { get; private set; } = "";
         public TOC Assets { get; private set; }
-        public int TotalSize { get; private set; }
+
+        public byte[] LoadedData { get; private set; }
+        public int NumBytesLoaded { get { return LoadedData.Length; } }
 
         private string inputFile;
 
@@ -24,11 +26,11 @@ namespace T2Tools.Turrican
                 return false;
             }
 
-            TotalSize = (int)(new FileInfo(inputFile)).Length;
+            LoadedData = File.ReadAllBytes(inputFile);
 
             try
             {
-                Assets = AssetLoader.Load(inputFile, true);
+                Assets = AssetLoader.Load(inputFile, false);
             }
             catch(Exception e)
             {
