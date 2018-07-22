@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools.Turrican
 {
-    class AssetLoader
+    public class AssetLoader
     {
         public static TOC Load(byte[] exeData, bool gapsAsEntries = false)
         {

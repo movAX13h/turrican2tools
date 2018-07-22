@@ -51,8 +51,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formats\BobDecoder.cs" />
+    <Compile Include="Formats\BobFile.cs" />
+    <Compile Include="Formats\DrawProgramCpu.cs" />
     <Compile Include="Formats\Palette.cs" />
     <Compile Include="Formats\PCXImage.cs" />
+    <Compile Include="Formats\VGABitmap.cs" />
+    <Compile Include="Formats\VGABitmapConverter.cs" />
     <Compile Include="Turrican\AssetLoader.cs" />
     <Compile Include="Controls\TOCListItem.cs" />
     <Compile Include="Controls\ListViewColumnSorter.cs" />

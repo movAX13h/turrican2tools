@@ -2,7 +2,7 @@
 
 namespace T2Tools.Turrican
 {
-    class TOC
+    public class TOC
     {
         public Dictionary<string,TOCEntry> Entries;
         public bool Dirty
