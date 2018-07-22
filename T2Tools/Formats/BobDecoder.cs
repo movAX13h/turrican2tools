@@ -9,7 +9,7 @@ namespace T2Tools.Formats
 {
     class BOBDecoder
     {
-        public List<VGABitmap> DecodeFrames(BobFile bob)
+        public List<VGABitmap> DecodeFrames(BOBFile bob)
         {
             List<VGABitmap> frames = new List<VGABitmap>(bob.Frames.Count);
             foreach(var frame in bob.Frames)

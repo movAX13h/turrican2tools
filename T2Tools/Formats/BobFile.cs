@@ -8,33 +8,17 @@ using System.Threading.Tasks;
 
 namespace T2Tools.Formats
 {
-    class BOBFrame
-    {
-        /// <summary>
-        /// a x86 program to draw the sprite, consisting of unrolled loops and pokes to the EGA card
-        /// </summary>
-        public byte[] DrawProgram;
-        /// <summary>
-        /// data that is accessed by the draw program
-        /// </summary>
-        public byte[] PixelData;
-        /// <summary>
-        /// yet unknown purpose
-        /// </summary>
-        public int Settings;
-
-        public int Width;
-        public int Height;
-    }
-
-    class BobFile
+    class BOBFile
     {
         public byte[] Palette;
         public List<BOBFrame> Frames;
 
-        public BobFile(string path)
+        public BOBFile(string path) : this(File.ReadAllBytes(path))
+        { }
+
+        public BOBFile(byte[] data)
         {
-            using(var f = new BinaryReader(File.OpenRead(path)))
+            using(var f = new BinaryReader(new MemoryStream(data)))
             {
                 Palette = f.ReadBytes(256 * 3);
                 int one = f.ReadInt16(); // "1"
@@ -73,5 +57,24 @@ namespace T2Tools.Formats
                 // 16 zerobytes trail each bob file
             }
         }
+    }
+
+    class BOBFrame
+    {
+        /// <summary>
+        /// a x86 program to draw the sprite, consisting of unrolled loops and pokes to the EGA card
+        /// </summary>
+        public byte[] DrawProgram;
+        /// <summary>
+        /// data that is accessed by the draw program
+        /// </summary>
+        public byte[] PixelData;
+        /// <summary>
+        /// yet unknown purpose
+        /// </summary>
+        public int Settings;
+
+        public int Width;
+        public int Height;
     }
 }
