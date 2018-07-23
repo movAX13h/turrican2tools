@@ -90,6 +90,7 @@ namespace T2Tools
                     PCXImage img = new PCXImage();
                     img.Load(item.Entry.Data);
                     currentImgZoom = 3;
+                    imgZoomInput.Value = currentImgZoom;
                     currentBitmaps = new Bitmap[] { img.Bitmap };
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
@@ -102,6 +103,8 @@ namespace T2Tools
                     var vgaBitmaps = decoder.DecodeFrames(file);
                     currentBitmaps = new Bitmap[vgaBitmaps.Count];
                     for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
+                    currentImgZoom = 3;
+                    imgZoomInput.Value = currentImgZoom;
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
                     bitmapControlsPanel.Visible = true;
@@ -109,6 +112,7 @@ namespace T2Tools
 
                 case TOCEntryType.Palette:
                     currentImgZoom = 14;
+                    imgZoomInput.Value = currentImgZoom;
                     currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
@@ -298,7 +302,6 @@ namespace T2Tools
                 currentBitmapIndexLabel.Text = (currentBitmapIndex + 1) + "/" + currentBitmaps.Length;
             }
         }
-        #endregion
 
         private void prevBitmapButton_Click(object sender, EventArgs e)
         {
@@ -313,5 +316,13 @@ namespace T2Tools
             if (currentBitmapIndex > currentBitmaps.Length - 1) currentBitmapIndex = 0;
             imgPage.Invalidate();
         }
+
+        private void imgZoomInput_Scroll(object sender, EventArgs e)
+        {
+            currentImgZoom = imgZoomInput.Value;
+            imgPage.Invalidate();
+        }
+        #endregion
+
     }
 }

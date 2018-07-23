@@ -53,6 +53,7 @@
             this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
             this.nextBitmapButton = new System.Windows.Forms.Button();
             this.prevBitmapButton = new System.Windows.Forms.Button();
+            this.imgZoomInput = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,6 +64,7 @@
             this.txtPage.SuspendLayout();
             this.imgPage.SuspendLayout();
             this.bitmapControlsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).BeginInit();
             this.SuspendLayout();
             // 
             // fileList
@@ -78,6 +80,7 @@
             this.fileList.FullRowSelect = true;
             this.fileList.HideSelection = false;
             this.fileList.Location = new System.Drawing.Point(0, 0);
+            this.fileList.MultiSelect = false;
             this.fileList.Name = "fileList";
             this.fileList.Size = new System.Drawing.Size(425, 410);
             this.fileList.TabIndex = 0;
@@ -244,6 +247,7 @@
             // 
             // imgPage
             // 
+            this.imgPage.Controls.Add(this.imgZoomInput);
             this.imgPage.Controls.Add(this.bitmapControlsPanel);
             this.imgPage.Location = new System.Drawing.Point(4, 22);
             this.imgPage.Name = "imgPage";
@@ -273,19 +277,18 @@
             // 
             // bitmapControlsPanel
             // 
-            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
-            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 334);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 349);
             this.bitmapControlsPanel.Name = "bitmapControlsPanel";
-            this.bitmapControlsPanel.Size = new System.Drawing.Size(339, 44);
+            this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
             this.bitmapControlsPanel.TabIndex = 0;
             // 
             // currentBitmapIndexLabel
             // 
-            this.currentBitmapIndexLabel.Location = new System.Drawing.Point(45, 11);
+            this.currentBitmapIndexLabel.Location = new System.Drawing.Point(38, 3);
             this.currentBitmapIndexLabel.Name = "currentBitmapIndexLabel";
             this.currentBitmapIndexLabel.Size = new System.Drawing.Size(58, 23);
             this.currentBitmapIndexLabel.TabIndex = 0;
@@ -294,7 +297,7 @@
             // 
             // nextBitmapButton
             // 
-            this.nextBitmapButton.Location = new System.Drawing.Point(109, 11);
+            this.nextBitmapButton.Location = new System.Drawing.Point(102, 3);
             this.nextBitmapButton.Name = "nextBitmapButton";
             this.nextBitmapButton.Size = new System.Drawing.Size(29, 23);
             this.nextBitmapButton.TabIndex = 1;
@@ -304,13 +307,27 @@
             // 
             // prevBitmapButton
             // 
-            this.prevBitmapButton.Location = new System.Drawing.Point(10, 11);
+            this.prevBitmapButton.Location = new System.Drawing.Point(3, 3);
             this.prevBitmapButton.Name = "prevBitmapButton";
             this.prevBitmapButton.Size = new System.Drawing.Size(29, 23);
             this.prevBitmapButton.TabIndex = 1;
             this.prevBitmapButton.Text = "<";
             this.prevBitmapButton.UseVisualStyleBackColor = true;
             this.prevBitmapButton.Click += new System.EventHandler(this.prevBitmapButton_Click);
+            // 
+            // imgZoomInput
+            // 
+            this.imgZoomInput.AutoSize = false;
+            this.imgZoomInput.BackColor = System.Drawing.Color.White;
+            this.imgZoomInput.Location = new System.Drawing.Point(241, 352);
+            this.imgZoomInput.Maximum = 14;
+            this.imgZoomInput.Minimum = 1;
+            this.imgZoomInput.Name = "imgZoomInput";
+            this.imgZoomInput.Size = new System.Drawing.Size(104, 26);
+            this.imgZoomInput.TabIndex = 1;
+            this.imgZoomInput.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.imgZoomInput.Value = 3;
+            this.imgZoomInput.Scroll += new System.EventHandler(this.imgZoomInput_Scroll);
             // 
             // MainForm
             // 
@@ -335,6 +352,7 @@
             this.txtPage.PerformLayout();
             this.imgPage.ResumeLayout(false);
             this.bitmapControlsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -365,6 +383,7 @@
         private System.Windows.Forms.Button prevBitmapButton;
         private System.Windows.Forms.Button nextBitmapButton;
         private System.Windows.Forms.Label currentBitmapIndexLabel;
+        private System.Windows.Forms.TrackBar imgZoomInput;
     }
 }
 
