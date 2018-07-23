@@ -3,7 +3,7 @@ Tools for the MS-DOS version of Turrican II.
 
 ## EIFS - Executable Integrated File System
 
-All data of the game is packed and appended to the main game executable in form of EIFS blocks. The last EIFS block is ready first by the game and contains a TOC for all other files.
+All data of the game is packed and appended to the main game executable in form of EIFS blocks. The last EIFS block is read first by the game and contains a TOC for all other files.
 
 ### Identification
 6 bytes at end of file/section:
@@ -14,7 +14,7 @@ All data of the game is packed and appended to the main game executable in form 
 
 ### Unpacker
 
-Turrican II stores it's asset-files as an obfuscated, or compressed and obfuscate stream of bytes.
+Turrican II stores its asset-files as an obfuscated, or compressed and obfuscate stream of bytes.
 The stream may be split into sequential compressed blocks, that must be decompressed individually, each giving a portion of the unpacked file.
 Every asset-file uses a block-size of 1024 bytes (that means that every compressed block produces 1024 unpacked bytes), with exception of the TOC file, which is treated as a single block, and may exceed that limit.
 
@@ -26,10 +26,10 @@ If LZ is used, the stream is a series of instructions, with respective payload:
 ```
 move   ... decipher a byte from the input stream, and write it to the output buffer
 repeat ... repeat a string that was decompressed before, by performing a string-copy within the output buffer
-fill   ... decipher the given byte, and write it the output buffer a given number of times
+fill   ... decipher the given byte, and write it to the output buffer a given number of times
 ```
 
-If LZ is not used, the data is an uncompressed block with ciphered bytes.
+If LZ is not used, the data is an uncompressed block of ciphered bytes.
 
 Turrican II uses an XOR cipher of 0x6B.
 
@@ -63,9 +63,3 @@ The game uses the following file types:
 
 BOB files contain one frame for still image sprites, or multiple frames of animated sprites.
 
-## History
-
-- 2018-07-18 unpacker simplified, assets loader by srtuss, repo created
-- 2018-07-17 unpacker working thanks to srtuss, TOC readable
-- 2018-07-16 translating EIFS unpack function to C#
-- 2018-07-14 analysing disassembly of t2.exe
