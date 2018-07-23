@@ -16,7 +16,8 @@ namespace T2Tools
         private HexBox hexBox;
         private TOCListItem selectedItem;
 
-        private Bitmap currentBitmap;
+        private Bitmap[] currentBitmaps;
+        private int currentBitmapIndex = 0;
         private int currentImgZoom = 3;
 
         public MainForm()
@@ -50,9 +51,8 @@ namespace T2Tools
             }
 
             // fill TOC list
-            foreach (var pair in game.Assets.Entries)
+            foreach (var entry in game.Assets.Entries.Values)
             {
-                var entry = pair.Value;
                 fileList.Items.Add(new TOCListItem(entry));
             }
 
@@ -68,10 +68,11 @@ namespace T2Tools
             var hidePages = new TabPage[] { txtPage, palPage, imgPage };
             foreach(TabPage page in hidePages) if (displayTabs.TabPages.Contains(page)) displayTabs.TabPages.Remove(page);
 
-            if (currentBitmap != null)
+            currentBitmapIndex = 0;
+            if (currentBitmaps != null)
             {
-                currentBitmap.Dispose();
-                currentBitmap = null;
+                foreach (Bitmap bmp in currentBitmaps) bmp.Dispose();
+                currentBitmaps = null;
             }
 
             hexBox.ByteProvider = new DynamicByteProvider(item.Entry.Data);
@@ -89,20 +90,32 @@ namespace T2Tools
                     PCXImage img = new PCXImage();
                     img.Load(item.Entry.Data);
                     currentImgZoom = 3;
-                    currentBitmap = img.Bitmap;
+                    currentBitmaps = new Bitmap[] { img.Bitmap };
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
+                    bitmapControlsPanel.Visible = false;
+                    break;
+
+                case TOCEntryType.AnimatedSprite:
+                    BOBFile file = new BOBFile(item.Entry.Data);
+                    BOBDecoder decoder = new BOBDecoder();
+                    var vgaBitmaps = decoder.DecodeFrames(file);
+                    currentBitmaps = new Bitmap[vgaBitmaps.Count];
+                    for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
+                    displayTabs.TabPages.Add(imgPage);
+                    displayTabs.SelectedTab = imgPage;
+                    bitmapControlsPanel.Visible = true;
                     break;
 
                 case TOCEntryType.Palette:
                     currentImgZoom = 14;
-                    currentBitmap = Palette.ToBitmap(item.Entry.Data);
+                    currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
                     displayTabs.TabPages.Add(imgPage);
-                    displayTabs.SelectedTab = imgPage;                    
+                    displayTabs.SelectedTab = imgPage;
+                    bitmapControlsPanel.Visible = false;
                     break;
 
                 case TOCEntryType.Unknown:                
-                case TOCEntryType.AnimatedSprite:
 
                     break;
                 case TOCEntryType.PixelFont:
@@ -177,6 +190,8 @@ namespace T2Tools
                     return;
                 }
             }
+
+            sectionsPanel.Invalidate();
         }
         #endregion
 
@@ -194,19 +209,21 @@ namespace T2Tools
             float w = sectionsPanel.Width;
             float scale = w / game.NumBytesLoaded;
 
-            foreach (var pair in game.Assets.Entries)
+            foreach (var entry in game.Assets.Entries.Values)
             {
-                TOCEntry entry = pair.Value;
-
                 start = (int)(scale * entry.PackedStart);
                 end = (int)(scale * entry.PackedEnd);
 
-                int r = 80;
-                int a = r * rand.Next(1, 3);
-                int b = r * rand.Next(1, 3);
-                int c = r * rand.Next(1, 3);
-                brush.Color = Color.FromArgb(255, 50 + a, 50 + b, 80 + c);
-
+                Color col = Color.Red;
+                if (!entry.Dirty)
+                {
+                    int r = 80;
+                    int a = r * rand.Next(1, 3);
+                    int b = r * rand.Next(1, 3);
+                    int c = r * rand.Next(1, 3);
+                    col = Color.FromArgb(255, 50 + a, 50 + b, 80 + c);
+                }
+                brush.Color = col;
                 e.Graphics.FillRectangle(brush, start, 0, Math.Max(2, end - start), sectionsPanel.Height);
             }
 
@@ -251,6 +268,7 @@ namespace T2Tools
             selectedItem.Entry.Data = (hexBox.ByteProvider as DynamicByteProvider).Bytes.ToArray();
             selectedItem.Entry.Dirty = true;
             selectedItem.Update();
+            sectionsPanel.Invalidate();
             applyChangesButton.Visible = false;
         }
         #endregion
@@ -260,22 +278,40 @@ namespace T2Tools
         {
             int x, y, w, h;
 
-            if (currentBitmap != null)
+            if (currentBitmaps != null)
             {
-                x = 0;
-                y = 0;
-                w = currentBitmap.Width * currentImgZoom;
-                h = currentBitmap.Height * currentImgZoom;
+                Bitmap bmp = currentBitmaps[currentBitmapIndex];
+
+                x = 10;
+                y = 10;
+                w = bmp.Width * currentImgZoom;
+                h = bmp.Height * currentImgZoom;
 
                 e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                e.Graphics.DrawImage(currentBitmap,
+                e.Graphics.DrawImage(bmp,
                     new Rectangle(x, y, w, h),
-                    new Rectangle(0, 0, currentBitmap.Width, currentBitmap.Height),
+                    new Rectangle(0, 0, bmp.Width, bmp.Height),
                     GraphicsUnit.Pixel);
+
+                currentBitmapIndexLabel.Text = (currentBitmapIndex + 1) + "/" + currentBitmaps.Length;
             }
         }
         #endregion
+
+        private void prevBitmapButton_Click(object sender, EventArgs e)
+        {
+            currentBitmapIndex--;
+            if (currentBitmapIndex < 0) currentBitmapIndex = currentBitmaps.Length - 1;
+            imgPage.Invalidate();
+        }
+
+        private void nextBitmapButton_Click(object sender, EventArgs e)
+        {
+            currentBitmapIndex++;
+            if (currentBitmapIndex > currentBitmaps.Length - 1) currentBitmapIndex = 0;
+            imgPage.Invalidate();
+        }
     }
 }

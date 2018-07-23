@@ -9,7 +9,7 @@ namespace T2Tools.Turrican
         {
             get
             {
-                foreach (var item in Entries) if (item.Value.Dirty) return true;
+                foreach (var entry in Entries.Values) if (entry.Dirty) return true;
                 return false;
             }
         }

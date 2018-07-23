@@ -45,10 +45,14 @@
             this.hexPage = new System.Windows.Forms.TabPage();
             this.txtPage = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.writeExeButton = new System.Windows.Forms.Button();
-            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.palPage = new System.Windows.Forms.TabPage();
             this.imgPage = new System.Windows.Forms.TabPage();
+            this.writeExeButton = new System.Windows.Forms.Button();
+            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
+            this.bitmapControlsPanel = new System.Windows.Forms.Panel();
+            this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
+            this.nextBitmapButton = new System.Windows.Forms.Button();
+            this.prevBitmapButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -57,6 +61,8 @@
             this.displayTabs.SuspendLayout();
             this.hexPage.SuspendLayout();
             this.txtPage.SuspendLayout();
+            this.imgPage.SuspendLayout();
+            this.bitmapControlsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileList
@@ -226,6 +232,28 @@
             this.txtOutput.Size = new System.Drawing.Size(345, 378);
             this.txtOutput.TabIndex = 0;
             // 
+            // palPage
+            // 
+            this.palPage.Location = new System.Drawing.Point(4, 22);
+            this.palPage.Name = "palPage";
+            this.palPage.Padding = new System.Windows.Forms.Padding(3);
+            this.palPage.Size = new System.Drawing.Size(351, 384);
+            this.palPage.TabIndex = 2;
+            this.palPage.Text = "Palette";
+            this.palPage.UseVisualStyleBackColor = true;
+            // 
+            // imgPage
+            // 
+            this.imgPage.Controls.Add(this.bitmapControlsPanel);
+            this.imgPage.Location = new System.Drawing.Point(4, 22);
+            this.imgPage.Name = "imgPage";
+            this.imgPage.Padding = new System.Windows.Forms.Padding(3);
+            this.imgPage.Size = new System.Drawing.Size(351, 384);
+            this.imgPage.TabIndex = 3;
+            this.imgPage.Text = "Image";
+            this.imgPage.UseVisualStyleBackColor = true;
+            this.imgPage.Paint += new System.Windows.Forms.PaintEventHandler(this.imgPage_Paint);
+            // 
             // writeExeButton
             // 
             this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -243,26 +271,46 @@
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
             // 
-            // palPage
+            // bitmapControlsPanel
             // 
-            this.palPage.Location = new System.Drawing.Point(4, 22);
-            this.palPage.Name = "palPage";
-            this.palPage.Padding = new System.Windows.Forms.Padding(3);
-            this.palPage.Size = new System.Drawing.Size(351, 384);
-            this.palPage.TabIndex = 2;
-            this.palPage.Text = "Palette";
-            this.palPage.UseVisualStyleBackColor = true;
+            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
+            this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
+            this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 334);
+            this.bitmapControlsPanel.Name = "bitmapControlsPanel";
+            this.bitmapControlsPanel.Size = new System.Drawing.Size(339, 44);
+            this.bitmapControlsPanel.TabIndex = 0;
             // 
-            // imgPage
+            // currentBitmapIndexLabel
             // 
-            this.imgPage.Location = new System.Drawing.Point(4, 22);
-            this.imgPage.Name = "imgPage";
-            this.imgPage.Padding = new System.Windows.Forms.Padding(3);
-            this.imgPage.Size = new System.Drawing.Size(351, 384);
-            this.imgPage.TabIndex = 3;
-            this.imgPage.Text = "Image";
-            this.imgPage.UseVisualStyleBackColor = true;
-            this.imgPage.Paint += new System.Windows.Forms.PaintEventHandler(this.imgPage_Paint);
+            this.currentBitmapIndexLabel.Location = new System.Drawing.Point(45, 11);
+            this.currentBitmapIndexLabel.Name = "currentBitmapIndexLabel";
+            this.currentBitmapIndexLabel.Size = new System.Drawing.Size(58, 23);
+            this.currentBitmapIndexLabel.TabIndex = 0;
+            this.currentBitmapIndexLabel.Text = "0/0";
+            this.currentBitmapIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // nextBitmapButton
+            // 
+            this.nextBitmapButton.Location = new System.Drawing.Point(109, 11);
+            this.nextBitmapButton.Name = "nextBitmapButton";
+            this.nextBitmapButton.Size = new System.Drawing.Size(29, 23);
+            this.nextBitmapButton.TabIndex = 1;
+            this.nextBitmapButton.Text = ">";
+            this.nextBitmapButton.UseVisualStyleBackColor = true;
+            this.nextBitmapButton.Click += new System.EventHandler(this.nextBitmapButton_Click);
+            // 
+            // prevBitmapButton
+            // 
+            this.prevBitmapButton.Location = new System.Drawing.Point(10, 11);
+            this.prevBitmapButton.Name = "prevBitmapButton";
+            this.prevBitmapButton.Size = new System.Drawing.Size(29, 23);
+            this.prevBitmapButton.TabIndex = 1;
+            this.prevBitmapButton.Text = "<";
+            this.prevBitmapButton.UseVisualStyleBackColor = true;
+            this.prevBitmapButton.Click += new System.EventHandler(this.prevBitmapButton_Click);
             // 
             // MainForm
             // 
@@ -285,6 +333,8 @@
             this.hexPage.ResumeLayout(false);
             this.txtPage.ResumeLayout(false);
             this.txtPage.PerformLayout();
+            this.imgPage.ResumeLayout(false);
+            this.bitmapControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -311,6 +361,10 @@
         private System.Windows.Forms.TabPage txtPage;
         private System.Windows.Forms.TabPage palPage;
         private System.Windows.Forms.TabPage imgPage;
+        private System.Windows.Forms.Panel bitmapControlsPanel;
+        private System.Windows.Forms.Button prevBitmapButton;
+        private System.Windows.Forms.Button nextBitmapButton;
+        private System.Windows.Forms.Label currentBitmapIndexLabel;
     }
 }
 

@@ -11,7 +11,8 @@ namespace T2Tools.Controls
                 TOCEntryType.Text,
                 TOCEntryType.Language,
                 TOCEntryType.StaticSprite,
-                TOCEntryType.Palette
+                TOCEntryType.Palette,
+                TOCEntryType.AnimatedSprite
         };
 
         public TOCEntry Entry { get; private set; }

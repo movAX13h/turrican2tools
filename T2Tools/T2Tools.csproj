@@ -51,8 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formats\BobDecoder.cs" />
-    <Compile Include="Formats\BobFile.cs" />
+    <Compile Include="Formats\BOBDecoder.cs" />
+    <Compile Include="Formats\BOBFile.cs" />
     <Compile Include="Formats\DrawProgramCpu.cs" />
     <Compile Include="Formats\Palette.cs" />
     <Compile Include="Formats\PCXImage.cs" />
