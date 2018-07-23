@@ -14,8 +14,26 @@ All data of the game is packed and appended to the main game executable in form 
 
 ### Unpacker
 
+Turrican II stores it's asset-files as an obfuscated, or compressed and obfuscate stream of bytes.
+The stream may be split into sequential compressed blocks, that must be decompressed individually, each giving a portion of the unpacked file.
+Every asset-file uses a block-size of 1024 bytes (that means that every compressed block produces 1024 unpacked bytes), with exception of the TOC file, which is treated as a single block, and may exceed that limit.
+
+Every compressed block starts with a word, which states the length of the block.
+
+The next bytes selects wether LZ compression is used in addition to the XOR cipher.
+
+In the case of files like audio samples for example, LZ will likely not produce a meaningful compression ratio, since the data is not necessarily predictable. The compressor will chose the mode that gives the smaller packed file.
+
+The compression algorithm used is an LZ variant. The input stream is a series of instructions, with respective payload:
+´´´
+move   ... decipher a byte from the input stream, and write it to the output buffer
+repeat ... repeat a string that was decompressed before, by performing a string-copy within the output buffer
+fill   ... decipher the given byte, and write it the output buffer a given number of times
+´´´
+
+The XOR cipher in Turrican II is 0x6B.
+
 Translated to C# from disassembly.
-?
 
 ### Table Of Contents (TOC)
 
@@ -35,12 +53,15 @@ The game uses the following file types:
 | Name | Extension | Description |
 | ---- |:---------:|:----------- |
 | Static Sprite    | ?             | asfsdf sadffdfads ffsfdsfkjaöfj öljkaölj sdölkfj dsölkjsd öjödlj döljk ölkjsdö jödsl dkljösdlkj sdöjdsö ljdsölk asödlj sdölkj döslkjö jödlkj dklj ölkjö lkjöalkdj ödslkj ölkjasdf  fasd |
-| Animated Sprite  | ?             |  |
+| Animated Sprite  | *.BOB         |  |
 | Palette          | ?             |  |
 | Music            | *.SAM, *.TFX  | [TFMX tracker module](https://www.exotica.org.uk/wiki/TFMX) |
 | Sound            | *.SAM         | raw 8-bit signed mono PCM data, containing every sample, per game-level |
 | Text             | ?             |  |
 
+### .BOB Files
+
+BOB files contain one frame for still image sprites, or multiple frames of animated sprites.
 
 ## History
 
