@@ -18,20 +18,20 @@ Turrican II stores it's asset-files as an obfuscated, or compressed and obfuscat
 The stream may be split into sequential compressed blocks, that must be decompressed individually, each giving a portion of the unpacked file.
 Every asset-file uses a block-size of 1024 bytes (that means that every compressed block produces 1024 unpacked bytes), with exception of the TOC file, which is treated as a single block, and may exceed that limit.
 
-Every compressed block starts with a word, which states the length of the block.
+Every compressed block starts with a word N, which states the length of the block, followed by N bytes of data.
 
-The next bytes selects wether LZ compression is used in addition to the XOR cipher.
+The first byte of this data selects wether LZ compression is used.
 
-In the case of files like audio samples for example, LZ will likely not produce a meaningful compression ratio, since the data is not necessarily predictable. The compressor will chose the mode that gives the smaller packed file.
+The data is a series of LZ instructions with ciphered bytes, or an uncompressed block with ciphered bytes, respectively.
 
-The compression algorithm used is an LZ variant. The input stream is a series of instructions, with respective payload:
+The LZ stream is a series of instructions, with respective payload:
 ´´´
 move   ... decipher a byte from the input stream, and write it to the output buffer
 repeat ... repeat a string that was decompressed before, by performing a string-copy within the output buffer
 fill   ... decipher the given byte, and write it the output buffer a given number of times
 ´´´
 
-The XOR cipher in Turrican II is 0x6B.
+Turrican II uses an XOR cipher of 0x6B.
 
 Translated to C# from disassembly.
 
