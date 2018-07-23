@@ -13,6 +13,7 @@ namespace T2Tools.Formats
 
         public byte[] Text;
         public byte[] Data;
+
         int pc = 0; // (EIP)
 
         int ds = 0;
@@ -24,6 +25,11 @@ namespace T2Tools.Formats
         int dx = 0; // word Data
         int di = 0; // word DestinationPtr
         int si = 0; // word SourcePtr
+        int al
+        {
+            get => ax & 0xFF;
+            set => ax = (ax & 0xFF00) + (value & 0xFF);
+        }
         int ah
         {
             get => ax >> 8;
@@ -40,11 +46,7 @@ namespace T2Tools.Formats
             set => cx = (cx & 0xFF) + (value & 0xFF) * 256;
         }
 
-        public int DI
-        {
-            set => di = value;
-            get => di;
-        }
+        public int DI => di;
 
 
         void ExecuteInstruction()
@@ -139,17 +141,19 @@ namespace T2Tools.Formats
                     break;
                 case 0xA4: // movsb
                     // Move byte at address DS:(E)SI to address ES:(E)DI.
+
                     //Dest[di++] = Data[si++];
-                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40 });
+                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40, ReadViolation = !(si >= 0 && si < Data.Length) });
                     ++di; ++si;
                     break;
                 case 0xA5: // movew
                     // Move word at address DS:(E)SI to address ES:(E)DI.
+
                     //Dest[di++] = Data[si++];
                     //Dest[di++] = Data[si++];
-                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40 });
+                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40, ReadViolation = !(si >= 0 && si < Data.Length) });
                     ++di; ++si;
-                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40 });
+                    Write.Invoke(this, new CpuWriteEvent { Address = di, Value = si < Data.Length ? Data[si] : 40, ReadViolation = !(si >= 0 && si < Data.Length) });
                     ++di; ++si;
                     break;
                 case 0xB1: // mov cl, imm8
@@ -168,7 +172,9 @@ namespace T2Tools.Formats
                     break;
                 case 0xBE: // mov si, imm16
                     imm = Text[pc] + Text[pc + 1] * 256;
-                    si = imm;
+                    // in some drawprograms this moves the source pointer and messes up the result!
+                    // TD: clarify why this happens - for now it's commented out
+                    //si = imm;
                     pc += 2;
                     break;
                 case 0xCB: // retf
@@ -180,6 +186,7 @@ namespace T2Tools.Formats
                     switch(r)
                     {
                         case 0xC4: // rol ah, 1
+                            // ...
                             break;
                         default:
                             throw new Exception();
@@ -231,5 +238,6 @@ namespace T2Tools.Formats
     {
         public int Address;
         public int Value;
+        public bool ReadViolation;
     }
 }

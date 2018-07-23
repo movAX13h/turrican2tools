@@ -9,6 +9,11 @@ namespace T2Tools.Formats
 {
     public class VGABitmapConverter
     {
+        public static int Convert6BitTo8Bit(int v)
+        {
+            return (v * 255 + 31) / 63;
+            //return ((v & 1) != 0) ? v * 4 + 3 : v * 4;
+        }
         public static Bitmap ToRGBA(VGABitmap vga)
         {
             var bmp = new Bitmap(vga.Width, vga.Height);
@@ -19,7 +24,7 @@ namespace T2Tools.Formats
                 {
                     int k = vga.Data[x + y * vga.Width];
                     if(k != 0)
-                        bmp.SetPixel(x, y, Color.FromArgb(vga.Palette[k * 3] * 4, vga.Palette[k * 3 + 1] * 4, vga.Palette[k * 3 + 2] * 4));
+                        bmp.SetPixel(x, y, Color.FromArgb(Convert6BitTo8Bit(vga.Palette[k * 3]), Convert6BitTo8Bit(vga.Palette[k * 3 + 1]), Convert6BitTo8Bit(vga.Palette[k * 3 + 2])));
                 }
             }
             return bmp;

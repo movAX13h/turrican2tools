@@ -34,7 +34,7 @@ namespace T2Tools.Formats
 
                     int pageAddr = e.Address;
                     int x = (pageAddr % rowBytes) * 4;
-                    int y = (pageAddr) / rowBytes;
+                    int y = pageAddr / rowBytes;
 
                     switch(page)
                     {
@@ -49,6 +49,7 @@ namespace T2Tools.Formats
                     if(x + y * frame.Width < screenbuffer.Length)
                         screenbuffer[x + y * frame.Width] = (byte)e.Value;
                 };
+                // the draw-program calls this at the beginning of every EGA page:
                 cpu.EgaSequencerReset += (s, e) =>
                 {
                     ++page;
