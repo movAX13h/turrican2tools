@@ -182,6 +182,7 @@ namespace T2Tools
 
             TOCListItem item = (TOCListItem)(fileList.SelectedItems[0]);
             fileSelected(item);
+            fileList.Focus();
         }
 
         private void writeExeButton_Click(object sender, EventArgs e)
