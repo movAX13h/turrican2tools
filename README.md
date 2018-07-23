@@ -22,14 +22,14 @@ Every compressed block starts with a word N, which states the length of the bloc
 
 The first byte of this data selects wether LZ compression is used.
 
-The data is a series of LZ instructions with ciphered bytes, or an uncompressed block with ciphered bytes, respectively.
-
-The LZ stream is a series of instructions, with respective payload:
-´´´
+If LZ is used, the stream is a series of instructions, with respective payload:
+```
 move   ... decipher a byte from the input stream, and write it to the output buffer
 repeat ... repeat a string that was decompressed before, by performing a string-copy within the output buffer
 fill   ... decipher the given byte, and write it the output buffer a given number of times
-´´´
+```
+
+If LZ is not used, the data is an uncompressed block with ciphered bytes.
 
 Turrican II uses an XOR cipher of 0x6B.
 
