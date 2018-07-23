@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools.Formats
 {
-    class BOBFile
+    public class BOBFile
     {
         public byte[] Palette;
         public List<BOBFrame> Frames;
@@ -59,7 +59,7 @@ namespace T2Tools.Formats
         }
     }
 
-    class BOBFrame
+    public class BOBFrame
     {
         /// <summary>
         /// a x86 program to draw the sprite, consisting of unrolled loops and pokes to the EGA card

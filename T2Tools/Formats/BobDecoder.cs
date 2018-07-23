@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools.Formats
 {
-    class BOBDecoder
+    public class BOBDecoder
     {
         public List<VGABitmap> DecodeFrames(BOBFile bob)
         {

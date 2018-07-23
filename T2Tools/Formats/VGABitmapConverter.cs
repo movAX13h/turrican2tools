@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace T2Tools.Formats
 {
-    class VGABitmapConverter
+    public class VGABitmapConverter
     {
         public static Bitmap ToRGBA(VGABitmap vga)
         {

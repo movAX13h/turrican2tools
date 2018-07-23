@@ -7,7 +7,7 @@ namespace T2Tools.Formats
     /// <summary>
     /// a palette bitmap with 6-bit colors
     /// </summary>
-    class VGABitmap
+    public class VGABitmap
     {
         public int Width, Height;
         public byte[] Data;
