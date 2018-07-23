@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
+using T2Tools.Utils;
 
 namespace T2Tools.Turrican
 {
     class Game
     {
+        private static string descriptionFile = "descriptions.json";
+        public DescriptionsList Descriptions { get; private set; }
+
         public string Error { get; private set; } = "";
         public TOC Assets { get; private set; }
 
@@ -20,6 +24,11 @@ namespace T2Tools.Turrican
 
         public bool Load()
         {
+            if (File.Exists(descriptionFile))
+            {
+                Descriptions = FileUtils.ObjectFromJsonFile<DescriptionsList>(descriptionFile);
+            }
+
             if (!File.Exists(inputFile))
             {
                 Error = $"input file '{inputFile}' not found";

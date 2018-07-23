@@ -54,6 +54,8 @@
             this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
+            this.infoPage = new System.Windows.Forms.TabPage();
+            this.infoOutput = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -65,6 +67,7 @@
             this.imgPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).BeginInit();
             this.bitmapControlsPanel.SuspendLayout();
+            this.infoPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileList
@@ -194,6 +197,7 @@
             this.displayTabs.Controls.Add(this.txtPage);
             this.displayTabs.Controls.Add(this.palPage);
             this.displayTabs.Controls.Add(this.imgPage);
+            this.displayTabs.Controls.Add(this.infoPage);
             this.displayTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayTabs.Location = new System.Drawing.Point(0, 0);
             this.displayTabs.Name = "displayTabs";
@@ -330,6 +334,28 @@
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
             // 
+            // infoPage
+            // 
+            this.infoPage.Controls.Add(this.infoOutput);
+            this.infoPage.Location = new System.Drawing.Point(4, 22);
+            this.infoPage.Name = "infoPage";
+            this.infoPage.Padding = new System.Windows.Forms.Padding(3);
+            this.infoPage.Size = new System.Drawing.Size(351, 384);
+            this.infoPage.TabIndex = 4;
+            this.infoPage.Text = "Information";
+            this.infoPage.UseVisualStyleBackColor = true;
+            // 
+            // infoOutput
+            // 
+            this.infoOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.infoOutput.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoOutput.Location = new System.Drawing.Point(3, 3);
+            this.infoOutput.Multiline = true;
+            this.infoOutput.Name = "infoOutput";
+            this.infoOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.infoOutput.Size = new System.Drawing.Size(345, 378);
+            this.infoOutput.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,6 +380,8 @@
             this.imgPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).EndInit();
             this.bitmapControlsPanel.ResumeLayout(false);
+            this.infoPage.ResumeLayout(false);
+            this.infoPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -385,6 +413,8 @@
         private System.Windows.Forms.Button nextBitmapButton;
         private System.Windows.Forms.Label currentBitmapIndexLabel;
         private System.Windows.Forms.TrackBar imgZoomInput;
+        private System.Windows.Forms.TabPage infoPage;
+        private System.Windows.Forms.TextBox infoOutput;
     }
 }
 

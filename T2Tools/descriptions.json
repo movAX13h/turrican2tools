@@ -1,0 +1,17 @@
+{
+  "descriptions": [
+    {
+      "name": "setup.exe",
+      "info": "always started first"
+    },
+    {
+      "name": "intro.exe",
+      "info": "info info"
+    },
+    {
+      "name": "num.bob",
+      "info": "does not have a palette",
+      "nopreview": true
+    }
+  ]
+}

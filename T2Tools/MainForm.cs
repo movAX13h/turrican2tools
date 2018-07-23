@@ -65,7 +65,7 @@ namespace T2Tools
             selectedItem = item;
             applyChangesButton.Visible = false;
 
-            var hidePages = new TabPage[] { txtPage, palPage, imgPage };
+            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage };
             foreach(TabPage page in hidePages) if (displayTabs.TabPages.Contains(page)) displayTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
@@ -77,63 +77,77 @@ namespace T2Tools
 
             hexBox.ByteProvider = new DynamicByteProvider(item.Entry.Data);
 
-            switch (item.Entry.Type)
+            bool preview = true;
+            Description description = game.Descriptions?.ByName(item.Entry.Name);
+            if (description != null && description.NoPreview) preview = false;
+
+            if (preview)
             {
-                case TOCEntryType.Text:
-                case TOCEntryType.Language:                    
-                    txtOutput.Text = Encoding.GetEncoding("437").GetString(item.Entry.Data);
-                    displayTabs.TabPages.Add(txtPage);
-                    displayTabs.SelectedTab = txtPage;
-                    break;
+                switch (item.Entry.Type)
+                {
+                    case TOCEntryType.Text:
+                    case TOCEntryType.Language:
+                        txtOutput.Text = Encoding.GetEncoding("437").GetString(item.Entry.Data);
+                        displayTabs.TabPages.Add(txtPage);
+                        displayTabs.SelectedTab = txtPage;
+                        break;
 
-                case TOCEntryType.StaticSprite:
-                    PCXImage img = new PCXImage();
-                    img.Load(item.Entry.Data);
-                    currentImgZoom = 3;
-                    imgZoomInput.Value = currentImgZoom;
-                    currentBitmaps = new Bitmap[] { img.Bitmap };
-                    imgPage.Text = "Sprite";
-                    displayTabs.TabPages.Add(imgPage);
-                    displayTabs.SelectedTab = imgPage;
-                    bitmapControlsPanel.Visible = false;
-                    break;
+                    case TOCEntryType.StaticSprite:
+                        PCXImage img = new PCXImage();
+                        img.Load(item.Entry.Data);
+                        currentImgZoom = 3;
+                        imgZoomInput.Value = currentImgZoom;
+                        currentBitmaps = new Bitmap[] { img.Bitmap };
+                        imgPage.Text = "Sprite";
+                        displayTabs.TabPages.Add(imgPage);
+                        displayTabs.SelectedTab = imgPage;
+                        bitmapControlsPanel.Visible = false;
+                        break;
 
-                case TOCEntryType.AnimatedSprite:
-                    BOBFile file = new BOBFile(item.Entry.Data);
-                    BOBDecoder decoder = new BOBDecoder();
-                    var vgaBitmaps = decoder.DecodeFrames(file);
-                    currentBitmaps = new Bitmap[vgaBitmaps.Count];
-                    imgPage.Text = "Sprite Animation";
-                    for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
-                    currentImgZoom = 3;
-                    imgZoomInput.Value = currentImgZoom;
-                    displayTabs.TabPages.Add(imgPage);
-                    displayTabs.SelectedTab = imgPage;
-                    bitmapControlsPanel.Visible = true;
-                    break;
+                    case TOCEntryType.AnimatedSprite:
+                        BOBFile file = new BOBFile(item.Entry.Data);
+                        BOBDecoder decoder = new BOBDecoder();
+                        var vgaBitmaps = decoder.DecodeFrames(file);
+                        currentBitmaps = new Bitmap[vgaBitmaps.Count];
+                        imgPage.Text = "Sprite Animation";
+                        for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
+                        currentImgZoom = 3;
+                        imgZoomInput.Value = currentImgZoom;
+                        displayTabs.TabPages.Add(imgPage);
+                        displayTabs.SelectedTab = imgPage;
+                        bitmapControlsPanel.Visible = true;
+                        break;
 
-                case TOCEntryType.Palette:
-                    currentImgZoom = 14;
-                    imgZoomInput.Value = currentImgZoom;
-                    imgPage.Text = "Palette";
-                    currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
-                    displayTabs.TabPages.Add(imgPage);
-                    displayTabs.SelectedTab = imgPage;
-                    bitmapControlsPanel.Visible = false;
-                    break;
+                    case TOCEntryType.Palette:
+                        currentImgZoom = 14;
+                        imgZoomInput.Value = currentImgZoom;
+                        imgPage.Text = "Palette";
+                        currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
+                        displayTabs.TabPages.Add(imgPage);
+                        displayTabs.SelectedTab = imgPage;
+                        bitmapControlsPanel.Visible = false;
+                        break;
 
-                case TOCEntryType.Unknown:                
+                    case TOCEntryType.Unknown:
 
-                    break;
-                case TOCEntryType.PixelFont:
-                case TOCEntryType.Music:
-                case TOCEntryType.Sound:
-                case TOCEntryType.Executable:
-                case TOCEntryType.DAT:
-                case TOCEntryType.DIR:
-                default:                   
-                    break;
+                        break;
+                    case TOCEntryType.PixelFont:
+                    case TOCEntryType.Music:
+                    case TOCEntryType.Sound:
+                    case TOCEntryType.Executable:
+                    case TOCEntryType.DAT:
+                    case TOCEntryType.DIR:
+                    default:
+                        break;
+                }
             }
+
+            if (description != null && !string.IsNullOrEmpty(description.Info))
+            {
+                infoOutput.Text = description.Info;
+                displayTabs.TabPages.Add(infoPage);
+                if (displayTabs.TabPages.Count == 1) displayTabs.SelectedTab = infoPage;
+            }            
 
             sectionsPanel.Invalidate();
         }
