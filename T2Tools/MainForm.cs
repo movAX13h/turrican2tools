@@ -103,6 +103,8 @@ namespace T2Tools
 
                 case TOCEntryType.Unknown:                
                 case TOCEntryType.AnimatedSprite:
+
+                    break;
                 case TOCEntryType.PixelFont:
                 case TOCEntryType.Music:
                 case TOCEntryType.Sound:
