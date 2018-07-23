@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace T2Tools
+namespace T2Tools.Utils
 {
     public static class Extensions
     {

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using T2Tools.Controls;
 using T2Tools.Formats;
 using T2Tools.Turrican;
+using T2Tools.Utils;
 
 namespace T2Tools
 {
