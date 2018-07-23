@@ -47,13 +47,13 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.palPage = new System.Windows.Forms.TabPage();
             this.imgPage = new System.Windows.Forms.TabPage();
+            this.imgZoomInput = new System.Windows.Forms.TrackBar();
+            this.bitmapControlsPanel = new System.Windows.Forms.Panel();
+            this.prevBitmapButton = new System.Windows.Forms.Button();
+            this.nextBitmapButton = new System.Windows.Forms.Button();
+            this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
-            this.bitmapControlsPanel = new System.Windows.Forms.Panel();
-            this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
-            this.nextBitmapButton = new System.Windows.Forms.Button();
-            this.prevBitmapButton = new System.Windows.Forms.Button();
-            this.imgZoomInput = new System.Windows.Forms.TrackBar();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,8 +63,8 @@
             this.hexPage.SuspendLayout();
             this.txtPage.SuspendLayout();
             this.imgPage.SuspendLayout();
-            this.bitmapControlsPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).BeginInit();
+            this.bitmapControlsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileList
@@ -258,6 +258,61 @@
             this.imgPage.UseVisualStyleBackColor = true;
             this.imgPage.Paint += new System.Windows.Forms.PaintEventHandler(this.imgPage_Paint);
             // 
+            // imgZoomInput
+            // 
+            this.imgZoomInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgZoomInput.AutoSize = false;
+            this.imgZoomInput.BackColor = System.Drawing.Color.White;
+            this.imgZoomInput.Location = new System.Drawing.Point(241, 352);
+            this.imgZoomInput.Maximum = 14;
+            this.imgZoomInput.Minimum = 1;
+            this.imgZoomInput.Name = "imgZoomInput";
+            this.imgZoomInput.Size = new System.Drawing.Size(104, 26);
+            this.imgZoomInput.TabIndex = 1;
+            this.imgZoomInput.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.imgZoomInput.Value = 3;
+            this.imgZoomInput.Scroll += new System.EventHandler(this.imgZoomInput_Scroll);
+            // 
+            // bitmapControlsPanel
+            // 
+            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
+            this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
+            this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 349);
+            this.bitmapControlsPanel.Name = "bitmapControlsPanel";
+            this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
+            this.bitmapControlsPanel.TabIndex = 0;
+            // 
+            // prevBitmapButton
+            // 
+            this.prevBitmapButton.Location = new System.Drawing.Point(3, 3);
+            this.prevBitmapButton.Name = "prevBitmapButton";
+            this.prevBitmapButton.Size = new System.Drawing.Size(29, 23);
+            this.prevBitmapButton.TabIndex = 1;
+            this.prevBitmapButton.Text = "<";
+            this.prevBitmapButton.UseVisualStyleBackColor = true;
+            this.prevBitmapButton.Click += new System.EventHandler(this.prevBitmapButton_Click);
+            // 
+            // nextBitmapButton
+            // 
+            this.nextBitmapButton.Location = new System.Drawing.Point(102, 3);
+            this.nextBitmapButton.Name = "nextBitmapButton";
+            this.nextBitmapButton.Size = new System.Drawing.Size(29, 23);
+            this.nextBitmapButton.TabIndex = 1;
+            this.nextBitmapButton.Text = ">";
+            this.nextBitmapButton.UseVisualStyleBackColor = true;
+            this.nextBitmapButton.Click += new System.EventHandler(this.nextBitmapButton_Click);
+            // 
+            // currentBitmapIndexLabel
+            // 
+            this.currentBitmapIndexLabel.Location = new System.Drawing.Point(38, 3);
+            this.currentBitmapIndexLabel.Name = "currentBitmapIndexLabel";
+            this.currentBitmapIndexLabel.Size = new System.Drawing.Size(58, 23);
+            this.currentBitmapIndexLabel.TabIndex = 0;
+            this.currentBitmapIndexLabel.Text = "0/0";
+            this.currentBitmapIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // writeExeButton
             // 
             this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -274,60 +329,6 @@
             this.saveExeDialog.FileName = "T2mod.EXE";
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
-            // 
-            // bitmapControlsPanel
-            // 
-            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
-            this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
-            this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
-            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 349);
-            this.bitmapControlsPanel.Name = "bitmapControlsPanel";
-            this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
-            this.bitmapControlsPanel.TabIndex = 0;
-            // 
-            // currentBitmapIndexLabel
-            // 
-            this.currentBitmapIndexLabel.Location = new System.Drawing.Point(38, 3);
-            this.currentBitmapIndexLabel.Name = "currentBitmapIndexLabel";
-            this.currentBitmapIndexLabel.Size = new System.Drawing.Size(58, 23);
-            this.currentBitmapIndexLabel.TabIndex = 0;
-            this.currentBitmapIndexLabel.Text = "0/0";
-            this.currentBitmapIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // nextBitmapButton
-            // 
-            this.nextBitmapButton.Location = new System.Drawing.Point(102, 3);
-            this.nextBitmapButton.Name = "nextBitmapButton";
-            this.nextBitmapButton.Size = new System.Drawing.Size(29, 23);
-            this.nextBitmapButton.TabIndex = 1;
-            this.nextBitmapButton.Text = ">";
-            this.nextBitmapButton.UseVisualStyleBackColor = true;
-            this.nextBitmapButton.Click += new System.EventHandler(this.nextBitmapButton_Click);
-            // 
-            // prevBitmapButton
-            // 
-            this.prevBitmapButton.Location = new System.Drawing.Point(3, 3);
-            this.prevBitmapButton.Name = "prevBitmapButton";
-            this.prevBitmapButton.Size = new System.Drawing.Size(29, 23);
-            this.prevBitmapButton.TabIndex = 1;
-            this.prevBitmapButton.Text = "<";
-            this.prevBitmapButton.UseVisualStyleBackColor = true;
-            this.prevBitmapButton.Click += new System.EventHandler(this.prevBitmapButton_Click);
-            // 
-            // imgZoomInput
-            // 
-            this.imgZoomInput.AutoSize = false;
-            this.imgZoomInput.BackColor = System.Drawing.Color.White;
-            this.imgZoomInput.Location = new System.Drawing.Point(241, 352);
-            this.imgZoomInput.Maximum = 14;
-            this.imgZoomInput.Minimum = 1;
-            this.imgZoomInput.Name = "imgZoomInput";
-            this.imgZoomInput.Size = new System.Drawing.Size(104, 26);
-            this.imgZoomInput.TabIndex = 1;
-            this.imgZoomInput.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.imgZoomInput.Value = 3;
-            this.imgZoomInput.Scroll += new System.EventHandler(this.imgZoomInput_Scroll);
             // 
             // MainForm
             // 
@@ -351,8 +352,8 @@
             this.txtPage.ResumeLayout(false);
             this.txtPage.PerformLayout();
             this.imgPage.ResumeLayout(false);
-            this.bitmapControlsPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).EndInit();
+            this.bitmapControlsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

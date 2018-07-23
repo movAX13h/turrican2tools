@@ -92,6 +92,7 @@ namespace T2Tools
                     currentImgZoom = 3;
                     imgZoomInput.Value = currentImgZoom;
                     currentBitmaps = new Bitmap[] { img.Bitmap };
+                    imgPage.Text = "Sprite";
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
                     bitmapControlsPanel.Visible = false;
@@ -102,6 +103,7 @@ namespace T2Tools
                     BOBDecoder decoder = new BOBDecoder();
                     var vgaBitmaps = decoder.DecodeFrames(file);
                     currentBitmaps = new Bitmap[vgaBitmaps.Count];
+                    imgPage.Text = "Sprite Animation";
                     for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
                     currentImgZoom = 3;
                     imgZoomInput.Value = currentImgZoom;
@@ -113,6 +115,7 @@ namespace T2Tools
                 case TOCEntryType.Palette:
                     currentImgZoom = 14;
                     imgZoomInput.Value = currentImgZoom;
+                    imgPage.Text = "Palette";
                     currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
                     displayTabs.TabPages.Add(imgPage);
                     displayTabs.SelectedTab = imgPage;
