@@ -15,6 +15,9 @@ namespace T2Tools.Formats
         public byte[] Data;
         int pc = 0; // (EIP)
 
+        int ds = 0;
+        public int DS => ds;
+
         int ax = 0; // word Accumulator
         int bx = 0; // word Base
         int cx = 0; // word Counter
@@ -111,7 +114,7 @@ namespace T2Tools.Formats
                     switch(r)
                     {
                         case 0xD8: // mov ds, ax
-                            //ds = ax;
+                            ds = ax;
                             break;
                         default:
                             throw new Exception();
