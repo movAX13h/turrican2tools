@@ -6,7 +6,7 @@ namespace T2Tools.Formats
     {
         public static Bitmap ToBitmap(byte[] data)
         {
-            Bitmap bmp = new Bitmap(8, 8);
+            Bitmap bmp = new Bitmap(16, 16);
 
             for (int y = 0; y < bmp.Height; y++)
             {
