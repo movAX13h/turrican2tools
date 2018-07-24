@@ -70,7 +70,7 @@ namespace T2Tools.Formats
         }
 
         /// <summary>
-        /// generate a .PCM file
+        /// save a .PCM file
         /// </summary>
         public void Save(Stream f)
         {
@@ -88,6 +88,17 @@ namespace T2Tools.Formats
             for(int y = 0; y < Height; ++y)
                 for(int x = 0; x < Width; ++x)
                     b.Write((short)(TilesIndices[y, x] * 4));
+        }
+
+        /// <summary>
+        /// save a .PCM file
+        /// </summary>
+        public void Save(string path)
+        {
+            using(var f = File.OpenWrite(path))
+            {
+                Save(f);
+            }
         }
     }
 }

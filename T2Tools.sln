@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T2Tools", "T2Tools\T2Tools.csproj", "{626227C7-7695-4B79-9CB8-B72BA83A962B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tfmx test\tests.csproj", "{F29C7312-0AEF-46B0-BE40-61B7C3710A4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Srtuss", "..\..\GameTool\Srtuss\Srtuss.csproj", "{5A5ABA4D-5E04-4461-8970-A7B71DBEBCCE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{F29C7312-0AEF-46B0-BE40-61B7C3710A4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{626227C7-7695-4B79-9CB8-B72BA83A962B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{626227C7-7695-4B79-9CB8-B72BA83A962B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{626227C7-7695-4B79-9CB8-B72BA83A962B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A5ABA4D-5E04-4461-8970-A7B71DBEBCCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A5ABA4D-5E04-4461-8970-A7B71DBEBCCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A5ABA4D-5E04-4461-8970-A7B71DBEBCCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A5ABA4D-5E04-4461-8970-A7B71DBEBCCE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F29C7312-0AEF-46B0-BE40-61B7C3710A4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F29C7312-0AEF-46B0-BE40-61B7C3710A4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F29C7312-0AEF-46B0-BE40-61B7C3710A4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
