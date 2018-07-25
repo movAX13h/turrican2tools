@@ -8,8 +8,6 @@ namespace T2Tools.Formats
     {
         public static Bitmap[] BlockPicToBitmaps(byte[] blockPic, byte[] palette)
         {
-            if(blockPic.Length != 256001)
-                throw new Exception("blockpic data must be 256001 bytes long");
             if(palette.Length != 768)
                 throw new Exception("blockpic data must be 768 bytes long");
 
@@ -19,7 +17,7 @@ namespace T2Tools.Formats
             //      16  20  24  28  17  21  25  29  18  22  26  30  19  23  27  31
             //      ...
 
-            int numTilesPerBlockPic = 1000;
+            int numTilesPerBlockPic = (blockPic.Length - 1) / 256;
             List<Bitmap> bitmaps = new List<Bitmap>(numTilesPerBlockPic);
             int ptr = 0;
             for(int i = 0; i < numTilesPerBlockPic; ++i)

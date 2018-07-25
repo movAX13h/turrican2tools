@@ -54,13 +54,16 @@ namespace T2Tools.Formats
             Width = widthBytes / 2;
             Height = height;
             TilesIndices = new short[Height, Width];
-            int ptr = 32;
+            int ptr = data.Length - widthBytes * Height;
             for(int y = 0; y < Height; ++y)
             {
                 for(int x = 0; x < Width; ++x)
                 {
                     int v = BitConverter.ToInt16(data, ptr);
-                    TilesIndices[y, x] = (short)(v >> 2);
+                    int index = v >> 2;
+                    if(index >= 1000)
+                        index = 0;
+                    TilesIndices[y, x] = (short)index;
                     ptr += 2;
                 }
             }
