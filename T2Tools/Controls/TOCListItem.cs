@@ -12,7 +12,9 @@ namespace T2Tools.Controls
                 TOCEntryType.Language,
                 TOCEntryType.StaticSprite,
                 TOCEntryType.Palette,
-                TOCEntryType.AnimatedSprite
+                TOCEntryType.AnimatedSprite,
+                TOCEntryType.Map,
+                TOCEntryType.Tileset
         };
 
         public TOCEntry Entry { get; private set; }

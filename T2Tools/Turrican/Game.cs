@@ -6,7 +6,9 @@ namespace T2Tools.Turrican
 {
     class Game
     {
-        private static string descriptionFile = "descriptions.json";
+        public static int TileSize = 16;
+
+        private string descriptionFile = "descriptions.json";
         public DescriptionsList Descriptions { get; private set; }
 
         public string Error { get; private set; } = "";
@@ -15,7 +17,7 @@ namespace T2Tools.Turrican
         public byte[] LoadedData { get; private set; }
         public int NumBytesLoaded { get { return LoadedData.Length; } }
 
-        private string inputFile;
+        private string inputFile;        
 
         public Game(string file)
         {

@@ -57,7 +57,7 @@
     <Compile Include="Formats\DrawProgramCpu.cs" />
     <Compile Include="Formats\Palette.cs" />
     <Compile Include="Formats\PCMFile.cs" />
-    <Compile Include="Formats\PCXImage.cs" />
+    <Compile Include="Formats\PCXFile.cs" />
     <Compile Include="Formats\BlockPicConverter.cs" />
     <Compile Include="Formats\TilemapMaker.cs" />
     <Compile Include="Formats\TXFMFile.cs" />
@@ -66,6 +66,7 @@
     <Compile Include="Turrican\AssetLoader.cs" />
     <Compile Include="Controls\TOCListItem.cs" />
     <Compile Include="Controls\ListViewColumnSorter.cs" />
+    <Compile Include="Turrican\MapMaker.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace T2Tools.Turrican
 {
     public enum TOCEntryType { Unknown, Gap, Text, Language, StaticSprite, AnimatedSprite,
-        Picture, Bitmap, PixelFont, TextmodeFont, Palette,
+        Tileset, Bitmap, PixelFont, TextmodeFont, Palette,
         Music, Sound, Executable, Map, DAT, DIR }
 
     public class TOCEntry
@@ -27,7 +27,7 @@ namespace T2Tools.Turrican
                     case ".lng": return TOCEntryType.Language;
                     case ".pcx": return TOCEntryType.StaticSprite;
                     case ".bob": return TOCEntryType.AnimatedSprite;
-                    case ".pic": return TOCEntryType.Picture;
+                    case ".pic": return TOCEntryType.Tileset;
                     case ".raw": return TOCEntryType.Bitmap;
                     case ".fnt": return TOCEntryType.PixelFont;
                     case ".fon": return TOCEntryType.TextmodeFont;

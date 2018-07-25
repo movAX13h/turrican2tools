@@ -1,5 +1,6 @@
 ﻿using Be.Windows.Forms;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -21,24 +22,17 @@ namespace T2Tools
         private int currentBitmapIndex = 0;
         private int currentImgZoom = 3;
 
+        private MapMaker mapMaker;
+
         public MainForm()
         {
             InitializeComponent();
             fileList.ListViewItemSorter = new ListViewColumnSorter();
 
-            hexBox = new HexBox();
-            hexBox.GroupSize = 4;
-            hexBox.Dock = DockStyle.Fill;
-            hexBox.GroupSeparatorVisible = true;
-            hexBox.VScrollBarVisible = true;
-            hexBox.LineInfoVisible = true;
-            hexBox.Font = new Font("Consolas", 8);
-            hexBox.KeyUp += HexBox_KeyUp;
-            
-            hexBox.SelectionStartChanged += HexBox_SelectionStartChanged;
-            hexBox.SelectionLengthChanged += HexBox_SelectionLengthChanged;
+            sectionsPanel.DoubleBuffered(true);
+            createHexEditor();
 
-            hexEditorPanel.Controls.Add(hexBox);            
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -50,6 +44,8 @@ namespace T2Tools
                 MessageBox.Show("Failed to load game data: " + game.Error);
                 return;
             }
+
+            mapMaker = new MapMaker(game.Assets, mapProgress, mapComplete);
 
             // fill TOC list
             foreach (var entry in game.Assets.Entries.Values)
@@ -66,7 +62,7 @@ namespace T2Tools
             selectedItem = item;
             applyChangesButton.Visible = false;
 
-            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage };
+            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage };
             foreach(TabPage page in hidePages) if (displayTabs.TabPages.Contains(page)) displayTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
@@ -74,6 +70,14 @@ namespace T2Tools
             {
                 foreach (Bitmap bmp in currentBitmaps) bmp.Dispose();
                 currentBitmaps = null;
+            }
+
+            mapMaker.Cancel();
+            if (mapPictureBox.Image != null)
+            {
+                var img = mapPictureBox.Image;                
+                mapPictureBox.Image = null;
+                img.Dispose();
             }
 
             hexBox.ByteProvider = new DynamicByteProvider(item.Entry.Data);
@@ -94,7 +98,7 @@ namespace T2Tools
                         break;
 
                     case TOCEntryType.StaticSprite:
-                        PCXImage img = new PCXImage();
+                        PCXFile img = new PCXFile();
                         img.Load(item.Entry.Data);
                         currentImgZoom = 3;
                         imgZoomInput.Value = currentImgZoom;
@@ -106,9 +110,9 @@ namespace T2Tools
                         break;
 
                     case TOCEntryType.AnimatedSprite:
-                        BOBFile file = new BOBFile(item.Entry.Data);
+                        BOBFile bobFile = new BOBFile(item.Entry.Data);
                         BOBDecoder decoder = new BOBDecoder();
-                        var vgaBitmaps = decoder.DecodeFrames(file);
+                        var vgaBitmaps = decoder.DecodeFrames(bobFile);
                         currentBitmaps = new Bitmap[vgaBitmaps.Count];
                         imgPage.Text = "Sprite Animation";
                         for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
@@ -127,6 +131,14 @@ namespace T2Tools
                         displayTabs.TabPages.Add(imgPage);
                         displayTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = false;
+                        break;
+
+                    case TOCEntryType.Map:
+                        displayTabs.TabPages.Add(mapPage);
+                        displayTabs.SelectedTab = mapPage;
+                        mapMakerProgressBar.Value = 0;
+                        mapMakerProgressPanel.Visible = true;
+                        if (!mapMaker.Make(item.Entry)) MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
 
                     case TOCEntryType.Unknown:
@@ -152,6 +164,8 @@ namespace T2Tools
 
             sectionsPanel.Invalidate();
         }
+
+        
 
         private void tocList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -263,8 +277,25 @@ namespace T2Tools
             sectionsPanel.Invalidate();
         }
         #endregion
-        
+
         #region HEX editor
+        private void createHexEditor()
+        {
+            hexBox = new HexBox();
+            hexBox.GroupSize = 4;
+            hexBox.Dock = DockStyle.Fill;
+            hexBox.GroupSeparatorVisible = true;
+            hexBox.VScrollBarVisible = true;
+            hexBox.LineInfoVisible = true;
+            hexBox.Font = new Font("Consolas", 8);
+            hexBox.KeyUp += HexBox_KeyUp;
+
+            hexBox.SelectionStartChanged += HexBox_SelectionStartChanged;
+            hexBox.SelectionLengthChanged += HexBox_SelectionLengthChanged;
+
+            hexEditorPanel.Controls.Add(hexBox);
+        }
+
         private void updateHexSelectionLabel()
         {
             hexSelectionLabel.Text = "Selection offset: " + hexBox.SelectionStart.ToString();
@@ -340,6 +371,25 @@ namespace T2Tools
         {
             currentImgZoom = imgZoomInput.Value;
             imgPage.Invalidate();
+        }
+        #endregion
+
+        #region map preview
+        private void mapProgress(int progress)
+        {
+            mapMakerProgressBar.Value = progress;
+        }
+
+        private void mapComplete(Bitmap bitmap)
+        {
+            mapMakerProgressPanel.Visible = false;
+            if (bitmap == null)
+            {
+                MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            mapPictureBox.Image = bitmap;            
         }
         #endregion
 

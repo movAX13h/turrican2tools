@@ -30,7 +30,7 @@ using System.IO;
 
 namespace T2Tools.Formats
 {
-    public class PCXImage
+    public class PCXFile
     {
         public Color[] Palette { get { return palette.Colors; } }
         public Bitmap Bitmap { get { return bitmap; } }

@@ -52,10 +52,15 @@
             this.prevBitmapButton = new System.Windows.Forms.Button();
             this.nextBitmapButton = new System.Windows.Forms.Button();
             this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
-            this.writeExeButton = new System.Windows.Forms.Button();
-            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.infoPage = new System.Windows.Forms.TabPage();
             this.infoOutput = new System.Windows.Forms.TextBox();
+            this.writeExeButton = new System.Windows.Forms.Button();
+            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mapPage = new System.Windows.Forms.TabPage();
+            this.mapMakerProgressBar = new System.Windows.Forms.ProgressBar();
+            this.mapMakerProgressPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +73,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).BeginInit();
             this.bitmapControlsPanel.SuspendLayout();
             this.infoPage.SuspendLayout();
+            this.mapPage.SuspendLayout();
+            this.mapMakerProgressPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // fileList
@@ -198,6 +206,7 @@
             this.displayTabs.Controls.Add(this.palPage);
             this.displayTabs.Controls.Add(this.imgPage);
             this.displayTabs.Controls.Add(this.infoPage);
+            this.displayTabs.Controls.Add(this.mapPage);
             this.displayTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.displayTabs.Location = new System.Drawing.Point(0, 0);
             this.displayTabs.Name = "displayTabs";
@@ -317,23 +326,6 @@
             this.currentBitmapIndexLabel.Text = "0/0";
             this.currentBitmapIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // writeExeButton
-            // 
-            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeExeButton.Location = new System.Drawing.Point(740, 6);
-            this.writeExeButton.Name = "writeExeButton";
-            this.writeExeButton.Size = new System.Drawing.Size(54, 23);
-            this.writeExeButton.TabIndex = 5;
-            this.writeExeButton.Text = "WRITE";
-            this.writeExeButton.UseVisualStyleBackColor = true;
-            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
-            // 
-            // saveExeDialog
-            // 
-            this.saveExeDialog.FileName = "T2mod.EXE";
-            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
-            this.saveExeDialog.RestoreDirectory = true;
-            // 
             // infoPage
             // 
             this.infoPage.Controls.Add(this.infoOutput);
@@ -355,6 +347,71 @@
             this.infoOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.infoOutput.Size = new System.Drawing.Size(345, 378);
             this.infoOutput.TabIndex = 1;
+            // 
+            // writeExeButton
+            // 
+            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.writeExeButton.Location = new System.Drawing.Point(740, 6);
+            this.writeExeButton.Name = "writeExeButton";
+            this.writeExeButton.Size = new System.Drawing.Size(54, 23);
+            this.writeExeButton.TabIndex = 5;
+            this.writeExeButton.Text = "WRITE";
+            this.writeExeButton.UseVisualStyleBackColor = true;
+            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
+            // 
+            // saveExeDialog
+            // 
+            this.saveExeDialog.FileName = "T2mod.EXE";
+            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
+            this.saveExeDialog.RestoreDirectory = true;
+            // 
+            // mapPage
+            // 
+            this.mapPage.Controls.Add(this.mapMakerProgressPanel);
+            this.mapPage.Controls.Add(this.mapPictureBox);
+            this.mapPage.Location = new System.Drawing.Point(4, 22);
+            this.mapPage.Name = "mapPage";
+            this.mapPage.Padding = new System.Windows.Forms.Padding(3);
+            this.mapPage.Size = new System.Drawing.Size(351, 384);
+            this.mapPage.TabIndex = 5;
+            this.mapPage.Text = "Map";
+            this.mapPage.UseVisualStyleBackColor = true;
+            // 
+            // mapMakerProgressBar
+            // 
+            this.mapMakerProgressBar.Location = new System.Drawing.Point(18, 31);
+            this.mapMakerProgressBar.Name = "mapMakerProgressBar";
+            this.mapMakerProgressBar.Size = new System.Drawing.Size(241, 23);
+            this.mapMakerProgressBar.Step = 1;
+            this.mapMakerProgressBar.TabIndex = 0;
+            // 
+            // mapMakerProgressPanel
+            // 
+            this.mapMakerProgressPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mapMakerProgressPanel.Controls.Add(this.label1);
+            this.mapMakerProgressPanel.Controls.Add(this.mapMakerProgressBar);
+            this.mapMakerProgressPanel.Location = new System.Drawing.Point(42, 84);
+            this.mapMakerProgressPanel.Name = "mapMakerProgressPanel";
+            this.mapMakerProgressPanel.Size = new System.Drawing.Size(275, 73);
+            this.mapMakerProgressPanel.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 15);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(134, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Generating map preview ...";
+            // 
+            // mapPictureBox
+            // 
+            this.mapPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.mapPictureBox.Name = "mapPictureBox";
+            this.mapPictureBox.Size = new System.Drawing.Size(345, 378);
+            this.mapPictureBox.TabIndex = 2;
+            this.mapPictureBox.TabStop = false;
             // 
             // MainForm
             // 
@@ -382,6 +439,10 @@
             this.bitmapControlsPanel.ResumeLayout(false);
             this.infoPage.ResumeLayout(false);
             this.infoPage.PerformLayout();
+            this.mapPage.ResumeLayout(false);
+            this.mapMakerProgressPanel.ResumeLayout(false);
+            this.mapMakerProgressPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -415,6 +476,11 @@
         private System.Windows.Forms.TrackBar imgZoomInput;
         private System.Windows.Forms.TabPage infoPage;
         private System.Windows.Forms.TextBox infoOutput;
+        private System.Windows.Forms.TabPage mapPage;
+        private System.Windows.Forms.Panel mapMakerProgressPanel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ProgressBar mapMakerProgressBar;
+        private System.Windows.Forms.PictureBox mapPictureBox;
     }
 }
 
