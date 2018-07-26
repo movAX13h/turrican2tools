@@ -14,9 +14,11 @@ namespace TFXTool
         public byte[] sampledata;
         Track[] tracks;
         int trackstepPosition;
-        bool advanceTrackstep = false;
         public int tickCounter = 0;
         public int Frequency = 11;
+        bool stopped = false;
+        int songNo;
+        int trackstepWait = 0;
 
         Channel[] channels;
 
@@ -27,8 +29,9 @@ namespace TFXTool
 
         public void SetSong(int i)
         {
+            songNo = i;
             trackstepPosition = tfx.SongStartPositions[i];
-            advanceTrackstep = true;
+            Frequency = 55 / (1 + tfx.TempoNumbers[i]);
         }
 
         void Log(string text)
@@ -36,44 +39,54 @@ namespace TFXTool
             Console.WriteLine(text);
         }
 
-        public void VBI()
+        void TrackStepExecute()
         {
-            again:
-            if(advanceTrackstep)
+            trackstepWait = 0;
+
+            if(tfx.Tracksteps[trackstepPosition][0] == 0xEFFE)
             {
-                advanceTrackstep = false;
+                var line = tfx.Tracksteps[trackstepPosition];
 
-                while(tfx.Tracksteps[trackstepPosition][0] == 0xEFFE)
+                if(++trackstepPosition >= tfx.SongEndPositions[songNo])
+                    trackstepPosition = tfx.SongStartPositions[songNo];
+
+                switch(line[1])
                 {
-                    switch(tfx.Tracksteps[trackstepPosition][1])
-                    {
-                        case 0: // stop the player
-                            break;
-                        case 1: // Play a section starting at position and ending here times
-                                // times.  If times is 0000 then section will repeat forever.
-                                // line+4=position, line+6=times
-                            break;
-                        case 2: // set the tempo
-                            break;
-                        case 3: // start a master volume slide (?)
-                            if(tfx.Tracksteps[trackstepPosition][3] == 0xEE)
-                            {
-                                Frequency = 14;
-                                TempoChanged?.Invoke(this, EventArgs.Empty);
-                            }
-                            else if(tfx.Tracksteps[trackstepPosition][3] == 0x10)
-                            {
-                                Frequency = 30;
-                                TempoChanged?.Invoke(this, EventArgs.Empty);
-                            }
-                            break;
-                        case 4:
-                            break;
-                    }
+                    case 0: // stop the player
+                        stopped = true;
+                        break;
+                    case 1: // Play a section starting at position and ending here times
+                            // times.  If times is 0000 then section will repeat forever.
+                            // line+4=position, line+6=times
+                        int position = line[2];
+                        int times = line[3];
 
-                    ++trackstepPosition;
+                        trackstepPosition = position; // TD: error-check, count loops
+
+                        break;
+                    case 2: // set the tempo
+                            // TD
+                        break;
+                    case 3: // start a master volume slide (?)
+                        if(line[3] == 0xEE)
+                        {
+                            Frequency = 14;
+                            TempoChanged?.Invoke(this, EventArgs.Empty);
+                        }
+                        else if(line[3] == 0x10)
+                        {
+                            Frequency = 30;
+                            TempoChanged?.Invoke(this, EventArgs.Empty);
+                        }
+                        break;
+                    case 4:
+                        break;
+                    default:
+                        break;
                 }
-
+            }
+            else
+            {
                 for(int i = 0; i < 8; ++i)
                 {
                     var track = tracks[i];
@@ -86,14 +99,10 @@ namespace TFXTool
                     track.NumWait = 0;
                     track.NumPatternLoop = 0;
 
-                    // TD: handle 0x80 and 0xFE correctly!
+                    // TD: handle 0xFE correctly!
                     if(stepPattern >= 0x80)
                     {
-                        if(stepPattern == 0x80)
-                        {
-                            //track.PatternPC = 0;
-                        }
-                        else
+                        if(stepPattern != 0x80)
                         {
                             track.PatternNo = -1;
                         }
@@ -107,147 +116,170 @@ namespace TFXTool
                     }
                 }
 
+                trackstepWait = 1;
+
                 TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
 
-                ++trackstepPosition;
+                if(++trackstepPosition >= tfx.SongEndPositions[songNo])
+                    trackstepPosition = tfx.SongStartPositions[songNo];
             }
+        }
 
-            for(int i = 0; i < 8; ++i)
+        public void TrackStep()
+        {
+            trackstepWait = 0;
+            while(trackstepWait == 0)
+                TrackStepExecute();
+        }
+
+        public void VBI()
+        {
+            if(stopped)
+                return;
+
+            do
             {
-                var track = tracks[i];
-                if(track.PatternNo != -1) // track is not stopped
+                while(trackstepWait == 0)
+                    TrackStepExecute();
+
+                // track's patterns handler:
+                for(int i = 0; i < 8; ++i)
                 {
-                    if(track.NumWait == 0) // pattern is not waiting
+                    var track = tracks[i];
+                    if(track.PatternNo != -1) // track is not stopped
                     {
-                        while(track.NumWait == 0)
+                        if(track.NumWait == 0) // pattern is not waiting
                         {
-                            var pattern = tfx.Patterns[track.PatternNo];
-                            var step = pattern.Steps[track.PatternPC];
-
-                            ++track.PatternPC;
-
-                            if(step.Note >= 0xF0)
+                            while(track.NumWait == 0)
                             {
-                                if(step.Note == 0xF0) // F0 xx xx xx	<End> end pattern
+                                var pattern = tfx.Patterns[track.PatternNo];
+                                var step = pattern.Steps[track.PatternPC];
+
+                                ++track.PatternPC;
+
+                                if(step.Note >= 0xF0)
                                 {
-                                    advanceTrackstep = true;
-                                    break;
-                                }
-                                else if(step.Note == 0xF1) // F1 aa bb bb	<Loop> repeat block
-                                {
-                                    int loopcount = step.Macro;
-                                    if(loopcount == 0 || track.NumPatternLoop < loopcount)
+                                    if(step.Note == 0xF0) // F0 xx xx xx	<End> end pattern
                                     {
-                                        track.PatternPC = step.Data & 0xFFFF;
-                                        ++track.NumPatternLoop;
+                                        trackstepWait = 0;
+                                        break;
                                     }
-                                    else
-                                        track.NumPatternLoop = 0;
+                                    else if(step.Note == 0xF1) // F1 aa bb bb	<Loop> repeat block
+                                    {
+                                        int loopcount = step.Macro;
+                                        if(loopcount == 0 || track.NumPatternLoop < loopcount)
+                                        {
+                                            track.PatternPC = step.Data & 0xFFFF;
+                                            ++track.NumPatternLoop;
+                                        }
+                                        else
+                                            track.NumPatternLoop = 0;
+                                    }
+                                    else if(step.Note == 0xF3) // F3 aa xx xx	<Wait> rest
+                                    {
+                                        track.NumWait = step.Macro + 1;
+                                    }
+                                    else if(step.Note == 0xF4) // F4 xx xx xx	<STOP> disable track
+                                    {
+                                        track.PatternNo = -1;
+                                        break;
+                                    }
                                 }
-                                else if(step.Note == 0xF3) // F3 aa xx xx	<Wait> rest
+                                else
                                 {
-                                    track.NumWait = step.Macro + 1;
-                                }
-                                else if(step.Note == 0xF4) // F4 xx xx xx	<STOP> disable track
-                                {
-                                    track.PatternNo = -1;
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                                // TD: volume, detune
-                                int note = -1;
-                                if(step.Note < 0x80) // note without wait
-                                {
-                                    note = step.Note;
-                                    // TD: step.Detune is actual pitch detune
-                                }
-                                else if(step.Note < 0xC0) // note with wait
-                                {
-                                    note = step.Note - 0x80;
-                                    track.NumWait = 1 + step.Detune;
-                                }
-                                else if(step.Note < 0xF0) // note with portamento
-                                {
-                                    note = step.Note - 0xC0;
-                                    // TD: portamento
-                                }
+                                    // TD: volume, detune
+                                    int note = -1;
+                                    if(step.Note < 0x80) // note without wait
+                                    {
+                                        note = step.Note;
+                                        // TD: step.Detune is actual pitch detune
+                                    }
+                                    else if(step.Note < 0xC0) // note with wait
+                                    {
+                                        note = step.Note - 0x80;
+                                        track.NumWait = 1 + step.Detune;
+                                    }
+                                    else if(step.Note < 0xF0) // note with portamento
+                                    {
+                                        note = step.Note - 0xC0;
+                                        // TD: portamento
+                                    }
 
-                                // bind the note to the channel:
-                                var c = channels[step.Channel];
-                                c.Note = note + track.Transpose;
-                                c.Volume = step.Volume;
-                                c.MacroNo = step.Macro;
-                                c.MacroPC = 0;
-                                Log("starting macro " + c.MacroNo + " in tick " + tickCounter + " channel " + step.Channel);
+                                    // bind the note to the channel:
+                                    var c = channels[step.Channel];
+                                    c.Note = note + track.Transpose;
+                                    c.Volume = step.Volume;
+                                    c.MacroNo = step.Macro;
+                                    c.MacroPC = 0;
+                                    Log("starting macro " + c.MacroNo + " in tick " + tickCounter + " channel " + step.Channel);
 
-                                MacroStart?.Invoke(this, new MacroStartEventArgs { Channel = step.Channel, MacroNo = step.Macro });
+                                    MacroStart?.Invoke(this, new MacroStartEventArgs { Channel = step.Channel, MacroNo = step.Macro });
+                                }
                             }
                         }
+                        if(track.NumWait > 0)
+                            --track.NumWait;
                     }
-                    if(track.NumWait > 0)
-                        --track.NumWait;
+
                 }
 
-            }
-
-            for(int i = 0; i < 8; ++i)
-            {
-                var channel = channels[i];
-                if(channel.MacroNo != -1)
+                // channel handler (executes macro steps):
+                for(int i = 0; i < 8; ++i)
                 {
-                    var macro = tfx.Macros[channel.MacroNo];
-                    var paulaRegs = Paula.Channels[i];
-
-                    bool done = false;
-                    while(!done)
+                    var channel = channels[i];
+                    if(channel.MacroNo != -1)
                     {
-                        var step = macro.Steps[channel.MacroPC++];
+                        var macro = tfx.Macros[channel.MacroNo];
+                        var paulaRegs = Paula.Channels[i];
 
-                        switch(step.Type)
+                        bool done = false;
+                        while(!done)
                         {
-                            case 0x0: // <DMAoff+Reset> stop efx and dma *
-                                paulaRegs.Reset();
-                                paulaRegs.Volume = 63;
-                                break;
-                            case 0x2: // 02 aa aa aa	<SetBegin> set beginning of sample
-                                paulaRegs.StartByte = step.Parameter;
-                                paulaRegs.Data = sampledata;
-                                break;
-                            case 0x3: // 03 xx aa aa	<SetLen> set length
-                                paulaRegs.LengthWords = step.Parameter & 0xFFFF;
-                                break;
-                            case 0x7: // 07 xx xx xx	<STOP> end macro *
-                                channel.MacroNo = -1; // stop macro execution
-                                done = true;
-                                break;
-                            case 0x8: // 08 aa bb bb	<AddNote> set freq by this note *
-                                double fsmp = 520 * 4 * Math.Pow(2, (channel.Note + (sbyte)step.B) / 12d);
-                                paulaRegs.Period = (int)Math.Round(7159091 / fsmp / 2);
-                                Log("channel " + i + " set period in tick " + tickCounter);
-                                break;
-                            case 0x9: // 09 aa bb bb	<SetNote> set freq direct *
-                                fsmp = 520 * 4 * Math.Pow(2, step.B / 12d);
-                                paulaRegs.Period = (int)Math.Round(7159091 / fsmp / 2);
-                                break;
-                            case 0x17: // 17 xx aa aa	<Set period> Absolute period *
-                                paulaRegs.Period = step.Parameter & 0xFFFF;
-                                break;
-                            case 0x18: // <Sampleloop> set sample loop
-                                paulaRegs.StartLoopByte = step.Parameter;
-                                break;
-                            case 0x19: // 19 xx xx xx	<Set one shot sample>
-                                paulaRegs.OneShot = true;
-                                break;
+                            var step = macro.Steps[channel.MacroPC++];
 
+                            switch(step.Type)
+                            {
+                                case 0x0: // <DMAoff+Reset> stop efx and dma *
+                                    paulaRegs.Reset();
+                                    paulaRegs.Volume = 63;
+                                    break;
+                                case 0x2: // 02 aa aa aa	<SetBegin> set beginning of sample
+                                    paulaRegs.StartByte = step.Parameter;
+                                    paulaRegs.Data = sampledata;
+                                    break;
+                                case 0x3: // 03 xx aa aa	<SetLen> set length
+                                    paulaRegs.LengthWords = step.Parameter & 0xFFFF;
+                                    break;
+                                case 0x7: // 07 xx xx xx	<STOP> end macro *
+                                    channel.MacroNo = -1; // stop macro execution
+                                    done = true;
+                                    break;
+                                case 0x8: // 08 aa bb bb	<AddNote> set freq by this note *
+                                    double fsmp = 520 * 4 * Math.Pow(2, (channel.Note + (sbyte)step.B) / 12d);
+                                    paulaRegs.Period = (int)Math.Round(7159091 / fsmp / 2);
+                                    Log("channel " + i + " set period in tick " + tickCounter);
+                                    break;
+                                case 0x9: // 09 aa bb bb	<SetNote> set freq direct *
+                                    fsmp = 520 * 4 * Math.Pow(2, step.B / 12d);
+                                    paulaRegs.Period = (int)Math.Round(7159091 / fsmp / 2);
+                                    break;
+                                case 0x17: // 17 xx aa aa	<Set period> Absolute period *
+                                    paulaRegs.Period = step.Parameter & 0xFFFF;
+                                    break;
+                                case 0x18: // <Sampleloop> set sample loop
+                                    paulaRegs.StartLoopByte = step.Parameter;
+                                    break;
+                                case 0x19: // 19 xx xx xx	<Set one shot sample>
+                                    paulaRegs.OneShot = true;
+                                    break;
+
+                            }
                         }
                     }
                 }
-            }
 
-            if(advanceTrackstep)
-                goto again;
+            }
+            while(trackstepWait == 0);
 
             ++tickCounter;
         }

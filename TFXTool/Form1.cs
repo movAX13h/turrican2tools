@@ -143,7 +143,7 @@ namespace TFXTool
             {
                 var item = new ListViewItem(i.ToString());
                 item.SubItems.Add(tfx.SongStartPositions[i].ToString());
-                item.SubItems.Add(tfx.SongEndPoitions[i].ToString());
+                item.SubItems.Add(tfx.SongEndPositions[i].ToString());
                 item.SubItems.Add(tfx.TempoNumbers[i].ToString());
                 listViewSongs.Items.Add(item);
             }
@@ -479,7 +479,7 @@ namespace TFXTool
                 }
                 else if(index == 2)
                 {
-                    tfx.SongEndPoitions[int.Parse(item.Text)] = ushort.Parse(value);
+                    tfx.SongEndPositions[int.Parse(item.Text)] = ushort.Parse(value);
 
                     UpdateSongView(tfx);
                 }
@@ -703,6 +703,11 @@ namespace TFXTool
             }
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if(currentPlayback != null)
+                currentPlayback.Playroutine.TrackStep();
+        }
     }
 
     class Note

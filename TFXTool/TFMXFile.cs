@@ -55,7 +55,7 @@ namespace T2Tools.Formats
 
         public ushort[] SongStartPositions;
 
-        public ushort[] SongEndPoitions;
+        public ushort[] SongEndPositions;
 
         /// <summary>
         /// If the tempo number is greater than 15, it is used as a beats-per-minute figure,
@@ -90,7 +90,7 @@ namespace T2Tools.Formats
             Patterns = new List<TFXPattern>();
             Macros = new List<TFXMacro>();
             SongStartPositions = new ushort[32];
-            SongEndPoitions = new ushort[32];
+            SongEndPositions = new ushort[32];
             TempoNumbers = new ushort[32];
             NumTracksteps = 1;
             Tracksteps = new ushort[1][];
@@ -113,7 +113,7 @@ namespace T2Tools.Formats
                     TextLines[i] = ReadString(f, 40);
 
                 SongStartPositions = ReadWords(f, 32);
-                SongEndPoitions = ReadWords(f, 32);
+                SongEndPositions = ReadWords(f, 32);
                 TempoNumbers = ReadWords(f, 32);
 
                 f.BaseStream.Position += 16;
@@ -135,8 +135,8 @@ namespace T2Tools.Formats
                 NumTracksteps = 0;
                 for(int i = 0; i < 32; ++i)
                 {
-                    if(SongEndPoitions[i] > SongStartPositions[i])
-                        NumTracksteps = Math.Max(NumTracksteps, 1 + SongEndPoitions[i]);
+                    if(SongEndPositions[i] > SongStartPositions[i])
+                        NumTracksteps = Math.Max(NumTracksteps, 1 + SongEndPositions[i]);
                 }
 
                 Tracksteps = new ushort[NumTracksteps][];
@@ -281,7 +281,7 @@ namespace T2Tools.Formats
                     f.Write(Encoding.ASCII.GetBytes(TextLines[i].PadRight(40, ' ')));
                 foreach(var w in SongStartPositions)
                     WriteWord(f, w);
-                foreach(var w in SongEndPoitions)
+                foreach(var w in SongEndPositions)
                     WriteWord(f, w);
                 foreach(var w in TempoNumbers)
                     WriteWord(f, w);

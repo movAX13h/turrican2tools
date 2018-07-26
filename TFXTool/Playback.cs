@@ -28,7 +28,7 @@ namespace TFXTool
             Playroutine.TempoChanged += Playroutine_TempoChanged;
 
 
-            timer = new Timer { Interval = 1000 / 11 };
+            timer = new Timer();
             timer.Tick += (s, ee) =>
             {
                 Playroutine.VBI();
@@ -49,6 +49,7 @@ namespace TFXTool
 
         public void Start()
         {
+            timer.Interval = 1000 / Playroutine.Frequency;
             PaulaChip.Connect(actx.Destination);
             timer.Start();
         }

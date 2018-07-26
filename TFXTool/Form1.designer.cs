@@ -100,6 +100,7 @@
             this.light3 = new TFXTool.Light();
             this.light2 = new TFXTool.Light();
             this.light1 = new TFXTool.Light();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -680,11 +681,22 @@
             this.light1.TabIndex = 38;
             this.light1.Text = "light0";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(12, 84);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(58, 23);
+            this.button4.TabIndex = 46;
+            this.button4.Text = "Next T";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 684);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.light8);
             this.Controls.Add(this.light7);
             this.Controls.Add(this.light6);
@@ -813,6 +825,7 @@
         private Light light6;
         private Light light7;
         private Light light8;
+        private System.Windows.Forms.Button button4;
     }
 }
 
