@@ -79,15 +79,15 @@ namespace T2Tools.Turrican
 
         private void make(object sender, DoWorkEventArgs e)
         {
-            //try
+            try
             {
                 make();
-            }/*
+            }
             catch(Exception ex)
             {
                 Error = ex.Message;
                 return;
-            }*/
+            }
         }
 
         private void make()
@@ -97,10 +97,12 @@ namespace T2Tools.Turrican
             PCMFile map = new PCMFile(mapEntry.Data);
 
             worker.ReportProgress(10);
+            if (worker.CancellationPending) return;
 
             Bitmap[] tiles = BlockPicConverter.BlockPicToBitmaps(tilesetEntry.Data, paletteEntry.Data);
 
             worker.ReportProgress(40);
+            if (worker.CancellationPending) return;
 
             resultBitmap = new Bitmap(Game.TileSize * map.Width, Game.TileSize * map.Height);
             Graphics gfx = Graphics.FromImage(resultBitmap);
