@@ -1,0 +1,658 @@
+﻿namespace TFXTool
+{
+    partial class Form1
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.listViewPattern = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listViewTrackstep = new System.Windows.Forms.ListView();
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.listViewMacro = new System.Windows.Forms.ListView();
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label3 = new System.Windows.Forms.Label();
+            this.numericUpDownMacro = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownPattern = new System.Windows.Forms.NumericUpDown();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.numericUpDownSubsong = new System.Windows.Forms.NumericUpDown();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.listViewSongs = new System.Windows.Forms.ListView();
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textBoxMessage = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insertNewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBoxPreviewNote = new System.Windows.Forms.ComboBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSubsong)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // listViewPattern
+            // 
+            this.listViewPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.listViewPattern.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8});
+            this.listViewPattern.FullRowSelect = true;
+            this.listViewPattern.GridLines = true;
+            this.listViewPattern.Location = new System.Drawing.Point(12, 354);
+            this.listViewPattern.Name = "listViewPattern";
+            this.listViewPattern.Size = new System.Drawing.Size(554, 243);
+            this.listViewPattern.TabIndex = 0;
+            this.listViewPattern.UseCompatibleStateImageBehavior = false;
+            this.listViewPattern.View = System.Windows.Forms.View.Details;
+            this.listViewPattern.DoubleClick += new System.EventHandler(this.listViewPattern_DoubleClick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Step";
+            this.columnHeader1.Width = 42;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Note";
+            this.columnHeader2.Width = 44;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Status";
+            this.columnHeader3.Width = 68;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Macro";
+            this.columnHeader4.Width = 46;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Name";
+            this.columnHeader5.Width = 200;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Vol";
+            this.columnHeader6.Width = 40;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "Chn";
+            this.columnHeader7.Width = 40;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Detune";
+            this.columnHeader8.Width = 50;
+            // 
+            // listViewTrackstep
+            // 
+            this.listViewTrackstep.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17});
+            this.listViewTrackstep.FullRowSelect = true;
+            this.listViewTrackstep.GridLines = true;
+            this.listViewTrackstep.Location = new System.Drawing.Point(12, 97);
+            this.listViewTrackstep.Name = "listViewTrackstep";
+            this.listViewTrackstep.Size = new System.Drawing.Size(554, 213);
+            this.listViewTrackstep.TabIndex = 1;
+            this.listViewTrackstep.UseCompatibleStateImageBehavior = false;
+            this.listViewTrackstep.View = System.Windows.Forms.View.Details;
+            this.listViewTrackstep.DoubleClick += new System.EventHandler(this.listViewTrackstep_DoubleClick);
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Step";
+            this.columnHeader9.Width = 42;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "Track 1";
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "Track 2";
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "Track 3";
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Track 4";
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Track 5";
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Track 6";
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "Track 7";
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "Track 8";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Trackstep";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 330);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Pattern";
+            // 
+            // listViewMacro
+            // 
+            this.listViewMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listViewMacro.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21});
+            this.listViewMacro.FullRowSelect = true;
+            this.listViewMacro.GridLines = true;
+            this.listViewMacro.Location = new System.Drawing.Point(572, 354);
+            this.listViewMacro.Name = "listViewMacro";
+            this.listViewMacro.Size = new System.Drawing.Size(438, 243);
+            this.listViewMacro.TabIndex = 4;
+            this.listViewMacro.UseCompatibleStateImageBehavior = false;
+            this.listViewMacro.View = System.Windows.Forms.View.Details;
+            this.listViewMacro.DoubleClick += new System.EventHandler(this.listViewMacro_DoubleClick);
+            this.listViewMacro.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewMacro_MouseUp);
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "Step";
+            this.columnHeader18.Width = 42;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "No.";
+            this.columnHeader19.Width = 44;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Statement";
+            this.columnHeader20.Width = 241;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "Parameter";
+            this.columnHeader21.Width = 66;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(572, 330);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Macro";
+            // 
+            // numericUpDownMacro
+            // 
+            this.numericUpDownMacro.Location = new System.Drawing.Point(622, 328);
+            this.numericUpDownMacro.Name = "numericUpDownMacro";
+            this.numericUpDownMacro.Size = new System.Drawing.Size(49, 20);
+            this.numericUpDownMacro.TabIndex = 6;
+            this.numericUpDownMacro.ValueChanged += new System.EventHandler(this.numericUpDownMacro_ValueChanged);
+            // 
+            // numericUpDownPattern
+            // 
+            this.numericUpDownPattern.Location = new System.Drawing.Point(66, 328);
+            this.numericUpDownPattern.Name = "numericUpDownPattern";
+            this.numericUpDownPattern.Size = new System.Drawing.Size(49, 20);
+            this.numericUpDownPattern.TabIndex = 7;
+            this.numericUpDownPattern.ValueChanged += new System.EventHandler(this.numericUpDownPattern_ValueChanged);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::TFXTool.Properties.Resources.TFMX;
+            this.pictureBox1.Location = new System.Drawing.Point(618, 124);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(142, 152);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1022, 24);
+            this.menuStrip1.TabIndex = 9;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.saveToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(245, 33);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(65, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "Play Ref.";
+            this.toolTip1.SetToolTip(this.button1, "Play using tfmxplay.exe");
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // numericUpDownSubsong
+            // 
+            this.numericUpDownSubsong.Location = new System.Drawing.Point(144, 36);
+            this.numericUpDownSubsong.Name = "numericUpDownSubsong";
+            this.numericUpDownSubsong.Size = new System.Drawing.Size(65, 20);
+            this.numericUpDownSubsong.TabIndex = 13;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(677, 325);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(58, 23);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Play";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(808, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 13);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "Songs";
+            // 
+            // listViewSongs
+            // 
+            this.listViewSongs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader22,
+            this.columnHeader23,
+            this.columnHeader24,
+            this.columnHeader25});
+            this.listViewSongs.FullRowSelect = true;
+            this.listViewSongs.GridLines = true;
+            this.listViewSongs.Location = new System.Drawing.Point(811, 97);
+            this.listViewSongs.Name = "listViewSongs";
+            this.listViewSongs.Size = new System.Drawing.Size(199, 135);
+            this.listViewSongs.TabIndex = 19;
+            this.listViewSongs.UseCompatibleStateImageBehavior = false;
+            this.listViewSongs.View = System.Windows.Forms.View.Details;
+            this.listViewSongs.DoubleClick += new System.EventHandler(this.listViewSongs_DoubleClick);
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "No.";
+            this.columnHeader22.Width = 30;
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "Start";
+            this.columnHeader23.Width = 45;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.Text = "End";
+            this.columnHeader24.Width = 45;
+            // 
+            // columnHeader25
+            // 
+            this.columnHeader25.Text = "Tempo";
+            this.columnHeader25.Width = 45;
+            // 
+            // textBoxMessage
+            // 
+            this.textBoxMessage.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxMessage.Location = new System.Drawing.Point(811, 248);
+            this.textBoxMessage.Multiline = true;
+            this.textBoxMessage.Name = "textBoxMessage";
+            this.textBoxMessage.Size = new System.Drawing.Size(199, 62);
+            this.textBoxMessage.TabIndex = 17;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeToolStripMenuItem,
+            this.insertNewToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(131, 48);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
+            // insertNewToolStripMenuItem
+            // 
+            this.insertNewToolStripMenuItem.Name = "insertNewToolStripMenuItem";
+            this.insertNewToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.insertNewToolStripMenuItem.Text = "Insert New";
+            // 
+            // comboBoxPreviewNote
+            // 
+            this.comboBoxPreviewNote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPreviewNote.FormattingEnabled = true;
+            this.comboBoxPreviewNote.Location = new System.Drawing.Point(741, 326);
+            this.comboBoxPreviewNote.Name = "comboBoxPreviewNote";
+            this.comboBoxPreviewNote.Size = new System.Drawing.Size(46, 21);
+            this.comboBoxPreviewNote.TabIndex = 21;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(15, 33);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(58, 23);
+            this.button3.TabIndex = 22;
+            this.button3.Text = "Play";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(811, 327);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(169, 20);
+            this.textBox1.TabIndex = 23;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(144, 328);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(169, 20);
+            this.textBox2.TabIndex = 24;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox1.Location = new System.Drawing.Point(400, 33);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(37, 24);
+            this.checkBox1.TabIndex = 27;
+            this.checkBox1.Text = "0";
+            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox2.Location = new System.Drawing.Point(443, 33);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(37, 24);
+            this.checkBox2.TabIndex = 28;
+            this.checkBox2.Text = "1";
+            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox3.Location = new System.Drawing.Point(486, 33);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(37, 24);
+            this.checkBox3.TabIndex = 29;
+            this.checkBox3.Text = "2";
+            this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBox4.Location = new System.Drawing.Point(529, 33);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(37, 24);
+            this.checkBox4.TabIndex = 30;
+            this.checkBox4.Text = "3";
+            this.checkBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(397, 60);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(86, 13);
+            this.label8.TabIndex = 31;
+            this.label8.Text = "Channels / Mute";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(89, 38);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(49, 13);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "Subsong";
+            // 
+            // MusicTest
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1022, 609);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.checkBox4);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.comboBoxPreviewNote);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.listViewSongs);
+            this.Controls.Add(this.textBoxMessage);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.numericUpDownSubsong);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.numericUpDownPattern);
+            this.Controls.Add(this.numericUpDownMacro);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.listViewMacro);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.listViewTrackstep);
+            this.Controls.Add(this.listViewPattern);
+            this.Controls.Add(this.menuStrip1);
+            this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "MusicTest";
+            this.Text = "TFMX Editor";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSubsong)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.ListView listViewPattern;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ListView listViewTrackstep;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
+        private System.Windows.Forms.ColumnHeader columnHeader15;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ColumnHeader columnHeader17;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ListView listViewMacro;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.ColumnHeader columnHeader20;
+        private System.Windows.Forms.ColumnHeader columnHeader21;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown numericUpDownMacro;
+        private System.Windows.Forms.NumericUpDown numericUpDownPattern;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.NumericUpDown numericUpDownSubsong;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ListView listViewSongs;
+        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.ColumnHeader columnHeader23;
+        private System.Windows.Forms.ColumnHeader columnHeader24;
+        private System.Windows.Forms.ColumnHeader columnHeader25;
+        private System.Windows.Forms.TextBox textBoxMessage;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertNewToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comboBoxPreviewNote;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+    }
+}
+
