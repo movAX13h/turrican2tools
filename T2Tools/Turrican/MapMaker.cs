@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using T2Tools.Formats;
 
 namespace T2Tools.Turrican
@@ -27,9 +28,15 @@ namespace T2Tools.Turrican
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
             worker.DoWork += make;
             worker.ProgressChanged += reportProgress;
             worker.RunWorkerCompleted += reportResult;
+        }
+        
+        public void Cancel()
+        {
+            if (worker.IsBusy) worker.CancelAsync();
         }
 
         public bool Make(TOCEntry entry)
@@ -44,6 +51,8 @@ namespace T2Tools.Turrican
                 Error = $"unable to derive level number from map name {mapName}";
                 return false;
             }
+
+            if (levelNumber == 6) levelNumber = 5;
 
             // tileset
             string tilesetName = $"BLOCK{levelNumber}.PIC";
@@ -66,11 +75,6 @@ namespace T2Tools.Turrican
             worker.RunWorkerAsync();
 
             return true;
-        }
-
-        public void Cancel()
-        {
-            if (worker.IsBusy) worker.CancelAsync();
         }
 
         private void make(object sender, DoWorkEventArgs e)
@@ -96,7 +100,7 @@ namespace T2Tools.Turrican
 
             Bitmap[] tiles = BlockPicConverter.BlockPicToBitmaps(tilesetEntry.Data, paletteEntry.Data);
 
-            worker.ReportProgress(20);
+            worker.ReportProgress(40);
 
             resultBitmap = new Bitmap(Game.TileSize * map.Width, Game.TileSize * map.Height);
             Graphics gfx = Graphics.FromImage(resultBitmap);
@@ -112,21 +116,30 @@ namespace T2Tools.Turrican
 
                     Bitmap tile = tiles[tileId];
                     gfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
-                    worker.ReportProgress(20 + 80 * id / total);
+                    worker.ReportProgress(40 + (int)Math.Round(60f * id / total));
+
+                    if (worker.CancellationPending)
+                    {
+                        Error = "Cancelled";
+                        goto end;
+                    }
                 }
             }
 
+            end:
             gfx.Dispose();
         }
 
         private void reportProgress(object sender, ProgressChangedEventArgs e)
         {
-            progressCallback(e.ProgressPercentage);
+            if (!worker.CancellationPending)
+                progressCallback(e.ProgressPercentage);
         }
 
         private void reportResult(object sender, RunWorkerCompletedEventArgs e)
         {
-            completeCallback(string.IsNullOrEmpty(Error) ? resultBitmap : null);
+            if (worker.CancellationPending) resultBitmap.Dispose();
+            else completeCallback(string.IsNullOrEmpty(Error) ? resultBitmap : null);
         }
 
     }

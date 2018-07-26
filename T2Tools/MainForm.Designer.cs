@@ -367,6 +367,7 @@
             // 
             // mapPage
             // 
+            this.mapPage.AutoScroll = true;
             this.mapPage.Controls.Add(this.mapMakerProgressPanel);
             this.mapPage.Controls.Add(this.mapPictureBox);
             this.mapPage.Location = new System.Drawing.Point(4, 22);
@@ -406,10 +407,10 @@
             // 
             // mapPictureBox
             // 
-            this.mapPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.mapPictureBox.Location = new System.Drawing.Point(6, 6);
             this.mapPictureBox.Name = "mapPictureBox";
-            this.mapPictureBox.Size = new System.Drawing.Size(345, 378);
+            this.mapPictureBox.Size = new System.Drawing.Size(339, 372);
+            this.mapPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.mapPictureBox.TabIndex = 2;
             this.mapPictureBox.TabStop = false;
             // 
@@ -440,6 +441,7 @@
             this.infoPage.ResumeLayout(false);
             this.infoPage.PerformLayout();
             this.mapPage.ResumeLayout(false);
+            this.mapPage.PerformLayout();
             this.mapMakerProgressPanel.ResumeLayout(false);
             this.mapMakerProgressPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 namespace T2Tools.Turrican
 {
     public enum TOCEntryType { Unknown, Gap, Text, Language, StaticSprite, AnimatedSprite,
-        Tileset, Bitmap, PixelFont, TextmodeFont, Palette,
+        Tileset, Bitmap, PixelFont, TextmodeFont, Palette, EntitiesList,
         Music, Sound, Executable, Map, DAT, DIR }
 
     public class TOCEntry
@@ -39,6 +39,7 @@ namespace T2Tools.Turrican
                     case ".dat": return TOCEntryType.DAT;
                     case ".dir": return TOCEntryType.DIR;
                     case ".gap": return TOCEntryType.Gap;
+                    case ".eib": return TOCEntryType.EntitiesList;
                     default:     return TOCEntryType.Unknown;
                 }                
             }

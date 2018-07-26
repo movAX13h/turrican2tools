@@ -12,6 +12,19 @@
       "name": "num.bob",
       "info": "does not have a palette",
       "nopreview": true
+    },
+    {
+      "name": "block6.pic",
+      "info": "using palette of WORLD5.PAL to render this tileset"
+    },
+    {
+      "name": "l6-1.pcm",
+      "info": "using palette of WORLD5.PAL to render this map"
+    },
+    {
+      "name": "l6-2.pcm",
+      "info": "using palette of WORLD5.PAL to render this map"
     }
+
   ]
 }

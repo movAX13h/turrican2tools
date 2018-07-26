@@ -59,8 +59,8 @@
     <Compile Include="Formats\PCMFile.cs" />
     <Compile Include="Formats\PCXFile.cs" />
     <Compile Include="Formats\BlockPicConverter.cs" />
+    <Compile Include="Formats\TFMXFile.cs" />
     <Compile Include="Formats\TilemapMaker.cs" />
-    <Compile Include="Formats\TXFMFile.cs" />
     <Compile Include="Formats\VGABitmap.cs" />
     <Compile Include="Formats\VGABitmapConverter.cs" />
     <Compile Include="Turrican\AssetLoader.cs" />

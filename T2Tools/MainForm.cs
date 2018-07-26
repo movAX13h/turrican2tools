@@ -30,9 +30,7 @@ namespace T2Tools
             fileList.ListViewItemSorter = new ListViewColumnSorter();
 
             sectionsPanel.DoubleBuffered(true);
-            createHexEditor();
-
-            
+            createHexEditor();            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -43,9 +41,7 @@ namespace T2Tools
             {
                 MessageBox.Show("Failed to load game data: " + game.Error);
                 return;
-            }
-
-            mapMaker = new MapMaker(game.Assets, mapProgress, mapComplete);
+            }            
 
             // fill TOC list
             foreach (var entry in game.Assets.Entries.Values)
@@ -72,7 +68,9 @@ namespace T2Tools
                 currentBitmaps = null;
             }
 
-            mapMaker.Cancel();
+            mapMaker?.Cancel();
+            mapMaker = new MapMaker(game.Assets, mapProgress, mapComplete);
+
             if (mapPictureBox.Image != null)
             {
                 var img = mapPictureBox.Image;                
@@ -133,6 +131,20 @@ namespace T2Tools
                         bitmapControlsPanel.Visible = false;
                         break;
 
+                    case TOCEntryType.Tileset:
+                        Bitmap tilesetBitmap = makeTilesetBitmap(item.Entry);
+                        if (tilesetBitmap != null)
+                        {
+                            currentBitmaps = new Bitmap[] { tilesetBitmap };
+                            currentImgZoom = 1;
+                            imgZoomInput.Value = currentImgZoom;
+                            displayTabs.TabPages.Add(imgPage);
+                            displayTabs.SelectedTab = imgPage;
+                            bitmapControlsPanel.Visible = false;
+                        }
+                        else MessageBox.Show("Error: Failed to generate tileset preview!");
+                        break;
+
                     case TOCEntryType.Map:
                         displayTabs.TabPages.Add(mapPage);
                         displayTabs.SelectedTab = mapPage;
@@ -165,7 +177,23 @@ namespace T2Tools
             sectionsPanel.Invalidate();
         }
 
-        
+        private Bitmap makeTilesetBitmap(TOCEntry entry)
+        {
+            // level number from BLOCK?.PIC file
+            if (!int.TryParse(entry.Name.Substring(5, 1), out int levelNumber)) return null;
+
+            if (levelNumber == 6) levelNumber = 5;
+
+            // palette entry
+            string palName = $"WORLD{levelNumber}.PAL";
+            if (!game.Assets.Entries.ContainsKey(palName)) return null;            
+            var paletteEntry = game.Assets.Entries[palName];
+            
+            try {
+                return TilemapMaker.FromBitmaps(BlockPicConverter.BlockPicToBitmaps(entry.Data, paletteEntry.Data));
+            } catch { return null; }
+        }
+
 
         private void tocList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -389,7 +417,9 @@ namespace T2Tools
                 return;
             }
 
-            mapPictureBox.Image = bitmap;            
+            mapPictureBox.Image = bitmap;
+
+            mapMaker = null;
         }
         #endregion
 
