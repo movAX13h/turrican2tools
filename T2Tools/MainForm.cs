@@ -30,6 +30,8 @@ namespace T2Tools
             fileList.ListViewItemSorter = new ListViewColumnSorter();
 
             sectionsPanel.DoubleBuffered(true);
+            imgPage.DoubleBuffered(true);
+
             createHexEditor();            
         }
 
@@ -138,6 +140,7 @@ namespace T2Tools
                             currentBitmaps = new Bitmap[] { tilesetBitmap };
                             currentImgZoom = 1;
                             imgZoomInput.Value = currentImgZoom;
+                            imgPage.Text = "Tileset";
                             displayTabs.TabPages.Add(imgPage);
                             displayTabs.SelectedTab = imgPage;
                             bitmapControlsPanel.Visible = false;
