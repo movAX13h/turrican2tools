@@ -92,6 +92,14 @@
             this.checkBoxMute5 = new System.Windows.Forms.CheckBox();
             this.checkBoxMute4 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.light8 = new TFXTool.Light();
+            this.light7 = new TFXTool.Light();
+            this.light6 = new TFXTool.Light();
+            this.light5 = new TFXTool.Light();
+            this.light4 = new TFXTool.Light();
+            this.light3 = new TFXTool.Light();
+            this.light2 = new TFXTool.Light();
+            this.light1 = new TFXTool.Light();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -115,7 +123,7 @@
             this.columnHeader8});
             this.listViewPattern.FullRowSelect = true;
             this.listViewPattern.GridLines = true;
-            this.listViewPattern.Location = new System.Drawing.Point(12, 384);
+            this.listViewPattern.Location = new System.Drawing.Point(12, 402);
             this.listViewPattern.Name = "listViewPattern";
             this.listViewPattern.Size = new System.Drawing.Size(554, 270);
             this.listViewPattern.TabIndex = 0;
@@ -177,7 +185,7 @@
             this.columnHeader17});
             this.listViewTrackstep.FullRowSelect = true;
             this.listViewTrackstep.GridLines = true;
-            this.listViewTrackstep.Location = new System.Drawing.Point(12, 127);
+            this.listViewTrackstep.Location = new System.Drawing.Point(12, 145);
             this.listViewTrackstep.Name = "listViewTrackstep";
             this.listViewTrackstep.Size = new System.Drawing.Size(554, 213);
             this.listViewTrackstep.TabIndex = 1;
@@ -225,7 +233,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 111);
+            this.label1.Location = new System.Drawing.Point(12, 129);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -234,7 +242,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 360);
+            this.label2.Location = new System.Drawing.Point(12, 378);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 3;
@@ -252,7 +260,7 @@
             this.columnHeader21});
             this.listViewMacro.FullRowSelect = true;
             this.listViewMacro.GridLines = true;
-            this.listViewMacro.Location = new System.Drawing.Point(572, 384);
+            this.listViewMacro.Location = new System.Drawing.Point(572, 402);
             this.listViewMacro.Name = "listViewMacro";
             this.listViewMacro.Size = new System.Drawing.Size(438, 270);
             this.listViewMacro.TabIndex = 4;
@@ -284,7 +292,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(572, 360);
+            this.label3.Location = new System.Drawing.Point(572, 378);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 5;
@@ -292,7 +300,7 @@
             // 
             // numericUpDownMacro
             // 
-            this.numericUpDownMacro.Location = new System.Drawing.Point(622, 358);
+            this.numericUpDownMacro.Location = new System.Drawing.Point(622, 376);
             this.numericUpDownMacro.Name = "numericUpDownMacro";
             this.numericUpDownMacro.Size = new System.Drawing.Size(49, 20);
             this.numericUpDownMacro.TabIndex = 6;
@@ -300,7 +308,7 @@
             // 
             // numericUpDownPattern
             // 
-            this.numericUpDownPattern.Location = new System.Drawing.Point(66, 358);
+            this.numericUpDownPattern.Location = new System.Drawing.Point(66, 376);
             this.numericUpDownPattern.Name = "numericUpDownPattern";
             this.numericUpDownPattern.Size = new System.Drawing.Size(49, 20);
             this.numericUpDownPattern.TabIndex = 7;
@@ -309,7 +317,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TFXTool.Properties.Resources.TFMX;
-            this.pictureBox1.Location = new System.Drawing.Point(619, 151);
+            this.pictureBox1.Location = new System.Drawing.Point(619, 169);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(142, 152);
             this.pictureBox1.TabIndex = 8;
@@ -350,7 +358,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(245, 62);
+            this.button1.Location = new System.Drawing.Point(245, 53);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 12;
@@ -361,14 +369,14 @@
             // 
             // numericUpDownSubsong
             // 
-            this.numericUpDownSubsong.Location = new System.Drawing.Point(144, 65);
+            this.numericUpDownSubsong.Location = new System.Drawing.Point(144, 56);
             this.numericUpDownSubsong.Name = "numericUpDownSubsong";
             this.numericUpDownSubsong.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownSubsong.TabIndex = 13;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(677, 355);
+            this.button2.Location = new System.Drawing.Point(677, 373);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(58, 23);
             this.button2.TabIndex = 14;
@@ -379,7 +387,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(808, 111);
+            this.label5.Location = new System.Drawing.Point(808, 129);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 20;
@@ -394,7 +402,7 @@
             this.columnHeader25});
             this.listViewSongs.FullRowSelect = true;
             this.listViewSongs.GridLines = true;
-            this.listViewSongs.Location = new System.Drawing.Point(811, 127);
+            this.listViewSongs.Location = new System.Drawing.Point(811, 145);
             this.listViewSongs.Name = "listViewSongs";
             this.listViewSongs.Size = new System.Drawing.Size(199, 135);
             this.listViewSongs.TabIndex = 19;
@@ -425,7 +433,7 @@
             // textBoxMessage
             // 
             this.textBoxMessage.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxMessage.Location = new System.Drawing.Point(811, 278);
+            this.textBoxMessage.Location = new System.Drawing.Point(811, 296);
             this.textBoxMessage.Multiline = true;
             this.textBoxMessage.Name = "textBoxMessage";
             this.textBoxMessage.Size = new System.Drawing.Size(199, 62);
@@ -456,14 +464,14 @@
             // 
             this.comboBoxPreviewNote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPreviewNote.FormattingEnabled = true;
-            this.comboBoxPreviewNote.Location = new System.Drawing.Point(741, 356);
+            this.comboBoxPreviewNote.Location = new System.Drawing.Point(741, 374);
             this.comboBoxPreviewNote.Name = "comboBoxPreviewNote";
             this.comboBoxPreviewNote.Size = new System.Drawing.Size(46, 21);
             this.comboBoxPreviewNote.TabIndex = 21;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 64);
+            this.button3.Location = new System.Drawing.Point(12, 55);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(58, 23);
             this.button3.TabIndex = 22;
@@ -473,14 +481,14 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(811, 357);
+            this.textBox1.Location = new System.Drawing.Point(811, 375);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(169, 20);
             this.textBox1.TabIndex = 23;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(144, 358);
+            this.textBox2.Location = new System.Drawing.Point(144, 376);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(169, 20);
             this.textBox2.TabIndex = 24;
@@ -488,7 +496,7 @@
             // checkBoxMute0
             // 
             this.checkBoxMute0.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute0.Location = new System.Drawing.Point(672, 62);
+            this.checkBoxMute0.Location = new System.Drawing.Point(672, 53);
             this.checkBoxMute0.Name = "checkBoxMute0";
             this.checkBoxMute0.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute0.TabIndex = 27;
@@ -500,7 +508,7 @@
             // checkBoxMute1
             // 
             this.checkBoxMute1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute1.Location = new System.Drawing.Point(715, 62);
+            this.checkBoxMute1.Location = new System.Drawing.Point(715, 53);
             this.checkBoxMute1.Name = "checkBoxMute1";
             this.checkBoxMute1.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute1.TabIndex = 28;
@@ -512,7 +520,7 @@
             // checkBoxMute2
             // 
             this.checkBoxMute2.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute2.Location = new System.Drawing.Point(758, 62);
+            this.checkBoxMute2.Location = new System.Drawing.Point(758, 53);
             this.checkBoxMute2.Name = "checkBoxMute2";
             this.checkBoxMute2.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute2.TabIndex = 29;
@@ -524,7 +532,7 @@
             // checkBoxMute3
             // 
             this.checkBoxMute3.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute3.Location = new System.Drawing.Point(801, 62);
+            this.checkBoxMute3.Location = new System.Drawing.Point(801, 53);
             this.checkBoxMute3.Name = "checkBoxMute3";
             this.checkBoxMute3.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute3.TabIndex = 30;
@@ -536,7 +544,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(669, 46);
+            this.label8.Location = new System.Drawing.Point(669, 37);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(86, 13);
             this.label8.TabIndex = 31;
@@ -545,7 +553,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(89, 67);
+            this.label9.Location = new System.Drawing.Point(89, 58);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 32;
@@ -554,7 +562,7 @@
             // checkBoxMute7
             // 
             this.checkBoxMute7.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute7.Location = new System.Drawing.Point(973, 63);
+            this.checkBoxMute7.Location = new System.Drawing.Point(973, 54);
             this.checkBoxMute7.Name = "checkBoxMute7";
             this.checkBoxMute7.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute7.TabIndex = 36;
@@ -566,7 +574,7 @@
             // checkBoxMute6
             // 
             this.checkBoxMute6.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute6.Location = new System.Drawing.Point(930, 63);
+            this.checkBoxMute6.Location = new System.Drawing.Point(930, 54);
             this.checkBoxMute6.Name = "checkBoxMute6";
             this.checkBoxMute6.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute6.TabIndex = 35;
@@ -578,7 +586,7 @@
             // checkBoxMute5
             // 
             this.checkBoxMute5.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute5.Location = new System.Drawing.Point(887, 63);
+            this.checkBoxMute5.Location = new System.Drawing.Point(887, 54);
             this.checkBoxMute5.Name = "checkBoxMute5";
             this.checkBoxMute5.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute5.TabIndex = 34;
@@ -590,7 +598,7 @@
             // checkBoxMute4
             // 
             this.checkBoxMute4.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBoxMute4.Location = new System.Drawing.Point(844, 63);
+            this.checkBoxMute4.Location = new System.Drawing.Point(844, 54);
             this.checkBoxMute4.Name = "checkBoxMute4";
             this.checkBoxMute4.Size = new System.Drawing.Size(37, 24);
             this.checkBoxMute4.TabIndex = 33;
@@ -602,17 +610,89 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 48);
+            this.label4.Location = new System.Drawing.Point(12, 39);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 37;
             this.label4.Text = "Song";
+            // 
+            // light8
+            // 
+            this.light8.Location = new System.Drawing.Point(980, 80);
+            this.light8.Name = "light8";
+            this.light8.Size = new System.Drawing.Size(23, 18);
+            this.light8.TabIndex = 45;
+            this.light8.Text = "light2";
+            // 
+            // light7
+            // 
+            this.light7.Location = new System.Drawing.Point(937, 80);
+            this.light7.Name = "light7";
+            this.light7.Size = new System.Drawing.Size(23, 18);
+            this.light7.TabIndex = 44;
+            this.light7.Text = "light2";
+            // 
+            // light6
+            // 
+            this.light6.Location = new System.Drawing.Point(894, 80);
+            this.light6.Name = "light6";
+            this.light6.Size = new System.Drawing.Size(23, 18);
+            this.light6.TabIndex = 43;
+            this.light6.Text = "light2";
+            // 
+            // light5
+            // 
+            this.light5.Location = new System.Drawing.Point(851, 80);
+            this.light5.Name = "light5";
+            this.light5.Size = new System.Drawing.Size(23, 18);
+            this.light5.TabIndex = 42;
+            this.light5.Text = "light2";
+            // 
+            // light4
+            // 
+            this.light4.Location = new System.Drawing.Point(808, 80);
+            this.light4.Name = "light4";
+            this.light4.Size = new System.Drawing.Size(23, 18);
+            this.light4.TabIndex = 41;
+            this.light4.Text = "light2";
+            // 
+            // light3
+            // 
+            this.light3.Location = new System.Drawing.Point(765, 80);
+            this.light3.Name = "light3";
+            this.light3.Size = new System.Drawing.Size(23, 18);
+            this.light3.TabIndex = 40;
+            this.light3.Text = "light2";
+            // 
+            // light2
+            // 
+            this.light2.Location = new System.Drawing.Point(722, 80);
+            this.light2.Name = "light2";
+            this.light2.Size = new System.Drawing.Size(23, 18);
+            this.light2.TabIndex = 39;
+            this.light2.Text = "light1";
+            // 
+            // light1
+            // 
+            this.light1.Location = new System.Drawing.Point(679, 80);
+            this.light1.Name = "light1";
+            this.light1.Size = new System.Drawing.Size(23, 18);
+            this.light1.TabIndex = 38;
+            this.light1.Text = "light0";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1022, 684);
+            this.Controls.Add(this.light8);
+            this.Controls.Add(this.light7);
+            this.Controls.Add(this.light6);
+            this.Controls.Add(this.light5);
+            this.Controls.Add(this.light4);
+            this.Controls.Add(this.light3);
+            this.Controls.Add(this.light2);
+            this.Controls.Add(this.light1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBoxMute7);
             this.Controls.Add(this.checkBoxMute6);
@@ -725,6 +805,14 @@
         private System.Windows.Forms.CheckBox checkBoxMute5;
         private System.Windows.Forms.CheckBox checkBoxMute4;
         private System.Windows.Forms.Label label4;
+        private Light light1;
+        private Light light2;
+        private Light light3;
+        private Light light4;
+        private Light light5;
+        private Light light6;
+        private Light light7;
+        private Light light8;
     }
 }
 

@@ -54,6 +54,9 @@
     <Compile Include="Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Light.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="PaulaChip.cs" />
     <Compile Include="Playback.cs" />
     <Compile Include="Playroutine.cs" />

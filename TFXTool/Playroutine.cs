@@ -23,6 +23,7 @@ namespace TFXTool
         public int TrackstepPosition => trackstepPosition;
         public event EventHandler TrackstepPositionChanged;
         public event EventHandler TempoChanged;
+        public event EventHandler<MacroStartEventArgs> MacroStart;
 
         public void SetSong(int i)
         {
@@ -180,6 +181,8 @@ namespace TFXTool
                                 c.MacroNo = step.Macro;
                                 c.MacroPC = 0;
                                 Log("starting macro " + c.MacroNo + " in tick " + tickCounter + " channel " + step.Channel);
+
+                                MacroStart?.Invoke(this, new MacroStartEventArgs { Channel = step.Channel, MacroNo = step.Macro });
                             }
                         }
                     }
@@ -262,6 +265,12 @@ namespace TFXTool
 
             SetSong(0);
         }
+    }
+
+    class MacroStartEventArgs : EventArgs
+    {
+        public int Channel;
+        public int MacroNo;
     }
 
     /// <summary>

@@ -59,6 +59,22 @@ namespace TFXTool
             var def = @"..\..\..\game\unpacked\TITLE.TFX";
             if(File.Exists(def))
                 Open(def);
+
+            var animationTimer = new Timer { Interval = 1000 / 60 };
+            animationTimer.Tick += AnimationTimer_Tick;
+            animationTimer.Start();
+        }
+
+        private void AnimationTimer_Tick(object sender, EventArgs e)
+        {
+            light1.Update();
+            light2.Update();
+            light3.Update();
+            light4.Update();
+            light5.Update();
+            light6.Update();
+            light7.Update();
+            light8.Update();
         }
 
         private void MusicTest_FormClosing(object sender, FormClosingEventArgs e)
@@ -629,6 +645,7 @@ namespace TFXTool
             {
                 currentPlayback = new Playback(actx, tfx, sampledata);
                 currentPlayback.Playroutine.TrackstepPositionChanged += Playroutine_TrackstepPositionChanged;
+                currentPlayback.Playroutine.MacroStart += Playroutine_MacroStart;
                 currentPlayback.Playroutine.SetSong((int)numericUpDownSubsong.Value);
                 currentPlayback.PaulaChip.Channels[0].Muted = checkBoxMute0.Checked;
                 currentPlayback.PaulaChip.Channels[1].Muted = checkBoxMute1.Checked;
@@ -641,6 +658,21 @@ namespace TFXTool
                 currentPlayback.Start();
                 btx2 = button3.Text;
                 button3.Text = "Stop";
+            }
+        }
+
+        private void Playroutine_MacroStart(object sender, MacroStartEventArgs e)
+        {
+            switch(e.Channel)
+            {
+                case 0: light1.val = 1; break;
+                case 1: light2.val = 1; break;
+                case 2: light3.val = 1; break;
+                case 3: light4.val = 1; break;
+                case 4: light5.val = 1; break;
+                case 5: light6.val = 1; break;
+                case 6: light7.val = 1; break;
+                case 7: light8.val = 1; break;
             }
         }
 
