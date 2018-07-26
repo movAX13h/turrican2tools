@@ -56,7 +56,7 @@ namespace TFXTool
             sampledata = new byte[1];
 
 
-            var def = @"..\..\assets\TITLE.TFX";
+            var def = @"..\..\..\game\unpacked\TITLE.TFX";
             if(File.Exists(def))
                 Open(def);
         }
@@ -527,7 +527,14 @@ namespace TFXTool
                 btx = button1.Text;
                 button1.Text = "Stop";
                 player = new TfmxplayPlayback();
-                player.Start(tfx, sampledata, (int)numericUpDownSubsong.Value);
+                try
+                {
+                    player.Start(tfx, sampledata, (int)numericUpDownSubsong.Value);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 

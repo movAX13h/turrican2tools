@@ -14,13 +14,17 @@ namespace TFXTool
     /// </summary>
     class TfmxplayPlayback
     {
+        string playerPath = "tfmxplay.exe";
         bool started = false;
         Process process;
+
         public void Start(TFXFile tfx, byte[] sampledata, int subsong)
         {
-            if(started)
-                throw new Exception("already started");
+            if (!File.Exists(playerPath)) throw new Exception($"tfmx player '{playerPath}' not found");
+
+            if (started) throw new Exception("already started");
             started = true;
+
             var tmp = Path.GetTempFileName();
             var tfxpath = Path.ChangeExtension(tmp, ".tfx");
             var sampath = Path.ChangeExtension(tmp, ".sam");
@@ -28,12 +32,13 @@ namespace TFXTool
             File.WriteAllBytes(sampath, sampledata);
             var sui = new ProcessStartInfo
             {
-                FileName = "tfmxplay.exe",
+                FileName = playerPath,
                 Arguments = (subsong != 0 ? "-p " + subsong : "") + " -b 1 " + tfxpath,
                 WindowStyle = ProcessWindowStyle.Minimized
             };
             process = Process.Start(sui);
         }
+
         public void Stop()
         {
             if(process != null)
