@@ -61,7 +61,7 @@ namespace T2Tools
             applyChangesButton.Visible = false;
 
             var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage };
-            foreach(TabPage page in hidePages) if (displayTabs.TabPages.Contains(page)) displayTabs.TabPages.Remove(page);
+            foreach(TabPage page in hidePages) if (previewTabs.TabPages.Contains(page)) previewTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
             if (currentBitmaps != null)
@@ -93,8 +93,8 @@ namespace T2Tools
                     case TOCEntryType.Text:
                     case TOCEntryType.Language:
                         txtOutput.Text = Encoding.GetEncoding("437").GetString(item.Entry.Data);
-                        displayTabs.TabPages.Add(txtPage);
-                        displayTabs.SelectedTab = txtPage;
+                        previewTabs.TabPages.Add(txtPage);
+                        previewTabs.SelectedTab = txtPage;
                         break;
 
                     case TOCEntryType.StaticSprite:
@@ -104,8 +104,8 @@ namespace T2Tools
                         imgZoomInput.Value = currentImgZoom;
                         currentBitmaps = new Bitmap[] { img.Bitmap };
                         imgPage.Text = "Sprite";
-                        displayTabs.TabPages.Add(imgPage);
-                        displayTabs.SelectedTab = imgPage;
+                        previewTabs.TabPages.Add(imgPage);
+                        previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = false;
                         break;
 
@@ -118,8 +118,8 @@ namespace T2Tools
                         for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
                         currentImgZoom = 3;
                         imgZoomInput.Value = currentImgZoom;
-                        displayTabs.TabPages.Add(imgPage);
-                        displayTabs.SelectedTab = imgPage;
+                        previewTabs.TabPages.Add(imgPage);
+                        previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = true;
                         break;
 
@@ -128,8 +128,8 @@ namespace T2Tools
                         imgZoomInput.Value = currentImgZoom;
                         imgPage.Text = "Palette";
                         currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
-                        displayTabs.TabPages.Add(imgPage);
-                        displayTabs.SelectedTab = imgPage;
+                        previewTabs.TabPages.Add(imgPage);
+                        previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = false;
                         break;
 
@@ -141,16 +141,16 @@ namespace T2Tools
                             currentImgZoom = 1;
                             imgZoomInput.Value = currentImgZoom;
                             imgPage.Text = "Tileset";
-                            displayTabs.TabPages.Add(imgPage);
-                            displayTabs.SelectedTab = imgPage;
+                            previewTabs.TabPages.Add(imgPage);
+                            previewTabs.SelectedTab = imgPage;
                             bitmapControlsPanel.Visible = false;
                         }
                         else MessageBox.Show("Error: Failed to generate tileset preview!");
                         break;
 
                     case TOCEntryType.Map:
-                        displayTabs.TabPages.Add(mapPage);
-                        displayTabs.SelectedTab = mapPage;
+                        previewTabs.TabPages.Add(mapPage);
+                        previewTabs.SelectedTab = mapPage;
                         mapMakerProgressBar.Value = 0;
                         mapMakerProgressPanel.Visible = true;
                         if (!mapMaker.Make(item.Entry)) MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -173,8 +173,8 @@ namespace T2Tools
             if (description != null && !string.IsNullOrEmpty(description.Info))
             {
                 infoOutput.Text = description.Info;
-                displayTabs.TabPages.Add(infoPage);
-                if (displayTabs.TabPages.Count == 1) displayTabs.SelectedTab = infoPage;
+                previewTabs.TabPages.Add(infoPage);
+                if (previewTabs.TabPages.Count == 1) previewTabs.SelectedTab = infoPage;
             }            
 
             sectionsPanel.Invalidate();
@@ -416,6 +416,7 @@ namespace T2Tools
             mapMakerProgressPanel.Visible = false;
             if (bitmap == null)
             {
+                if (string.IsNullOrEmpty(mapMaker.Error)) return;
                 MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }

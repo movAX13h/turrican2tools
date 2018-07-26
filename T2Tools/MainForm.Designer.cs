@@ -41,7 +41,7 @@
             this.hexSelectionLabel = new System.Windows.Forms.Label();
             this.sectionsPanel = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.displayTabs = new System.Windows.Forms.TabControl();
+            this.previewTabs = new System.Windows.Forms.TabControl();
             this.hexPage = new System.Windows.Forms.TabPage();
             this.txtPage = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
@@ -54,19 +54,19 @@
             this.currentBitmapIndexLabel = new System.Windows.Forms.Label();
             this.infoPage = new System.Windows.Forms.TabPage();
             this.infoOutput = new System.Windows.Forms.TextBox();
-            this.writeExeButton = new System.Windows.Forms.Button();
-            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.mapPage = new System.Windows.Forms.TabPage();
-            this.mapMakerProgressBar = new System.Windows.Forms.ProgressBar();
             this.mapMakerProgressPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.mapMakerProgressBar = new System.Windows.Forms.ProgressBar();
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
+            this.writeExeButton = new System.Windows.Forms.Button();
+            this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.displayTabs.SuspendLayout();
+            this.previewTabs.SuspendLayout();
             this.hexPage.SuspendLayout();
             this.txtPage.SuspendLayout();
             this.imgPage.SuspendLayout();
@@ -194,25 +194,25 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.displayTabs);
+            this.splitContainer1.Panel2.Controls.Add(this.previewTabs);
             this.splitContainer1.Size = new System.Drawing.Size(788, 410);
             this.splitContainer1.SplitterDistance = 425;
             this.splitContainer1.TabIndex = 4;
             // 
-            // displayTabs
+            // previewTabs
             // 
-            this.displayTabs.Controls.Add(this.hexPage);
-            this.displayTabs.Controls.Add(this.txtPage);
-            this.displayTabs.Controls.Add(this.palPage);
-            this.displayTabs.Controls.Add(this.imgPage);
-            this.displayTabs.Controls.Add(this.infoPage);
-            this.displayTabs.Controls.Add(this.mapPage);
-            this.displayTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.displayTabs.Location = new System.Drawing.Point(0, 0);
-            this.displayTabs.Name = "displayTabs";
-            this.displayTabs.SelectedIndex = 0;
-            this.displayTabs.Size = new System.Drawing.Size(359, 410);
-            this.displayTabs.TabIndex = 5;
+            this.previewTabs.Controls.Add(this.hexPage);
+            this.previewTabs.Controls.Add(this.txtPage);
+            this.previewTabs.Controls.Add(this.palPage);
+            this.previewTabs.Controls.Add(this.imgPage);
+            this.previewTabs.Controls.Add(this.infoPage);
+            this.previewTabs.Controls.Add(this.mapPage);
+            this.previewTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewTabs.Location = new System.Drawing.Point(0, 0);
+            this.previewTabs.Name = "previewTabs";
+            this.previewTabs.SelectedIndex = 0;
+            this.previewTabs.Size = new System.Drawing.Size(359, 410);
+            this.previewTabs.TabIndex = 5;
             // 
             // hexPage
             // 
@@ -348,23 +348,6 @@
             this.infoOutput.Size = new System.Drawing.Size(345, 378);
             this.infoOutput.TabIndex = 1;
             // 
-            // writeExeButton
-            // 
-            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeExeButton.Location = new System.Drawing.Point(740, 6);
-            this.writeExeButton.Name = "writeExeButton";
-            this.writeExeButton.Size = new System.Drawing.Size(54, 23);
-            this.writeExeButton.TabIndex = 5;
-            this.writeExeButton.Text = "WRITE";
-            this.writeExeButton.UseVisualStyleBackColor = true;
-            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
-            // 
-            // saveExeDialog
-            // 
-            this.saveExeDialog.FileName = "T2mod.EXE";
-            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
-            this.saveExeDialog.RestoreDirectory = true;
-            // 
             // mapPage
             // 
             this.mapPage.AutoScroll = true;
@@ -377,14 +360,6 @@
             this.mapPage.TabIndex = 5;
             this.mapPage.Text = "Map";
             this.mapPage.UseVisualStyleBackColor = true;
-            // 
-            // mapMakerProgressBar
-            // 
-            this.mapMakerProgressBar.Location = new System.Drawing.Point(18, 31);
-            this.mapMakerProgressBar.Name = "mapMakerProgressBar";
-            this.mapMakerProgressBar.Size = new System.Drawing.Size(241, 23);
-            this.mapMakerProgressBar.Step = 1;
-            this.mapMakerProgressBar.TabIndex = 0;
             // 
             // mapMakerProgressPanel
             // 
@@ -405,6 +380,14 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Generating map preview ...";
             // 
+            // mapMakerProgressBar
+            // 
+            this.mapMakerProgressBar.Location = new System.Drawing.Point(18, 31);
+            this.mapMakerProgressBar.Name = "mapMakerProgressBar";
+            this.mapMakerProgressBar.Size = new System.Drawing.Size(241, 23);
+            this.mapMakerProgressBar.Step = 1;
+            this.mapMakerProgressBar.TabIndex = 0;
+            // 
             // mapPictureBox
             // 
             this.mapPictureBox.Location = new System.Drawing.Point(6, 6);
@@ -413,6 +396,23 @@
             this.mapPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.mapPictureBox.TabIndex = 2;
             this.mapPictureBox.TabStop = false;
+            // 
+            // writeExeButton
+            // 
+            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.writeExeButton.Location = new System.Drawing.Point(740, 6);
+            this.writeExeButton.Name = "writeExeButton";
+            this.writeExeButton.Size = new System.Drawing.Size(54, 23);
+            this.writeExeButton.TabIndex = 5;
+            this.writeExeButton.Text = "WRITE";
+            this.writeExeButton.UseVisualStyleBackColor = true;
+            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
+            // 
+            // saveExeDialog
+            // 
+            this.saveExeDialog.FileName = "T2mod.EXE";
+            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
+            this.saveExeDialog.RestoreDirectory = true;
             // 
             // MainForm
             // 
@@ -431,7 +431,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.displayTabs.ResumeLayout(false);
+            this.previewTabs.ResumeLayout(false);
             this.hexPage.ResumeLayout(false);
             this.txtPage.ResumeLayout(false);
             this.txtPage.PerformLayout();
@@ -466,7 +466,7 @@
         private System.Windows.Forms.Button writeExeButton;
         private System.Windows.Forms.SaveFileDialog saveExeDialog;
         private System.Windows.Forms.Button applyChangesButton;
-        private System.Windows.Forms.TabControl displayTabs;
+        private System.Windows.Forms.TabControl previewTabs;
         private System.Windows.Forms.TabPage hexPage;
         private System.Windows.Forms.TabPage txtPage;
         private System.Windows.Forms.TabPage palPage;
