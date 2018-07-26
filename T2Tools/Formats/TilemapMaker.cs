@@ -14,14 +14,21 @@ namespace T2Tools.Formats
         /// </summary>
         public static Bitmap FromBitmaps(Bitmap[] bitmaps)
         {
-            int blocksX = 20, blocksY = 50; // < this makes most sense for Turrican II blocks
+            // 20x50 makes most sense for maps with 1000 tiles
+            int blocksX = 20, blocksY = (bitmaps.Length + blocksX - 1) / blocksX;
 
             var bmp = new Bitmap(16 * blocksX, 16 * blocksY);
             using(var g = Graphics.FromImage(bmp))
             {
                 for(int i = 0; i < blocksY; ++i)
+                {
                     for(int j = 0; j < blocksX; ++j)
-                        g.DrawImage(bitmaps[j + i * blocksX], new Rectangle(j * 16, i * 16, 16, 16));
+                    {
+                        int a = j + i * blocksX;
+                        if(a < bitmaps.Length)
+                            g.DrawImage(bitmaps[a], new Rectangle(j * 16, i * 16, 16, 16));
+                    }
+                }
             }
             return bmp;
         }
