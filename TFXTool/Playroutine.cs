@@ -77,8 +77,8 @@ namespace TFXTool
                 {
                     var track = tracks[i];
                     var d = tfx.Tracksteps[trackstepPosition][i];
-                    track.PatternNo = d >> 8;
-                    track.Transpose = (sbyte)(d & 0xFF);
+                    int stepPattern = d >> 8;
+                    int stepTranspose = (sbyte)(d & 0xFF);
 
                     // init pattern
                     track.PatternPC = 0;
@@ -86,13 +86,23 @@ namespace TFXTool
                     track.NumPatternLoop = 0;
 
                     // TD: handle 0x80 and 0xFE correctly!
-                    if(track.PatternNo >= 0x80)
+                    if(stepPattern >= 0x80)
                     {
-                        track.PatternNo = -1;
+                        if(stepPattern == 0x80)
+                        {
+                            //track.PatternPC = 0;
+                        }
+                        else
+                        {
+                            track.PatternNo = -1;
+                        }
                     }
                     else
                     {
                         Log("starting pattern " + track.PatternNo + " in tick " + tickCounter);
+
+                        track.PatternNo = stepPattern;
+                        track.Transpose = stepTranspose;
                     }
                 }
 

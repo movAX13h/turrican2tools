@@ -611,6 +611,7 @@ namespace TFXTool
         }
 
         Playback currentPlayback;
+        ListViewItem lviLastTrackstepHighlight;
         string btx2;
         private void button3_Click(object sender, EventArgs e)
         {
@@ -620,29 +621,53 @@ namespace TFXTool
                 currentPlayback = null;
 
                 button3.Text = btx2;
+
+                if(lviLastTrackstepHighlight != null)
+                    lviLastTrackstepHighlight.BackColor = Color.White;
             }
             else
             {
                 currentPlayback = new Playback(actx, tfx, sampledata);
+                currentPlayback.Playroutine.TrackstepPositionChanged += Playroutine_TrackstepPositionChanged;
                 currentPlayback.Playroutine.SetSong((int)numericUpDownSubsong.Value);
-                currentPlayback.PaulaChip.Channels[0].Muted = checkBox1.Checked;
-                currentPlayback.PaulaChip.Channels[1].Muted = checkBox2.Checked;
-                currentPlayback.PaulaChip.Channels[2].Muted = checkBox3.Checked;
-                currentPlayback.PaulaChip.Channels[3].Muted = checkBox4.Checked;
+                currentPlayback.PaulaChip.Channels[0].Muted = checkBoxMute0.Checked;
+                currentPlayback.PaulaChip.Channels[1].Muted = checkBoxMute1.Checked;
+                currentPlayback.PaulaChip.Channels[2].Muted = checkBoxMute2.Checked;
+                currentPlayback.PaulaChip.Channels[3].Muted = checkBoxMute3.Checked;
+                currentPlayback.PaulaChip.Channels[4].Muted = checkBoxMute4.Checked;
+                currentPlayback.PaulaChip.Channels[5].Muted = checkBoxMute5.Checked;
+                currentPlayback.PaulaChip.Channels[6].Muted = checkBoxMute6.Checked;
+                currentPlayback.PaulaChip.Channels[7].Muted = checkBoxMute7.Checked;
                 currentPlayback.Start();
                 btx2 = button3.Text;
                 button3.Text = "Stop";
             }
         }
 
+        private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
+        {
+            if(lviLastTrackstepHighlight != null)
+                lviLastTrackstepHighlight.BackColor = Color.White;
+
+            var item = listViewTrackstep.Items[currentPlayback.Playroutine.TrackstepPosition];
+            item.BackColor = Color.LightGray;
+            item.EnsureVisible();
+
+            lviLastTrackstepHighlight = item;
+        }
+
         private void checkBoxChX_CheckedChanged(object sender, EventArgs e)
         {
             if(currentPlayback != null)
             {
-                currentPlayback.PaulaChip.Channels[0].Muted = checkBox1.Checked;
-                currentPlayback.PaulaChip.Channels[1].Muted = checkBox2.Checked;
-                currentPlayback.PaulaChip.Channels[2].Muted = checkBox3.Checked;
-                currentPlayback.PaulaChip.Channels[3].Muted = checkBox4.Checked;
+                currentPlayback.PaulaChip.Channels[0].Muted = checkBoxMute0.Checked;
+                currentPlayback.PaulaChip.Channels[1].Muted = checkBoxMute1.Checked;
+                currentPlayback.PaulaChip.Channels[2].Muted = checkBoxMute2.Checked;
+                currentPlayback.PaulaChip.Channels[3].Muted = checkBoxMute3.Checked;
+                currentPlayback.PaulaChip.Channels[4].Muted = checkBoxMute4.Checked;
+                currentPlayback.PaulaChip.Channels[5].Muted = checkBoxMute5.Checked;
+                currentPlayback.PaulaChip.Channels[6].Muted = checkBoxMute6.Checked;
+                currentPlayback.PaulaChip.Channels[7].Muted = checkBoxMute7.Checked;
             }
         }
 

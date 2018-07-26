@@ -81,12 +81,17 @@
             this.button3 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute0 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute2 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute3 = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.checkBoxMute7 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute6 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute5 = new System.Windows.Forms.CheckBox();
+            this.checkBoxMute4 = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -97,7 +102,7 @@
             // 
             // listViewPattern
             // 
-            this.listViewPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.listViewPattern.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listViewPattern.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -110,9 +115,9 @@
             this.columnHeader8});
             this.listViewPattern.FullRowSelect = true;
             this.listViewPattern.GridLines = true;
-            this.listViewPattern.Location = new System.Drawing.Point(12, 354);
+            this.listViewPattern.Location = new System.Drawing.Point(12, 384);
             this.listViewPattern.Name = "listViewPattern";
-            this.listViewPattern.Size = new System.Drawing.Size(554, 243);
+            this.listViewPattern.Size = new System.Drawing.Size(554, 270);
             this.listViewPattern.TabIndex = 0;
             this.listViewPattern.UseCompatibleStateImageBehavior = false;
             this.listViewPattern.View = System.Windows.Forms.View.Details;
@@ -172,7 +177,7 @@
             this.columnHeader17});
             this.listViewTrackstep.FullRowSelect = true;
             this.listViewTrackstep.GridLines = true;
-            this.listViewTrackstep.Location = new System.Drawing.Point(12, 97);
+            this.listViewTrackstep.Location = new System.Drawing.Point(12, 127);
             this.listViewTrackstep.Name = "listViewTrackstep";
             this.listViewTrackstep.Size = new System.Drawing.Size(554, 213);
             this.listViewTrackstep.TabIndex = 1;
@@ -220,7 +225,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 81);
+            this.label1.Location = new System.Drawing.Point(12, 111);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -229,7 +234,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 330);
+            this.label2.Location = new System.Drawing.Point(12, 360);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 3;
@@ -237,8 +242,8 @@
             // 
             // listViewMacro
             // 
-            this.listViewMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.listViewMacro.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewMacro.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader18,
@@ -247,9 +252,9 @@
             this.columnHeader21});
             this.listViewMacro.FullRowSelect = true;
             this.listViewMacro.GridLines = true;
-            this.listViewMacro.Location = new System.Drawing.Point(572, 354);
+            this.listViewMacro.Location = new System.Drawing.Point(572, 384);
             this.listViewMacro.Name = "listViewMacro";
-            this.listViewMacro.Size = new System.Drawing.Size(438, 243);
+            this.listViewMacro.Size = new System.Drawing.Size(438, 270);
             this.listViewMacro.TabIndex = 4;
             this.listViewMacro.UseCompatibleStateImageBehavior = false;
             this.listViewMacro.View = System.Windows.Forms.View.Details;
@@ -279,7 +284,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(572, 330);
+            this.label3.Location = new System.Drawing.Point(572, 360);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 5;
@@ -287,7 +292,7 @@
             // 
             // numericUpDownMacro
             // 
-            this.numericUpDownMacro.Location = new System.Drawing.Point(622, 328);
+            this.numericUpDownMacro.Location = new System.Drawing.Point(622, 358);
             this.numericUpDownMacro.Name = "numericUpDownMacro";
             this.numericUpDownMacro.Size = new System.Drawing.Size(49, 20);
             this.numericUpDownMacro.TabIndex = 6;
@@ -295,7 +300,7 @@
             // 
             // numericUpDownPattern
             // 
-            this.numericUpDownPattern.Location = new System.Drawing.Point(66, 328);
+            this.numericUpDownPattern.Location = new System.Drawing.Point(66, 358);
             this.numericUpDownPattern.Name = "numericUpDownPattern";
             this.numericUpDownPattern.Size = new System.Drawing.Size(49, 20);
             this.numericUpDownPattern.TabIndex = 7;
@@ -304,7 +309,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::TFXTool.Properties.Resources.TFMX;
-            this.pictureBox1.Location = new System.Drawing.Point(618, 124);
+            this.pictureBox1.Location = new System.Drawing.Point(619, 151);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(142, 152);
             this.pictureBox1.TabIndex = 8;
@@ -345,7 +350,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(245, 33);
+            this.button1.Location = new System.Drawing.Point(245, 62);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(65, 23);
             this.button1.TabIndex = 12;
@@ -356,14 +361,14 @@
             // 
             // numericUpDownSubsong
             // 
-            this.numericUpDownSubsong.Location = new System.Drawing.Point(144, 36);
+            this.numericUpDownSubsong.Location = new System.Drawing.Point(144, 65);
             this.numericUpDownSubsong.Name = "numericUpDownSubsong";
             this.numericUpDownSubsong.Size = new System.Drawing.Size(65, 20);
             this.numericUpDownSubsong.TabIndex = 13;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(677, 325);
+            this.button2.Location = new System.Drawing.Point(677, 355);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(58, 23);
             this.button2.TabIndex = 14;
@@ -374,11 +379,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(808, 81);
+            this.label5.Location = new System.Drawing.Point(808, 111);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 13);
+            this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 20;
-            this.label5.Text = "Songs";
+            this.label5.Text = "Songlist";
             // 
             // listViewSongs
             // 
@@ -389,7 +394,7 @@
             this.columnHeader25});
             this.listViewSongs.FullRowSelect = true;
             this.listViewSongs.GridLines = true;
-            this.listViewSongs.Location = new System.Drawing.Point(811, 97);
+            this.listViewSongs.Location = new System.Drawing.Point(811, 127);
             this.listViewSongs.Name = "listViewSongs";
             this.listViewSongs.Size = new System.Drawing.Size(199, 135);
             this.listViewSongs.TabIndex = 19;
@@ -420,7 +425,7 @@
             // textBoxMessage
             // 
             this.textBoxMessage.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxMessage.Location = new System.Drawing.Point(811, 248);
+            this.textBoxMessage.Location = new System.Drawing.Point(811, 278);
             this.textBoxMessage.Multiline = true;
             this.textBoxMessage.Name = "textBoxMessage";
             this.textBoxMessage.Size = new System.Drawing.Size(199, 62);
@@ -451,14 +456,14 @@
             // 
             this.comboBoxPreviewNote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPreviewNote.FormattingEnabled = true;
-            this.comboBoxPreviewNote.Location = new System.Drawing.Point(741, 326);
+            this.comboBoxPreviewNote.Location = new System.Drawing.Point(741, 356);
             this.comboBoxPreviewNote.Name = "comboBoxPreviewNote";
             this.comboBoxPreviewNote.Size = new System.Drawing.Size(46, 21);
             this.comboBoxPreviewNote.TabIndex = 21;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(15, 33);
+            this.button3.Location = new System.Drawing.Point(12, 64);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(58, 23);
             this.button3.TabIndex = 22;
@@ -468,70 +473,70 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(811, 327);
+            this.textBox1.Location = new System.Drawing.Point(811, 357);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(169, 20);
             this.textBox1.TabIndex = 23;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(144, 328);
+            this.textBox2.Location = new System.Drawing.Point(144, 358);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(169, 20);
             this.textBox2.TabIndex = 24;
             // 
-            // checkBox1
+            // checkBoxMute0
             // 
-            this.checkBox1.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox1.Location = new System.Drawing.Point(400, 33);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(37, 24);
-            this.checkBox1.TabIndex = 27;
-            this.checkBox1.Text = "0";
-            this.checkBox1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            this.checkBoxMute0.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute0.Location = new System.Drawing.Point(672, 62);
+            this.checkBoxMute0.Name = "checkBoxMute0";
+            this.checkBoxMute0.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute0.TabIndex = 27;
+            this.checkBoxMute0.Text = "0";
+            this.checkBoxMute0.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute0.UseVisualStyleBackColor = true;
+            this.checkBoxMute0.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
             // 
-            // checkBox2
+            // checkBoxMute1
             // 
-            this.checkBox2.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox2.Location = new System.Drawing.Point(443, 33);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(37, 24);
-            this.checkBox2.TabIndex = 28;
-            this.checkBox2.Text = "1";
-            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            this.checkBoxMute1.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute1.Location = new System.Drawing.Point(715, 62);
+            this.checkBoxMute1.Name = "checkBoxMute1";
+            this.checkBoxMute1.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute1.TabIndex = 28;
+            this.checkBoxMute1.Text = "1";
+            this.checkBoxMute1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute1.UseVisualStyleBackColor = true;
+            this.checkBoxMute1.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
             // 
-            // checkBox3
+            // checkBoxMute2
             // 
-            this.checkBox3.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox3.Location = new System.Drawing.Point(486, 33);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(37, 24);
-            this.checkBox3.TabIndex = 29;
-            this.checkBox3.Text = "2";
-            this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            this.checkBoxMute2.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute2.Location = new System.Drawing.Point(758, 62);
+            this.checkBoxMute2.Name = "checkBoxMute2";
+            this.checkBoxMute2.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute2.TabIndex = 29;
+            this.checkBoxMute2.Text = "2";
+            this.checkBoxMute2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute2.UseVisualStyleBackColor = true;
+            this.checkBoxMute2.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
             // 
-            // checkBox4
+            // checkBoxMute3
             // 
-            this.checkBox4.Appearance = System.Windows.Forms.Appearance.Button;
-            this.checkBox4.Location = new System.Drawing.Point(529, 33);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(37, 24);
-            this.checkBox4.TabIndex = 30;
-            this.checkBox4.Text = "3";
-            this.checkBox4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            this.checkBoxMute3.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute3.Location = new System.Drawing.Point(801, 62);
+            this.checkBoxMute3.Name = "checkBoxMute3";
+            this.checkBoxMute3.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute3.TabIndex = 30;
+            this.checkBoxMute3.Text = "3";
+            this.checkBoxMute3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute3.UseVisualStyleBackColor = true;
+            this.checkBoxMute3.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(397, 60);
+            this.label8.Location = new System.Drawing.Point(669, 46);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(86, 13);
             this.label8.TabIndex = 31;
@@ -540,23 +545,85 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(89, 38);
+            this.label9.Location = new System.Drawing.Point(89, 67);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 13);
             this.label9.TabIndex = 32;
             this.label9.Text = "Subsong";
             // 
-            // MusicTest
+            // checkBoxMute7
+            // 
+            this.checkBoxMute7.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute7.Location = new System.Drawing.Point(973, 63);
+            this.checkBoxMute7.Name = "checkBoxMute7";
+            this.checkBoxMute7.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute7.TabIndex = 36;
+            this.checkBoxMute7.Text = "7";
+            this.checkBoxMute7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute7.UseVisualStyleBackColor = true;
+            this.checkBoxMute7.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBoxMute6
+            // 
+            this.checkBoxMute6.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute6.Location = new System.Drawing.Point(930, 63);
+            this.checkBoxMute6.Name = "checkBoxMute6";
+            this.checkBoxMute6.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute6.TabIndex = 35;
+            this.checkBoxMute6.Text = "6";
+            this.checkBoxMute6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute6.UseVisualStyleBackColor = true;
+            this.checkBoxMute6.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBoxMute5
+            // 
+            this.checkBoxMute5.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute5.Location = new System.Drawing.Point(887, 63);
+            this.checkBoxMute5.Name = "checkBoxMute5";
+            this.checkBoxMute5.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute5.TabIndex = 34;
+            this.checkBoxMute5.Text = "5";
+            this.checkBoxMute5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute5.UseVisualStyleBackColor = true;
+            this.checkBoxMute5.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // checkBoxMute4
+            // 
+            this.checkBoxMute4.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxMute4.Location = new System.Drawing.Point(844, 63);
+            this.checkBoxMute4.Name = "checkBoxMute4";
+            this.checkBoxMute4.Size = new System.Drawing.Size(37, 24);
+            this.checkBoxMute4.TabIndex = 33;
+            this.checkBoxMute4.Text = "4";
+            this.checkBoxMute4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxMute4.UseVisualStyleBackColor = true;
+            this.checkBoxMute4.CheckedChanged += new System.EventHandler(this.checkBoxChX_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 48);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 37;
+            this.label4.Text = "Song";
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1022, 609);
+            this.ClientSize = new System.Drawing.Size(1022, 684);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.checkBoxMute7);
+            this.Controls.Add(this.checkBoxMute6);
+            this.Controls.Add(this.checkBoxMute5);
+            this.Controls.Add(this.checkBoxMute4);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.checkBoxMute3);
+            this.Controls.Add(this.checkBoxMute2);
+            this.Controls.Add(this.checkBoxMute1);
+            this.Controls.Add(this.checkBoxMute0);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button3);
@@ -579,7 +646,7 @@
             this.Controls.Add(this.menuStrip1);
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "MusicTest";
+            this.Name = "Form1";
             this.Text = "TFMX Editor";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMacro)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPattern)).EndInit();
@@ -647,12 +714,17 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBoxMute0;
+        private System.Windows.Forms.CheckBox checkBoxMute1;
+        private System.Windows.Forms.CheckBox checkBoxMute2;
+        private System.Windows.Forms.CheckBox checkBoxMute3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox checkBoxMute7;
+        private System.Windows.Forms.CheckBox checkBoxMute6;
+        private System.Windows.Forms.CheckBox checkBoxMute5;
+        private System.Windows.Forms.CheckBox checkBoxMute4;
+        private System.Windows.Forms.Label label4;
     }
 }
 
