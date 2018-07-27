@@ -82,6 +82,12 @@ namespace TFXTool
             }
         }
 
+        public void Reset()
+        {
+            foreach(var channel in Channels)
+                channel.Reset();
+        }
+
         public class Channel
         {
             // fs = fcpu / period / 2

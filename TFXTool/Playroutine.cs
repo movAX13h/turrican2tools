@@ -25,6 +25,7 @@ namespace TFXTool
         public event EventHandler TrackstepPositionChanged;
         public event EventHandler TempoChanged;
         public event EventHandler<MacroStartEventArgs> MacroStart;
+        public event EventHandler SongEnded;
 
         public void SetSong(int i)
         {
@@ -42,12 +43,20 @@ namespace TFXTool
         {
             trackstepWait = 0;
 
+            if(trackstepPosition > tfx.SongEndPositions[songNo])
+            {
+                Paula.Reset();
+
+                TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
+                SongEnded?.Invoke(this, EventArgs.Empty);
+                trackstepWait = 1;
+                stopped = true;
+                return;
+            }
+
             if(tfx.Tracksteps[trackstepPosition][0] == 0xEFFE)
             {
                 var line = tfx.Tracksteps[trackstepPosition];
-
-                if(++trackstepPosition >= tfx.SongEndPositions[songNo])
-                    trackstepPosition = tfx.SongStartPositions[songNo];
 
                 switch(line[1])
                 {
@@ -116,12 +125,11 @@ namespace TFXTool
                 }
 
                 trackstepWait = 1;
-
-                TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
-
-                if(++trackstepPosition >= tfx.SongEndPositions[songNo])
-                    trackstepPosition = tfx.SongStartPositions[songNo];
             }
+
+            TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
+
+            ++trackstepPosition;
         }
 
         public void TrackStep()
@@ -140,6 +148,9 @@ namespace TFXTool
             {
                 while(trackstepWait == 0)
                     TrackStepExecute();
+
+                if(stopped)
+                    return;
 
                 // track's patterns handler:
                 for(int i = 0; i < 8; ++i)

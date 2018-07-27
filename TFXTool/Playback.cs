@@ -21,6 +21,7 @@ namespace TFXTool
             Playroutine.Paula = PaulaChip;
             Playroutine.TrackstepPositionChanged += Playroutine_TrackstepPositionChanged;
             Playroutine.TempoChanged += Playroutine_TempoChanged;
+            Playroutine.SongEnded += Playroutine_SongEnded;
 
 
             timer = new Timer();
@@ -30,6 +31,10 @@ namespace TFXTool
 
             };
 
+        }
+
+        private void Playroutine_SongEnded(object sender, EventArgs e)
+        {
         }
 
         private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
