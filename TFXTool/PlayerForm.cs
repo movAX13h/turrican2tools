@@ -7,10 +7,11 @@ namespace TFXTool
 {
     public partial class PlayerForm : Form
     {
-        AudioContext audio;
-        TFXFile tfx;
-        byte[] sampleData;
-        Playback currentPlayback;
+        private AudioContext audio;
+        private TFXFile tfx;
+        private byte[] sampleData;
+        private Playback currentPlayback;
+        private int currentSongNumber;
 
         public PlayerForm(string name, byte[] tfmxData, byte[] samData)
         {
@@ -36,30 +37,92 @@ namespace TFXTool
 
         private void playSong(int number)
         {
+            currentSongNumber = number;
+
             if (currentPlayback != null)
             {
                 currentPlayback.Stop();
                 currentPlayback = null;
             }
+            
+            try
+            {
+                currentPlayback = new Playback(audio, tfx, sampleData);
+                currentPlayback.Playroutine.TrackstepPositionChanged += Playroutine_TrackstepPositionChanged;
+                currentPlayback.Playroutine.MacroStart += Playroutine_MacroStart;
+                currentPlayback.Playroutine.SongEnded += Playroutine_SongEnded;
+                currentPlayback.Playroutine.SetSong(number);
+                updateMuteState();
+                currentPlayback.Start();
 
-            currentPlayback = new Playback(audio, tfx, sampleData);
-            currentPlayback.Playroutine.TrackstepPositionChanged += Playroutine_TrackstepPositionChanged;
-            currentPlayback.Playroutine.MacroStart += Playroutine_MacroStart;
-            currentPlayback.Playroutine.SetSong(number);
-            updateMuteState();
-            currentPlayback.Start();
+                songLabel.Text = (currentSongNumber + 1).ToString();
+                patternLabel.Text = "Pattern: ...";
+            }
+            catch
+            {
+                playNextSong();
+            }
+        }
+
+        private void playNextSong()
+        {
+            if (songList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Unable to play next song because there are no songs checked!", "No selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ListViewItem item;
+
+            do
+            {
+                currentSongNumber++;
+                if (currentSongNumber > songList.Items.Count - 1) currentSongNumber = 0;
+                item = songList.Items[currentSongNumber];
+            }
+            while (!item.Checked);
+
+            songList.SelectedItems.Clear();
+            item.Selected = true;
+        }
+        
+        private void playPrevSong()
+        {
+            if (songList.CheckedItems.Count == 0)
+            {
+                MessageBox.Show("Unable to play previous song because there are no songs checked!", "No selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            ListViewItem item;
+
+            do
+            {
+                currentSongNumber--;
+                if (currentSongNumber < 0) currentSongNumber = songList.Items.Count - 1;
+                item = songList.Items[currentSongNumber];
+            }
+            while (!item.Checked);
+
+            songList.SelectedItems.Clear();
+            item.Selected = true;
         }
 
         private void updateSongList()
         {
             songList.BeginUpdate();
             songList.Items.Clear();
-            for (int i = 0; i < 32; i++)
+            for (int i = 0; i < 31; i++)
             {
+                ushort start = tfx.SongStartPositions[i];
+                ushort end = tfx.SongEndPositions[i];
+                ushort tempo = tfx.TempoNumbers[i];
+
                 var item = new ListViewItem(i.ToString());
-                item.SubItems.Add(tfx.SongStartPositions[i].ToString());
-                item.SubItems.Add(tfx.SongEndPositions[i].ToString());
-                item.SubItems.Add(tfx.TempoNumbers[i].ToString());
+                item.SubItems.Add(start.ToString());
+                item.SubItems.Add(end.ToString());
+                item.SubItems.Add(tempo.ToString());
+                item.Checked = !(start == 0 && end == 0);
                 songList.Items.Add(item);
             }
             songList.EndUpdate();
@@ -127,7 +190,14 @@ namespace TFXTool
 
         private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
         {
+            patternLabel.Text = "Pattern: " + currentPlayback.Playroutine.TrackstepPosition.ToString();
             
+            
+        }
+
+        private void Playroutine_SongEnded(object sender, EventArgs e)
+        {
+            playNextSong();
         }
 
         private void checkBoxMute_CheckedChanged(object sender, EventArgs e)
@@ -144,6 +214,16 @@ namespace TFXTool
         {
             if (songList.SelectedItems.Count == 0) return;
             playSong(int.Parse(songList.SelectedItems[0].Text));
+        }
+
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            playNextSong();
+        }
+
+        private void prevButton_Click(object sender, EventArgs e)
+        {
+            playPrevSong();
         }
     }
 }
