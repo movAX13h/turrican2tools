@@ -59,7 +59,6 @@
     <Compile Include="Formats\PCMFile.cs" />
     <Compile Include="Formats\PCXFile.cs" />
     <Compile Include="Formats\BlockPicConverter.cs" />
-    <Compile Include="Formats\TFMXFile.cs" />
     <Compile Include="Formats\TilemapMaker.cs" />
     <Compile Include="Formats\VGABitmap.cs" />
     <Compile Include="Formats\VGABitmapConverter.cs" />
@@ -113,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TFXTool\TFXTool.csproj">
+      <Project>{1ed3a2d1-086b-4c4c-95ad-c58ff08d1024}</Project>
+      <Name>TFXTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

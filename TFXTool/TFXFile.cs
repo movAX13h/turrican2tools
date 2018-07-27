@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 // specs from:
 // ftp://ftp.modland.com/pub/documents/format_documentation/The%20Final%20Musicsystem%20eXtended%20Professional%20v2.0%20%28.mdat,%20.smpl%29.txt
 
-namespace T2Tools.Formats
+namespace TFXTool
 {
     public class TFXFile
     {
@@ -98,129 +96,137 @@ namespace T2Tools.Formats
             TextLines = new string[6] { "", "", "", "", "", "" };
         }
 
+        public TFXFile(byte[] data)
+        {
+            using (var f = new BinaryReader(new MemoryStream(data)))
+            {
+                read(f);
+            }
+        }
+
         public TFXFile(string path)
         {
-            using(var f = new BinaryReader(File.OpenRead(path)))
+            using (var f = new BinaryReader(File.OpenRead(path)))
             {
-                var magic = ReadString(f, 10);
-                if(!magic.Equals("TFMX-SONG "))
-                    throw new Exception("bad magic number");
+                read(f);
+            }
+        }
 
-                int unk1 = ReadWord(f);
-                int unk2 = ReadInt(f);
+        private void read(BinaryReader f)
+        {
+            var magic = ReadString(f, 10);
+            if (!magic.Equals("TFMX-SONG "))
+                throw new Exception("bad magic number");
 
-                for(int i = 0; i < 6; ++i)
-                    TextLines[i] = ReadString(f, 40);
+            int unk1 = ReadWord(f);
+            int unk2 = ReadInt(f);
 
-                SongStartPositions = ReadWords(f, 32);
-                SongEndPositions = ReadWords(f, 32);
-                TempoNumbers = ReadWords(f, 32);
+            for (int i = 0; i < 6; ++i)
+                TextLines[i] = ReadString(f, 40);
 
-                f.BaseStream.Position += 16;
+            SongStartPositions = ReadWords(f, 32);
+            SongEndPositions = ReadWords(f, 32);
+            TempoNumbers = ReadWords(f, 32);
 
-                int trackstepPointer = ReadInt(f);
-                int patternDataPointer = ReadInt(f);
-                int macroDataPointer = ReadInt(f);
+            f.BaseStream.Position += 16;
 
-                if(trackstepPointer == 0 && patternDataPointer == 0 && macroDataPointer == 0)
-                {
-                    throw new NotImplementedException();
+            int trackstepPointer = ReadInt(f);
+            int patternDataPointer = ReadInt(f);
+            int macroDataPointer = ReadInt(f);
 
-                    trackstepPointer = 0x600;
-                    patternDataPointer = 0x200;
-                    macroDataPointer = 0x400;
-                }
+            if (trackstepPointer == 0 && patternDataPointer == 0 && macroDataPointer == 0)
+            {
+                throw new NotImplementedException();
 
-                // try to find out how many tracksteps there are:
-                NumTracksteps = 0;
-                for(int i = 0; i < 32; ++i)
-                {
-                    if(SongEndPositions[i] > SongStartPositions[i])
-                        NumTracksteps = Math.Max(NumTracksteps, 1 + SongEndPositions[i]);
-                }
-
-                Tracksteps = new ushort[NumTracksteps][];
-                f.BaseStream.Position = trackstepPointer;
-                for(var i = 0; i < NumTracksteps; ++i)
-                    Tracksteps[i] = ReadWords(f, 8);
-
-                var at = f.BaseStream.Position;
-
-                // try to find out how many patterns there are:
-                int numPatterns = 0;
-                for(int i = 0; i < NumTracksteps; ++i)
-                {
-                    if(Tracksteps[i][0] == 0xEFFE) // it's a command
-                        continue;
-
-                    for(int j = 0; j < 8; ++j)
-                    {
-                        int patternIndex = Tracksteps[i][j] >> 8;
-                        if(patternIndex < 128)
-                            numPatterns = Math.Max(numPatterns, patternIndex + 1);
-                    }
-                }
-
-                // TITLE.TFX
-                // suggests 103 patterns, but appears to contain 151 pattern pointers
-
-                f.BaseStream.Position = patternDataPointer;
-                var patternPointers = ReadInts(f, numPatterns);
-
-                int numMacros = 0;
-
-                Patterns = new List<TFXPattern>(numPatterns);
-                for(int i = 0; i < numPatterns; ++i)
-                {
-                    var pattern = new TFXPattern { Steps = new List<TFXPatternCommand>() };
-                    f.BaseStream.Position = patternPointers[i];
-                    while(true)
-                    {
-                        int cmd = ReadInt(f);
-                        pattern.Steps.Add(new TFXPatternCommand(cmd));
-                        if((cmd & 0xFF000000) == 0xF0000000) // "pattern end"
-                            break;
-
-                        if(((cmd >> 30) & 0x3) < 3)
-                        {
-                            int macro = (cmd >> 16) & 0xFF;
-
-                            numMacros = Math.Max(numMacros, macro + 1);
-                        }
-                    }
-                    Patterns.Add(pattern);
-                }
-
-                f.BaseStream.Position = macroDataPointer;
-                var macroPointers = ReadInts(f, numMacros);
-
-                Macros = new List<TFXMacro>(numMacros);
-                for(int i = 0; i < numMacros; ++i)
-                {
-                    var macro = new TFXMacro { Steps = new List<TFXMacroCommand>() };
-                    f.BaseStream.Position = macroPointers[i];
-                    while(true)
-                    {
-                        int cmd = ReadInt(f);
-                        macro.Steps.Add(new TFXMacroCommand(cmd));
-                        if(((cmd >> 24) & 0xFF) == 7)
-                            break;
-                    }
-                    Macros.Add(macro);
-                }
-
-
-
-                /*for(int i = 0; i + 1 < patternPointers.Length; ++i)
-                {
-                    Console.WriteLine(patternPointers[i] + "\t" + (patternPointers[i + 1] - patternPointers[i]));
-                }*/
-
-                at = f.BaseStream.Position;
-
+                trackstepPointer = 0x600;
+                patternDataPointer = 0x200;
+                macroDataPointer = 0x400;
             }
 
+            // try to find out how many tracksteps there are:
+            NumTracksteps = 0;
+            for (int i = 0; i < 32; ++i)
+            {
+                if (SongEndPositions[i] > SongStartPositions[i])
+                    NumTracksteps = Math.Max(NumTracksteps, 1 + SongEndPositions[i]);
+            }
 
+            Tracksteps = new ushort[NumTracksteps][];
+            f.BaseStream.Position = trackstepPointer;
+            for (var i = 0; i < NumTracksteps; ++i)
+                Tracksteps[i] = ReadWords(f, 8);
+
+            var at = f.BaseStream.Position;
+
+            // try to find out how many patterns there are:
+            int numPatterns = 0;
+            for (int i = 0; i < NumTracksteps; ++i)
+            {
+                if (Tracksteps[i][0] == 0xEFFE) // it's a command
+                    continue;
+
+                for (int j = 0; j < 8; ++j)
+                {
+                    int patternIndex = Tracksteps[i][j] >> 8;
+                    if (patternIndex < 128)
+                        numPatterns = Math.Max(numPatterns, patternIndex + 1);
+                }
+            }
+
+            // TITLE.TFX
+            // suggests 103 patterns, but appears to contain 151 pattern pointers
+
+            f.BaseStream.Position = patternDataPointer;
+            var patternPointers = ReadInts(f, numPatterns);
+
+            int numMacros = 0;
+
+            Patterns = new List<TFXPattern>(numPatterns);
+            for (int i = 0; i < numPatterns; ++i)
+            {
+                var pattern = new TFXPattern { Steps = new List<TFXPatternCommand>() };
+                f.BaseStream.Position = patternPointers[i];
+                while (true)
+                {
+                    int cmd = ReadInt(f);
+                    pattern.Steps.Add(new TFXPatternCommand(cmd));
+                    if ((cmd & 0xFF000000) == 0xF0000000) // "pattern end"
+                        break;
+
+                    if (((cmd >> 30) & 0x3) < 3)
+                    {
+                        int macro = (cmd >> 16) & 0xFF;
+
+                        numMacros = Math.Max(numMacros, macro + 1);
+                    }
+                }
+                Patterns.Add(pattern);
+            }
+
+            f.BaseStream.Position = macroDataPointer;
+            var macroPointers = ReadInts(f, numMacros);
+
+            Macros = new List<TFXMacro>(numMacros);
+            for (int i = 0; i < numMacros; ++i)
+            {
+                var macro = new TFXMacro { Steps = new List<TFXMacroCommand>() };
+                f.BaseStream.Position = macroPointers[i];
+                while (true)
+                {
+                    int cmd = ReadInt(f);
+                    macro.Steps.Add(new TFXMacroCommand(cmd));
+                    if (((cmd >> 24) & 0xFF) == 7)
+                        break;
+                }
+                Macros.Add(macro);
+            }
+            
+            /*for(int i = 0; i + 1 < patternPointers.Length; ++i)
+            {
+                Console.WriteLine(patternPointers[i] + "\t" + (patternPointers[i + 1] - patternPointers[i]));
+            }*/
+
+            at = f.BaseStream.Position;
         }
 
 

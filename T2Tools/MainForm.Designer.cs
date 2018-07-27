@@ -61,6 +61,8 @@
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tfmxPage = new System.Windows.Forms.TabPage();
+            this.tfmxPlayButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -76,6 +78,7 @@
             this.mapPage.SuspendLayout();
             this.mapMakerProgressPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
+            this.tfmxPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileList
@@ -207,6 +210,7 @@
             this.previewTabs.Controls.Add(this.imgPage);
             this.previewTabs.Controls.Add(this.infoPage);
             this.previewTabs.Controls.Add(this.mapPage);
+            this.previewTabs.Controls.Add(this.tfmxPage);
             this.previewTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewTabs.Location = new System.Drawing.Point(0, 0);
             this.previewTabs.Name = "previewTabs";
@@ -414,6 +418,27 @@
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
             // 
+            // tfmxPage
+            // 
+            this.tfmxPage.Controls.Add(this.tfmxPlayButton);
+            this.tfmxPage.Location = new System.Drawing.Point(4, 22);
+            this.tfmxPage.Name = "tfmxPage";
+            this.tfmxPage.Padding = new System.Windows.Forms.Padding(3);
+            this.tfmxPage.Size = new System.Drawing.Size(351, 384);
+            this.tfmxPage.TabIndex = 6;
+            this.tfmxPage.Text = "Music";
+            this.tfmxPage.UseVisualStyleBackColor = true;
+            // 
+            // tfmxPlayButton
+            // 
+            this.tfmxPlayButton.Location = new System.Drawing.Point(25, 25);
+            this.tfmxPlayButton.Name = "tfmxPlayButton";
+            this.tfmxPlayButton.Size = new System.Drawing.Size(75, 23);
+            this.tfmxPlayButton.TabIndex = 0;
+            this.tfmxPlayButton.Text = "PLAY";
+            this.tfmxPlayButton.UseVisualStyleBackColor = true;
+            this.tfmxPlayButton.Click += new System.EventHandler(this.tfmxPlayButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -446,6 +471,7 @@
             this.mapMakerProgressPanel.ResumeLayout(false);
             this.mapMakerProgressPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
+            this.tfmxPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -484,6 +510,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ProgressBar mapMakerProgressBar;
         private System.Windows.Forms.PictureBox mapPictureBox;
+        private System.Windows.Forms.TabPage tfmxPage;
+        private System.Windows.Forms.Button tfmxPlayButton;
     }
 }
 

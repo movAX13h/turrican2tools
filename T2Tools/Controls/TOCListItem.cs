@@ -14,7 +14,8 @@ namespace T2Tools.Controls
                 TOCEntryType.Palette,
                 TOCEntryType.AnimatedSprite,
                 TOCEntryType.Map,
-                TOCEntryType.Tileset
+                TOCEntryType.Tileset,
+                TOCEntryType.Music
         };
 
         public TOCEntry Entry { get; private set; }

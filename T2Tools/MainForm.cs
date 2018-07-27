@@ -60,7 +60,7 @@ namespace T2Tools
             selectedItem = item;
             applyChangesButton.Visible = false;
 
-            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage };
+            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage, tfmxPage };
             foreach(TabPage page in hidePages) if (previewTabs.TabPages.Contains(page)) previewTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
@@ -156,11 +156,13 @@ namespace T2Tools
                         if (!mapMaker.Make(item.Entry)) MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
 
-                    case TOCEntryType.Unknown:
-
-                        break;
-                    case TOCEntryType.PixelFont:
                     case TOCEntryType.Music:
+                        previewTabs.TabPages.Add(tfmxPage);
+                        previewTabs.SelectedTab = tfmxPage;
+                        break;
+
+                    case TOCEntryType.Unknown:
+                    case TOCEntryType.PixelFont:
                     case TOCEntryType.Sound:
                     case TOCEntryType.Executable:
                     case TOCEntryType.DAT:
@@ -427,5 +429,23 @@ namespace T2Tools
         }
         #endregion
 
+        #region music
+        private void tfmxPlayButton_Click(object sender, EventArgs e)
+        {
+            //selectedItem.Entry
+
+            string samName = Path.ChangeExtension(selectedItem.Entry.Name, ".SAM");
+            if (!game.Assets.Entries.ContainsKey(samName))
+            {
+                MessageBox.Show($"Sample file '{samName}' not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            TOCEntry samples = game.Assets.Entries[samName];
+
+            TFXTool.PlayerForm form = new TFXTool.PlayerForm(selectedItem.Entry.Name, selectedItem.Entry.Data, samples.Data);
+            form.ShowDialog(this);
+        }
+        #endregion
     }
 }
