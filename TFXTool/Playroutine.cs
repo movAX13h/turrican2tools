@@ -43,11 +43,12 @@ namespace TFXTool
         {
             trackstepWait = 0;
 
-            if(trackstepPosition > tfx.SongEndPositions[songNo])
+            if(trackstepPosition > tfx.SongEndPositions[songNo] || trackstepPosition >= tfx.Tracksteps.Length)
             {
                 Paula.Reset();
 
-                TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
+                if(trackstepPosition < tfx.Tracksteps.Length)
+                    TrackstepPositionChanged?.Invoke(this, EventArgs.Empty);
                 SongEnded?.Invoke(this, EventArgs.Empty);
                 trackstepWait = 1;
                 stopped = true;
