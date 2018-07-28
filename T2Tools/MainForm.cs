@@ -60,7 +60,7 @@ namespace T2Tools
             selectedItem = item;
             applyChangesButton.Visible = false;
 
-            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage, tfmxPage };
+            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage, tfmxPage, tilesPage };
             foreach(TabPage page in hidePages) if (previewTabs.TabPages.Contains(page)) previewTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
@@ -134,16 +134,14 @@ namespace T2Tools
                         break;
 
                     case TOCEntryType.Tileset:
+                    case TOCEntryType.CollisionInfo:
+                        tilesCollisionsCheckbox.Checked = item.Entry.Type == TOCEntryType.CollisionInfo;
                         Bitmap tilesetBitmap = makeTilesetBitmap(item.Entry);
                         if (tilesetBitmap != null)
                         {
-                            currentBitmaps = new Bitmap[] { tilesetBitmap };
-                            currentImgZoom = 1;
-                            imgZoomInput.Value = currentImgZoom;
-                            imgPage.Text = "Tileset";
-                            previewTabs.TabPages.Add(imgPage);
-                            previewTabs.SelectedTab = imgPage;
-                            bitmapControlsPanel.Visible = false;
+                            tilesPictureBox.Image = tilesetBitmap;
+                            previewTabs.TabPages.Add(tilesPage);
+                            previewTabs.SelectedTab = tilesPage;
                         }
                         else MessageBox.Show("Error: Failed to generate tileset preview!");
                         break;
@@ -159,6 +157,7 @@ namespace T2Tools
                     case TOCEntryType.Music:
                         previewTabs.TabPages.Add(tfmxPage);
                         previewTabs.SelectedTab = tfmxPage;
+                        playSelectedTFM();
                         break;
 
                     case TOCEntryType.Unknown:
@@ -182,22 +181,7 @@ namespace T2Tools
             sectionsPanel.Invalidate();
         }
 
-        private Bitmap makeTilesetBitmap(TOCEntry entry)
-        {
-            // level number from BLOCK?.PIC file
-            if (!int.TryParse(entry.Name.Substring(5, 1), out int levelNumber)) return null;
 
-            if (levelNumber == 6) levelNumber = 5;
-
-            // palette entry
-            string palName = $"WORLD{levelNumber}.PAL";
-            if (!game.Assets.Entries.ContainsKey(palName)) return null;            
-            var paletteEntry = game.Assets.Entries[palName];
-            
-            try {
-                return TilemapMaker.FromBitmaps(BlockPicConverter.BlockPicToBitmaps(entry.Data, paletteEntry.Data));
-            } catch { return null; }
-        }
 
 
         private void tocList_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -425,6 +409,8 @@ namespace T2Tools
 
             mapPictureBox.Image = bitmap;
 
+            mapDetailsLabel.Text = $"Size: {mapMaker.Map.Width}x{mapMaker.Map.Height}";
+
             mapMaker = null;
         }
         #endregion
@@ -432,8 +418,11 @@ namespace T2Tools
         #region music
         private void tfmxPlayButton_Click(object sender, EventArgs e)
         {
-            //selectedItem.Entry
+            playSelectedTFM();
+        }
 
+        private void playSelectedTFM()
+        { 
             string samName = Path.ChangeExtension(selectedItem.Entry.Name, ".SAM");
             if (!game.Assets.Entries.ContainsKey(samName))
             {
@@ -445,6 +434,58 @@ namespace T2Tools
 
             TFXTool.PlayerForm form = new TFXTool.PlayerForm(selectedItem.Entry.Name, selectedItem.Entry.Data, samples.Data);
             form.ShowDialog(this);
+        }
+        #endregion
+
+        #region tiles preview
+        private Bitmap makeTilesetBitmap(TOCEntry entry)
+        {
+            string picName, palName, colName;
+            TOCEntry picEntry, palEntry, colEntry;
+
+            // level number from BLOCK?.PIC or WORLD?.COL file
+            if (!int.TryParse(entry.Name.Substring(5, 1), out int levelNumber))
+                return null;
+            if (levelNumber == 6) levelNumber = 5;
+
+            if (entry.Type == TOCEntryType.CollisionInfo) // get matching block?.pic
+            {
+                colEntry = entry;
+                picName = $"BLOCK{levelNumber}.PIC";
+                if (!game.Assets.Entries.ContainsKey(picName))
+                    return null;
+                picEntry = game.Assets.Entries[picName];
+            }
+            else // get matching world?.col
+            {
+                picEntry = entry;
+
+                // collision entry
+                colName = $"WORLD{levelNumber}.COL";
+                if (!game.Assets.Entries.ContainsKey(colName))
+                    return null;
+                colEntry = game.Assets.Entries[colName];
+            }
+
+            // palette entry
+            palName = $"WORLD{levelNumber}.PAL";
+            if (!game.Assets.Entries.ContainsKey(palName))
+                return null;
+            palEntry = game.Assets.Entries[palName];
+
+            // read col data
+            COLFile colFile = tilesCollisionsCheckbox.Checked ? new COLFile(colEntry.Data) : null;
+
+            try
+            {
+                return TilemapMaker.FromBitmaps(PICConverter.PICToBitmaps(picEntry.Data, palEntry.Data), colFile);
+            }
+            catch { return null; }
+        }
+
+        private void tilesCollisionsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            tilesPictureBox.Image = makeTilesetBitmap(selectedItem.Entry);
         }
         #endregion
     }

@@ -84,6 +84,7 @@ namespace TFXTool
 
             songList.SelectedItems.Clear();
             item.Selected = true;
+            item.EnsureVisible();
         }
         
         private void playPrevSong()

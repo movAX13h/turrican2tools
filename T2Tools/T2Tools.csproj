@@ -54,12 +54,13 @@
   <ItemGroup>
     <Compile Include="Formats\BOBDecoder.cs" />
     <Compile Include="Formats\BOBFile.cs" />
+    <Compile Include="Formats\COLFile.cs" />
     <Compile Include="Formats\DrawProgramCpu.cs" />
     <Compile Include="Formats\Palette.cs" />
     <Compile Include="Formats\PCMFile.cs" />
     <Compile Include="Formats\PCXFile.cs" />
-    <Compile Include="Formats\BlockPicConverter.cs" />
-    <Compile Include="Formats\TilemapMaker.cs" />
+    <Compile Include="Formats\PICConverter.cs" />
+    <Compile Include="Turrican\TilemapMaker.cs" />
     <Compile Include="Formats\VGABitmap.cs" />
     <Compile Include="Formats\VGABitmapConverter.cs" />
     <Compile Include="Turrican\AssetLoader.cs" />

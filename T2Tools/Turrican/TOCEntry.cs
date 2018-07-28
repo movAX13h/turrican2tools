@@ -5,7 +5,7 @@ namespace T2Tools.Turrican
 {
     public enum TOCEntryType { Unknown, Gap, Text, Language, StaticSprite, AnimatedSprite,
         Tileset, Bitmap, PixelFont, TextmodeFont, Palette, EntitiesList,
-        Music, Sound, Executable, Map, DAT, DIR }
+        Music, Sound, Executable, Map, DAT, DIR, CollisionInfo }
 
     public class TOCEntry
     {
@@ -40,6 +40,7 @@ namespace T2Tools.Turrican
                     case ".dir": return TOCEntryType.DIR;
                     case ".gap": return TOCEntryType.Gap;
                     case ".eib": return TOCEntryType.EntitiesList;
+                    case ".col": return TOCEntryType.CollisionInfo;
                     default:     return TOCEntryType.Unknown;
                 }                
             }

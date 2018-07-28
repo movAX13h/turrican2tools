@@ -4,9 +4,9 @@ using System.Drawing;
 
 namespace T2Tools.Formats
 {
-    public class BlockPicConverter
+    public class PICConverter
     {
-        public static Bitmap[] BlockPicToBitmaps(byte[] blockPic, byte[] palette)
+        public static Bitmap[] PICToBitmaps(byte[] blockPic, byte[] palette)
         {
             if(palette.Length != 768)
                 throw new Exception("blockpic data must be 768 bytes long");

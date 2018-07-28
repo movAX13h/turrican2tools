@@ -20,6 +20,8 @@ namespace T2Tools.Turrican
 
         private Bitmap resultBitmap;
 
+        public PCMFile Map { get; private set; }
+
         public MapMaker(TOC assets, Action<int> progressCallback, Action<Bitmap> completeCallback)
         {
             this.assets = assets;
@@ -94,27 +96,27 @@ namespace T2Tools.Turrican
         { 
             worker.ReportProgress(0);
 
-            PCMFile map = new PCMFile(mapEntry.Data);
+            Map = new PCMFile(mapEntry.Data);
 
             worker.ReportProgress(10);
             if (worker.CancellationPending) return;
 
-            Bitmap[] tiles = BlockPicConverter.BlockPicToBitmaps(tilesetEntry.Data, paletteEntry.Data);
+            Bitmap[] tiles = PICConverter.PICToBitmaps(tilesetEntry.Data, paletteEntry.Data);
 
             worker.ReportProgress(40);
             if (worker.CancellationPending) return;
 
-            resultBitmap = new Bitmap(Game.TileSize * map.Width, Game.TileSize * map.Height);
+            resultBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
             Graphics gfx = Graphics.FromImage(resultBitmap);
 
-            int total = map.Width * map.Height;
+            int total = Map.Width * Map.Height;
 
-            for(int y = 0; y < map.Height; y++)
+            for(int y = 0; y < Map.Height; y++)
             {
-                for (int x = 0; x < map.Width; x++)
+                for (int x = 0; x < Map.Width; x++)
                 {
-                    int id = x + y * map.Width;
-                    int tileId = map.TilesIndices[y, x];
+                    int id = x + y * Map.Width;
+                    int tileId = Map.TilesIndices[y, x];
 
                     Bitmap tile = tiles[tileId];
                     gfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
