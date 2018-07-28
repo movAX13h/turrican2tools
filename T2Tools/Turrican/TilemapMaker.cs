@@ -36,30 +36,38 @@ namespace T2Tools.Turrican
 
                     gfx.DrawImage(bitmaps[i], 16 * x, 16 * y, 16, 16);
 
-                    if (collisionInfo != null && i < collisionInfo.Entries.Length)
+                    if (collisionInfo != null)
                     {
-                        if (collisionInfo.Entries[i].A > 0)
+                        if (i < collisionInfo.Entries.Length)
                         {
-                            brush.Color = colors[collisionInfo.Entries[i].A];
-                            gfx.FillRectangle(brush, 16 * x, 16 * y, 8, 8);
-                        }
+                            if (collisionInfo.Entries[i].A > 0)
+                            {
+                                brush.Color = colors[collisionInfo.Entries[i].A];
+                                gfx.FillRectangle(brush, 16 * x, 16 * y, 8, 8);
+                            }
 
-                        if (collisionInfo.Entries[i].B > 0)
-                        {
-                            brush.Color = colors[collisionInfo.Entries[i].B];
-                            gfx.FillRectangle(brush, 16 * x + 8, 16 * y, 8, 8);
-                        }
+                            if (collisionInfo.Entries[i].B > 0)
+                            {
+                                brush.Color = colors[collisionInfo.Entries[i].B];
+                                gfx.FillRectangle(brush, 16 * x + 8, 16 * y, 8, 8);
+                            }
 
-                        if (collisionInfo.Entries[i].C > 0)
-                        {
-                            brush.Color = colors[collisionInfo.Entries[i].C];
-                            gfx.FillRectangle(brush, 16 * x, 16 * y + 8, 8, 8);
-                        }
+                            if (collisionInfo.Entries[i].C > 0)
+                            {
+                                brush.Color = colors[collisionInfo.Entries[i].C];
+                                gfx.FillRectangle(brush, 16 * x, 16 * y + 8, 8, 8);
+                            }
 
-                        if (collisionInfo.Entries[i].D > 0)
+                            if (collisionInfo.Entries[i].D > 0)
+                            {
+                                brush.Color = colors[collisionInfo.Entries[i].D];
+                                gfx.FillRectangle(brush, 16 * x + 8, 16 * y + 8, 8, 8);
+                            }
+                        }
+                        else
                         {
-                            brush.Color = colors[collisionInfo.Entries[i].D];
-                            gfx.FillRectangle(brush, 16 * x + 8, 16 * y + 8, 8, 8);
+                            gfx.DrawLine(Pens.Red, 16 * x + 2, 16 * y + 2, 16 * x + 14, 16 * y + 14);
+                            gfx.DrawLine(Pens.Red, 16 * x + 14, 16 * y + 2, 16 * x + 2, 16 * y + 14);
                         }
                     }
                 }
