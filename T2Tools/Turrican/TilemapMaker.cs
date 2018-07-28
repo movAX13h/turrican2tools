@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using T2Tools.Formats;
 
 namespace T2Tools.Turrican
@@ -17,10 +18,13 @@ namespace T2Tools.Turrican
             int h = (num / w) + 1;
 
             SolidBrush brush = new SolidBrush(Color.White);
-            Color colorA = Color.FromArgb(200, 255, 255, 0);
-            Color colorB = Color.FromArgb(200, 255, 0, 255);
-            Color colorC = Color.FromArgb(200, 0, 255, 255);
-            Color colorD = Color.FromArgb(200, 0, 255, 0);
+            Dictionary<int, Color> colors = new Dictionary<int,Color>() {
+                { 0x01, Color.FromArgb(200, 255, 255, 0) },
+                { 0x80, Color.FromArgb(200, 255, 0, 255) },
+                { 0x7F, Color.FromArgb(200, 0, 255, 255) },
+                { 0xD3, Color.FromArgb(200, 0, 255, 0) },
+                { 0x31, Color.FromArgb(200, 10, 100, 200) }
+            };
 
             Bitmap bmp = new Bitmap(16 * w, 16 * h);
             using (var gfx = Graphics.FromImage(bmp))
@@ -36,25 +40,25 @@ namespace T2Tools.Turrican
                     {
                         if (collisionInfo.Entries[i].A > 0)
                         {
-                            brush.Color = colorA;
+                            brush.Color = colors[collisionInfo.Entries[i].A];
                             gfx.FillRectangle(brush, 16 * x, 16 * y, 8, 8);
                         }
 
                         if (collisionInfo.Entries[i].B > 0)
                         {
-                            brush.Color = colorA;
+                            brush.Color = colors[collisionInfo.Entries[i].B];
                             gfx.FillRectangle(brush, 16 * x + 8, 16 * y, 8, 8);
                         }
 
                         if (collisionInfo.Entries[i].C > 0)
                         {
-                            brush.Color = colorA;
+                            brush.Color = colors[collisionInfo.Entries[i].C];
                             gfx.FillRectangle(brush, 16 * x, 16 * y + 8, 8, 8);
                         }
 
                         if (collisionInfo.Entries[i].D > 0)
                         {
-                            brush.Color = colorA;
+                            brush.Color = colors[collisionInfo.Entries[i].D];
                             gfx.FillRectangle(brush, 16 * x + 8, 16 * y + 8, 8, 8);
                         }
                     }

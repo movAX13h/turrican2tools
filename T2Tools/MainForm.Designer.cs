@@ -70,7 +70,6 @@
             this.tilesPictureBox = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tilesCollisionsCheckbox = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -486,7 +485,6 @@
             // 
             // tilesPage
             // 
-            this.tilesPage.Controls.Add(this.label2);
             this.tilesPage.Controls.Add(this.tilesCollisionsCheckbox);
             this.tilesPage.Controls.Add(this.panel3);
             this.tilesPage.Location = new System.Drawing.Point(4, 22);
@@ -522,20 +520,11 @@
             this.tilesCollisionsCheckbox.AutoSize = true;
             this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
             this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
-            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(107, 17);
+            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
             this.tilesCollisionsCheckbox.TabIndex = 5;
-            this.tilesCollisionsCheckbox.Text = "Collisions (yellow)";
+            this.tilesCollisionsCheckbox.Text = "Collisions";
             this.tilesCollisionsCheckbox.UseVisualStyleBackColor = true;
             this.tilesCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.tilesCollisionsCheckbox_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(482, 19);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 23);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Size...";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
@@ -621,7 +610,6 @@
         private System.Windows.Forms.CheckBox mapCollisionsCheckbox;
         private System.Windows.Forms.Label mapDetailsLabel;
         private System.Windows.Forms.TabPage tilesPage;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox tilesCollisionsCheckbox;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox tilesPictureBox;
