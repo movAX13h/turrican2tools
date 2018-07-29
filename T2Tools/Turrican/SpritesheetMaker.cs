@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using T2Tools.Formats;
 
 namespace T2Tools.Turrican
@@ -20,6 +17,7 @@ namespace T2Tools.Turrican
                 ww += frame.Width + (i != 0 ? spacingX : 0);
                 hh = Math.Max(frame.Height, hh);
             }
+
             var bmp = new Bitmap(ww, hh);
             using(var g = Graphics.FromImage(bmp))
             {
@@ -28,16 +26,10 @@ namespace T2Tools.Turrican
                 {
                     var frame = frames[i];
                     var rgbbmp = VGABitmapConverter.ToRGBA(frame);
-
                     var r = new Rectangle(x, hh - rgbbmp.Height, rgbbmp.Width, rgbbmp.Height);
-
                     g.DrawImage(rgbbmp, r);
-
-                    if(frameRectangles != null)
-                        frameRectangles.Add(r);
-
+                    frameRectangles?.Add(r);
                     //g.DrawString(bob.Frames[i].Settings.ToString(), SystemFonts.DialogFont, SystemBrushes.ActiveBorder, x, 0);
-
                     x += frame.Width + spacingX;
                 }
             }

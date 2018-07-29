@@ -81,9 +81,10 @@
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.exportButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.saveFrameButton = new System.Windows.Forms.Button();
+            this.saveSpriteSheetButton = new System.Windows.Forms.Button();
+            this.saveStripeButton = new System.Windows.Forms.Button();
+            this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -283,9 +284,9 @@
             // 
             // imgPage
             // 
-            this.imgPage.Controls.Add(this.button3);
-            this.imgPage.Controls.Add(this.button2);
-            this.imgPage.Controls.Add(this.button1);
+            this.imgPage.Controls.Add(this.saveStripeButton);
+            this.imgPage.Controls.Add(this.saveSpriteSheetButton);
+            this.imgPage.Controls.Add(this.saveFrameButton);
             this.imgPage.Controls.Add(this.panel4);
             this.imgPage.Controls.Add(this.imgZoomInput);
             this.imgPage.Controls.Add(this.bitmapControlsPanel);
@@ -304,14 +305,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.AutoScroll = true;
             this.panel4.Controls.Add(this.imgPictureBox);
-            this.panel4.Location = new System.Drawing.Point(0, 38);
+            this.panel4.Location = new System.Drawing.Point(0, 34);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(659, 457);
+            this.panel4.Size = new System.Drawing.Size(659, 461);
             this.panel4.TabIndex = 3;
             // 
             // imgPictureBox
             // 
-            this.imgPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.imgPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPictureBox.Location = new System.Drawing.Point(7, 1);
             this.imgPictureBox.Name = "imgPictureBox";
             this.imgPictureBox.Size = new System.Drawing.Size(295, 217);
             this.imgPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -320,10 +322,9 @@
             // 
             // imgZoomInput
             // 
-            this.imgZoomInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.imgZoomInput.AutoSize = false;
             this.imgZoomInput.BackColor = System.Drawing.Color.White;
-            this.imgZoomInput.Location = new System.Drawing.Point(549, 6);
+            this.imgZoomInput.Location = new System.Drawing.Point(144, 6);
             this.imgZoomInput.Maximum = 14;
             this.imgZoomInput.Minimum = 1;
             this.imgZoomInput.Name = "imgZoomInput";
@@ -335,7 +336,6 @@
             // 
             // bitmapControlsPanel
             // 
-            this.bitmapControlsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
@@ -624,9 +624,11 @@
             // 
             // saveExeDialog
             // 
+            this.saveExeDialog.DefaultExt = "exe";
             this.saveExeDialog.FileName = "T2mod.EXE";
             this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
             this.saveExeDialog.RestoreDirectory = true;
+            this.saveExeDialog.Title = "Save new game executable";
             // 
             // exportButton
             // 
@@ -639,32 +641,49 @@
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
-            // button1
+            // exportDialog
             // 
-            this.button1.Location = new System.Drawing.Point(144, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "FRAME";
-            this.button1.UseVisualStyleBackColor = true;
+            this.exportDialog.Description = "Select a folder to store all raw assets of the game.";
             // 
-            // button2
+            // saveFrameButton
             // 
-            this.button2.Location = new System.Drawing.Point(276, 6);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(94, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "SPRITESHEET";
-            this.button2.UseVisualStyleBackColor = true;
+            this.saveFrameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveFrameButton.Location = new System.Drawing.Point(427, 6);
+            this.saveFrameButton.Name = "saveFrameButton";
+            this.saveFrameButton.Size = new System.Drawing.Size(60, 23);
+            this.saveFrameButton.TabIndex = 4;
+            this.saveFrameButton.Text = "FRAME";
+            this.saveFrameButton.UseVisualStyleBackColor = true;
+            this.saveFrameButton.Click += new System.EventHandler(this.saveFrameButton_Click);
             // 
-            // button3
+            // saveSpriteSheetButton
             // 
-            this.button3.Location = new System.Drawing.Point(210, 6);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(60, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "STRIPE";
-            this.button3.UseVisualStyleBackColor = true;
+            this.saveSpriteSheetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveSpriteSheetButton.Location = new System.Drawing.Point(559, 6);
+            this.saveSpriteSheetButton.Name = "saveSpriteSheetButton";
+            this.saveSpriteSheetButton.Size = new System.Drawing.Size(94, 23);
+            this.saveSpriteSheetButton.TabIndex = 5;
+            this.saveSpriteSheetButton.Text = "SPRITESHEET";
+            this.saveSpriteSheetButton.UseVisualStyleBackColor = true;
+            this.saveSpriteSheetButton.Click += new System.EventHandler(this.saveSpriteSheetButton_Click);
+            // 
+            // saveStripeButton
+            // 
+            this.saveStripeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveStripeButton.Location = new System.Drawing.Point(493, 6);
+            this.saveStripeButton.Name = "saveStripeButton";
+            this.saveStripeButton.Size = new System.Drawing.Size(60, 23);
+            this.saveStripeButton.TabIndex = 6;
+            this.saveStripeButton.Text = "STRIPE";
+            this.saveStripeButton.UseVisualStyleBackColor = true;
+            this.saveStripeButton.Click += new System.EventHandler(this.saveStripeButton_Click);
+            // 
+            // saveImageDialog
+            // 
+            this.saveImageDialog.DefaultExt = "png";
+            this.saveImageDialog.Filter = "PNG Files (*.png)|*.png";
+            this.saveImageDialog.RestoreDirectory = true;
+            this.saveImageDialog.Title = "Save PNG";
             // 
             // MainForm
             // 
@@ -770,9 +789,10 @@
         private System.Windows.Forms.FolderBrowserDialog exportDialog;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox imgPictureBox;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button saveStripeButton;
+        private System.Windows.Forms.Button saveSpriteSheetButton;
+        private System.Windows.Forms.Button saveFrameButton;
+        private System.Windows.Forms.SaveFileDialog saveImageDialog;
     }
 }
 

@@ -464,6 +464,19 @@ namespace T2Tools
         }
         #endregion
 
-        
+        private void saveFrameButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("not implemented yet");
+        }
+
+        private void saveStripeButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("not implemented yet");
+        }
+
+        private void saveSpriteSheetButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("not implemented yet");
+        }
     }
 }

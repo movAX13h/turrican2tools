@@ -61,6 +61,7 @@
     <Compile Include="Formats\PCMFile.cs" />
     <Compile Include="Formats\PCXFile.cs" />
     <Compile Include="Formats\PICConverter.cs" />
+    <Compile Include="Turrican\SpritesheetMaker.cs" />
     <Compile Include="Turrican\TilemapMaker.cs" />
     <Compile Include="Formats\VGABitmap.cs" />
     <Compile Include="Formats\VGABitmapConverter.cs" />
