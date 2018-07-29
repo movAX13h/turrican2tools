@@ -16,7 +16,8 @@ namespace T2Tools.Controls
                 TOCEntryType.Map,
                 TOCEntryType.Tileset,
                 TOCEntryType.Music,
-                TOCEntryType.CollisionInfo
+                TOCEntryType.CollisionInfo,
+                TOCEntryType.EntitiesList
         };
 
         public TOCEntry Entry { get; private set; }

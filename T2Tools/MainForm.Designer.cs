@@ -45,8 +45,9 @@
             this.hexPage = new System.Windows.Forms.TabPage();
             this.txtPage = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.palPage = new System.Windows.Forms.TabPage();
             this.imgPage = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.imgPictureBox = new System.Windows.Forms.PictureBox();
             this.imgZoomInput = new System.Windows.Forms.TrackBar();
             this.bitmapControlsPanel = new System.Windows.Forms.Panel();
             this.prevBitmapButton = new System.Windows.Forms.Button();
@@ -55,21 +56,34 @@
             this.infoPage = new System.Windows.Forms.TabPage();
             this.infoOutput = new System.Windows.Forms.TextBox();
             this.mapPage = new System.Windows.Forms.TabPage();
-            this.mapDetailsLabel = new System.Windows.Forms.Label();
-            this.mapCollisionsCheckbox = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.mapMakerProgressPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.mapMakerProgressBar = new System.Windows.Forms.ProgressBar();
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
+            this.mapDetailsLabel = new System.Windows.Forms.Label();
+            this.mapCollisionsCheckbox = new System.Windows.Forms.CheckBox();
             this.tfmxPage = new System.Windows.Forms.TabPage();
             this.tfmxPlayButton = new System.Windows.Forms.Button();
+            this.tilesPage = new System.Windows.Forms.TabPage();
+            this.tilesCollisionsCheckbox = new System.Windows.Forms.CheckBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tilesPictureBox = new System.Windows.Forms.PictureBox();
+            this.entitiesPage = new System.Windows.Forms.TabPage();
+            this.entityFileInfo = new System.Windows.Forms.Label();
+            this.entitiesList = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
-            this.tilesPage = new System.Windows.Forms.TabPage();
-            this.tilesPictureBox = new System.Windows.Forms.PictureBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.tilesCollisionsCheckbox = new System.Windows.Forms.CheckBox();
+            this.exportButton = new System.Windows.Forms.Button();
+            this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -79,6 +93,8 @@
             this.hexPage.SuspendLayout();
             this.txtPage.SuspendLayout();
             this.imgPage.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).BeginInit();
             this.bitmapControlsPanel.SuspendLayout();
             this.infoPage.SuspendLayout();
@@ -88,8 +104,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
             this.tfmxPage.SuspendLayout();
             this.tilesPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tilesPictureBox)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilesPictureBox)).BeginInit();
+            this.entitiesPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileList
@@ -188,7 +205,7 @@
             this.sectionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.sectionsPanel.Location = new System.Drawing.Point(6, 6);
             this.sectionsPanel.Name = "sectionsPanel";
-            this.sectionsPanel.Size = new System.Drawing.Size(1036, 23);
+            this.sectionsPanel.Size = new System.Drawing.Size(962, 23);
             this.sectionsPanel.TabIndex = 3;
             this.sectionsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.sectionsPanel_Paint);
             this.sectionsPanel.Resize += new System.EventHandler(this.sectionsPanel_Resize);
@@ -217,12 +234,12 @@
             // 
             this.previewTabs.Controls.Add(this.hexPage);
             this.previewTabs.Controls.Add(this.txtPage);
-            this.previewTabs.Controls.Add(this.palPage);
             this.previewTabs.Controls.Add(this.imgPage);
             this.previewTabs.Controls.Add(this.infoPage);
             this.previewTabs.Controls.Add(this.mapPage);
             this.previewTabs.Controls.Add(this.tfmxPage);
             this.previewTabs.Controls.Add(this.tilesPage);
+            this.previewTabs.Controls.Add(this.entitiesPage);
             this.previewTabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewTabs.Location = new System.Drawing.Point(0, 0);
             this.previewTabs.Name = "previewTabs";
@@ -264,18 +281,12 @@
             this.txtOutput.Size = new System.Drawing.Size(653, 489);
             this.txtOutput.TabIndex = 0;
             // 
-            // palPage
-            // 
-            this.palPage.Location = new System.Drawing.Point(4, 22);
-            this.palPage.Name = "palPage";
-            this.palPage.Padding = new System.Windows.Forms.Padding(3);
-            this.palPage.Size = new System.Drawing.Size(659, 495);
-            this.palPage.TabIndex = 2;
-            this.palPage.Text = "Palette";
-            this.palPage.UseVisualStyleBackColor = true;
-            // 
             // imgPage
             // 
+            this.imgPage.Controls.Add(this.button3);
+            this.imgPage.Controls.Add(this.button2);
+            this.imgPage.Controls.Add(this.button1);
+            this.imgPage.Controls.Add(this.panel4);
             this.imgPage.Controls.Add(this.imgZoomInput);
             this.imgPage.Controls.Add(this.bitmapControlsPanel);
             this.imgPage.Location = new System.Drawing.Point(4, 22);
@@ -285,14 +296,34 @@
             this.imgPage.TabIndex = 3;
             this.imgPage.Text = "Image";
             this.imgPage.UseVisualStyleBackColor = true;
-            this.imgPage.Paint += new System.Windows.Forms.PaintEventHandler(this.imgPage_Paint);
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.AutoScroll = true;
+            this.panel4.Controls.Add(this.imgPictureBox);
+            this.panel4.Location = new System.Drawing.Point(0, 38);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(659, 457);
+            this.panel4.TabIndex = 3;
+            // 
+            // imgPictureBox
+            // 
+            this.imgPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.imgPictureBox.Name = "imgPictureBox";
+            this.imgPictureBox.Size = new System.Drawing.Size(295, 217);
+            this.imgPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.imgPictureBox.TabIndex = 2;
+            this.imgPictureBox.TabStop = false;
             // 
             // imgZoomInput
             // 
             this.imgZoomInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.imgZoomInput.AutoSize = false;
             this.imgZoomInput.BackColor = System.Drawing.Color.White;
-            this.imgZoomInput.Location = new System.Drawing.Point(241, 352);
+            this.imgZoomInput.Location = new System.Drawing.Point(549, 6);
             this.imgZoomInput.Maximum = 14;
             this.imgZoomInput.Minimum = 1;
             this.imgZoomInput.Name = "imgZoomInput";
@@ -308,7 +339,7 @@
             this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
-            this.bitmapControlsPanel.Location = new System.Drawing.Point(6, 349);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(3, 3);
             this.bitmapControlsPanel.Name = "bitmapControlsPanel";
             this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
             this.bitmapControlsPanel.TabIndex = 0;
@@ -376,25 +407,6 @@
             this.mapPage.Text = "Map";
             this.mapPage.UseVisualStyleBackColor = true;
             // 
-            // mapDetailsLabel
-            // 
-            this.mapDetailsLabel.Location = new System.Drawing.Point(491, 15);
-            this.mapDetailsLabel.Name = "mapDetailsLabel";
-            this.mapDetailsLabel.Size = new System.Drawing.Size(153, 23);
-            this.mapDetailsLabel.TabIndex = 5;
-            this.mapDetailsLabel.Text = "Size...";
-            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // mapCollisionsCheckbox
-            // 
-            this.mapCollisionsCheckbox.AutoSize = true;
-            this.mapCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
-            this.mapCollisionsCheckbox.Name = "mapCollisionsCheckbox";
-            this.mapCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
-            this.mapCollisionsCheckbox.TabIndex = 4;
-            this.mapCollisionsCheckbox.Text = "Collisions";
-            this.mapCollisionsCheckbox.UseVisualStyleBackColor = true;
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -445,6 +457,25 @@
             this.mapPictureBox.TabIndex = 2;
             this.mapPictureBox.TabStop = false;
             // 
+            // mapDetailsLabel
+            // 
+            this.mapDetailsLabel.Location = new System.Drawing.Point(491, 15);
+            this.mapDetailsLabel.Name = "mapDetailsLabel";
+            this.mapDetailsLabel.Size = new System.Drawing.Size(153, 23);
+            this.mapDetailsLabel.TabIndex = 5;
+            this.mapDetailsLabel.Text = "Size...";
+            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // mapCollisionsCheckbox
+            // 
+            this.mapCollisionsCheckbox.AutoSize = true;
+            this.mapCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
+            this.mapCollisionsCheckbox.Name = "mapCollisionsCheckbox";
+            this.mapCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
+            this.mapCollisionsCheckbox.TabIndex = 4;
+            this.mapCollisionsCheckbox.Text = "Collisions";
+            this.mapCollisionsCheckbox.UseVisualStyleBackColor = true;
+            // 
             // tfmxPage
             // 
             this.tfmxPage.Controls.Add(this.tfmxPlayButton);
@@ -466,23 +497,6 @@
             this.tfmxPlayButton.UseVisualStyleBackColor = true;
             this.tfmxPlayButton.Click += new System.EventHandler(this.tfmxPlayButton_Click);
             // 
-            // writeExeButton
-            // 
-            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeExeButton.Location = new System.Drawing.Point(1048, 6);
-            this.writeExeButton.Name = "writeExeButton";
-            this.writeExeButton.Size = new System.Drawing.Size(54, 23);
-            this.writeExeButton.TabIndex = 5;
-            this.writeExeButton.Text = "WRITE";
-            this.writeExeButton.UseVisualStyleBackColor = true;
-            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
-            // 
-            // saveExeDialog
-            // 
-            this.saveExeDialog.FileName = "T2mod.EXE";
-            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
-            this.saveExeDialog.RestoreDirectory = true;
-            // 
             // tilesPage
             // 
             this.tilesPage.Controls.Add(this.tilesCollisionsCheckbox);
@@ -494,14 +508,16 @@
             this.tilesPage.Text = "Tiles";
             this.tilesPage.UseVisualStyleBackColor = true;
             // 
-            // tilesPictureBox
+            // tilesCollisionsCheckbox
             // 
-            this.tilesPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.tilesPictureBox.Name = "tilesPictureBox";
-            this.tilesPictureBox.Size = new System.Drawing.Size(100, 50);
-            this.tilesPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.tilesPictureBox.TabIndex = 0;
-            this.tilesPictureBox.TabStop = false;
+            this.tilesCollisionsCheckbox.AutoSize = true;
+            this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
+            this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
+            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
+            this.tilesCollisionsCheckbox.TabIndex = 5;
+            this.tilesCollisionsCheckbox.Text = "Collisions";
+            this.tilesCollisionsCheckbox.UseVisualStyleBackColor = true;
+            this.tilesCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.tilesCollisionsCheckbox_CheckedChanged);
             // 
             // panel3
             // 
@@ -516,22 +532,146 @@
             this.panel3.Size = new System.Drawing.Size(660, 436);
             this.panel3.TabIndex = 1;
             // 
-            // tilesCollisionsCheckbox
+            // tilesPictureBox
             // 
-            this.tilesCollisionsCheckbox.AutoSize = true;
-            this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
-            this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
-            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
-            this.tilesCollisionsCheckbox.TabIndex = 5;
-            this.tilesCollisionsCheckbox.Text = "Collisions";
-            this.tilesCollisionsCheckbox.UseVisualStyleBackColor = true;
-            this.tilesCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.tilesCollisionsCheckbox_CheckedChanged);
+            this.tilesPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.tilesPictureBox.Name = "tilesPictureBox";
+            this.tilesPictureBox.Size = new System.Drawing.Size(100, 50);
+            this.tilesPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.tilesPictureBox.TabIndex = 0;
+            this.tilesPictureBox.TabStop = false;
+            // 
+            // entitiesPage
+            // 
+            this.entitiesPage.Controls.Add(this.entityFileInfo);
+            this.entitiesPage.Controls.Add(this.entitiesList);
+            this.entitiesPage.Location = new System.Drawing.Point(4, 22);
+            this.entitiesPage.Name = "entitiesPage";
+            this.entitiesPage.Padding = new System.Windows.Forms.Padding(3);
+            this.entitiesPage.Size = new System.Drawing.Size(659, 495);
+            this.entitiesPage.TabIndex = 8;
+            this.entitiesPage.Text = "Entities";
+            this.entitiesPage.UseVisualStyleBackColor = true;
+            // 
+            // entityFileInfo
+            // 
+            this.entityFileInfo.AutoSize = true;
+            this.entityFileInfo.Location = new System.Drawing.Point(23, 21);
+            this.entityFileInfo.Name = "entityFileInfo";
+            this.entityFileInfo.Size = new System.Drawing.Size(25, 13);
+            this.entityFileInfo.TabIndex = 2;
+            this.entityFileInfo.Text = "Info";
+            // 
+            // entitiesList
+            // 
+            this.entitiesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.entitiesList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+            this.entitiesList.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.entitiesList.FullRowSelect = true;
+            this.entitiesList.HideSelection = false;
+            this.entitiesList.Location = new System.Drawing.Point(0, 52);
+            this.entitiesList.MultiSelect = false;
+            this.entitiesList.Name = "entitiesList";
+            this.entitiesList.Size = new System.Drawing.Size(659, 444);
+            this.entitiesList.TabIndex = 1;
+            this.entitiesList.UseCompatibleStateImageBehavior = false;
+            this.entitiesList.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 101;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Type";
+            this.columnHeader2.Width = 105;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Size";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Start";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader4.Width = 65;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "End";
+            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeader5.Width = 66;
+            // 
+            // writeExeButton
+            // 
+            this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.writeExeButton.Location = new System.Drawing.Point(972, 6);
+            this.writeExeButton.Name = "writeExeButton";
+            this.writeExeButton.Size = new System.Drawing.Size(66, 23);
+            this.writeExeButton.TabIndex = 5;
+            this.writeExeButton.Text = "REPACK";
+            this.writeExeButton.UseVisualStyleBackColor = true;
+            this.writeExeButton.Click += new System.EventHandler(this.writeExeButton_Click);
+            // 
+            // saveExeDialog
+            // 
+            this.saveExeDialog.FileName = "T2mod.EXE";
+            this.saveExeDialog.Filter = "EXE Files (*.exe)|*.exe|All Files|*.*";
+            this.saveExeDialog.RestoreDirectory = true;
+            // 
+            // exportButton
+            // 
+            this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exportButton.Location = new System.Drawing.Point(1041, 6);
+            this.exportButton.Name = "exportButton";
+            this.exportButton.Size = new System.Drawing.Size(59, 23);
+            this.exportButton.TabIndex = 5;
+            this.exportButton.Text = "EXPORT";
+            this.exportButton.UseVisualStyleBackColor = true;
+            this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(144, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(60, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "FRAME";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(276, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(94, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "SPRITESHEET";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(210, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(60, 23);
+            this.button3.TabIndex = 6;
+            this.button3.Text = "STRIPE";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1108, 561);
+            this.Controls.Add(this.exportButton);
             this.Controls.Add(this.writeExeButton);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.sectionsPanel);
@@ -550,6 +690,9 @@
             this.txtPage.ResumeLayout(false);
             this.txtPage.PerformLayout();
             this.imgPage.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgZoomInput)).EndInit();
             this.bitmapControlsPanel.ResumeLayout(false);
             this.infoPage.ResumeLayout(false);
@@ -564,9 +707,11 @@
             this.tfmxPage.ResumeLayout(false);
             this.tilesPage.ResumeLayout(false);
             this.tilesPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tilesPictureBox)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilesPictureBox)).EndInit();
+            this.entitiesPage.ResumeLayout(false);
+            this.entitiesPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -591,7 +736,6 @@
         private System.Windows.Forms.TabControl previewTabs;
         private System.Windows.Forms.TabPage hexPage;
         private System.Windows.Forms.TabPage txtPage;
-        private System.Windows.Forms.TabPage palPage;
         private System.Windows.Forms.TabPage imgPage;
         private System.Windows.Forms.Panel bitmapControlsPanel;
         private System.Windows.Forms.Button prevBitmapButton;
@@ -614,6 +758,21 @@
         private System.Windows.Forms.CheckBox tilesCollisionsCheckbox;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox tilesPictureBox;
+        private System.Windows.Forms.TabPage entitiesPage;
+        private System.Windows.Forms.ListView entitiesList;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.Label entityFileInfo;
+        private System.Windows.Forms.Button exportButton;
+        private System.Windows.Forms.FolderBrowserDialog exportDialog;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.PictureBox imgPictureBox;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 

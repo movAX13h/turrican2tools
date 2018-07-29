@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace T2Tools.Turrican
 {
@@ -12,6 +13,18 @@ namespace T2Tools.Turrican
                 foreach (var entry in Entries.Values) if (entry.Dirty) return true;
                 return false;
             }
+        }
+
+        public int ExportTo(string dir)
+        {
+            if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
+            foreach(var entry in Entries.Values)
+            {
+                File.WriteAllBytes(Path.Combine(dir, entry.Name), entry.Data);
+            }
+
+            return Entries.Count;
         }
     }
 }

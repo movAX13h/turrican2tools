@@ -63,7 +63,7 @@ namespace T2Tools
             selectedItem = item;
             applyChangesButton.Visible = false;
 
-            var hidePages = new TabPage[] { txtPage, palPage, imgPage, infoPage, mapPage, tfmxPage, tilesPage };
+            var hidePages = new TabPage[] { txtPage, imgPage, infoPage, mapPage, tfmxPage, tilesPage, entitiesPage };
             foreach(TabPage page in hidePages) if (previewTabs.TabPages.Contains(page)) previewTabs.TabPages.Remove(page);
 
             currentBitmapIndex = 0;
@@ -110,6 +110,7 @@ namespace T2Tools
                         previewTabs.TabPages.Add(imgPage);
                         previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = false;
+                        updateImagePreview();
                         break;
 
                     case TOCEntryType.AnimatedSprite:
@@ -124,16 +125,18 @@ namespace T2Tools
                         previewTabs.TabPages.Add(imgPage);
                         previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = true;
+                        updateImagePreview();
                         break;
 
                     case TOCEntryType.Palette:
                         currentImgZoom = 14;
                         imgZoomInput.Value = currentImgZoom;
-                        imgPage.Text = "Palette";
                         currentBitmaps = new Bitmap[] { Palette.ToBitmap(item.Entry.Data) };
+                        imgPage.Text = "Palette";
                         previewTabs.TabPages.Add(imgPage);
                         previewTabs.SelectedTab = imgPage;
                         bitmapControlsPanel.Visible = false;
+                        updateImagePreview();
                         break;
 
                     case TOCEntryType.Tileset:
@@ -163,12 +166,19 @@ namespace T2Tools
                         playSelectedTFM();
                         break;
 
-                    case TOCEntryType.Unknown:
+                    case TOCEntryType.EntitiesList:
+                        previewTabs.TabPages.Add(entitiesPage);
+                        previewTabs.SelectedTab = entitiesPage;
+                        EIBFile eibFile = new EIBFile(item.Entry.Data);
+                        entityFileInfo.Text = $"A: {eibFile.A}, B: {eibFile.B}, C: {eibFile.C}";
+                        break;
+
                     case TOCEntryType.PixelFont:
                     case TOCEntryType.Sound:
                     case TOCEntryType.Executable:
                     case TOCEntryType.DAT:
                     case TOCEntryType.DIR:
+                    case TOCEntryType.Unknown:
                     default:
                         break;
                 }
@@ -183,9 +193,6 @@ namespace T2Tools
 
             sectionsPanel.Invalidate();
         }
-
-
-
 
         private void tocList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -249,6 +256,13 @@ namespace T2Tools
             }
 
             sectionsPanel.Invalidate();
+        }
+
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            if (exportDialog.ShowDialog() != DialogResult.OK) return;
+            int numSavedFiled = game.Assets.ExportTo(exportDialog.SelectedPath);
+            MessageBox.Show($"Successfully saved {numSavedFiled} files to '{exportDialog.SelectedPath}'.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 
@@ -348,7 +362,7 @@ namespace T2Tools
         #endregion
 
         #region image preview
-        private void imgPage_Paint(object sender, PaintEventArgs e)
+        private void updateImagePreview()
         {
             int x, y, w, h;
 
@@ -356,19 +370,22 @@ namespace T2Tools
             {
                 Bitmap bmp = currentBitmaps[currentBitmapIndex];
 
-                x = 10;
-                y = 10;
                 w = bmp.Width * currentImgZoom;
                 h = bmp.Height * currentImgZoom;
 
-                e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                Bitmap target = new Bitmap(w, h);
+                using (Graphics gfx = Graphics.FromImage(target))
+                {
+                    gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                    gfx.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                e.Graphics.DrawImage(bmp,
-                    new Rectangle(x, y, w, h),
-                    new Rectangle(0, 0, bmp.Width, bmp.Height),
-                    GraphicsUnit.Pixel);
+                    gfx.DrawImage(bmp,
+                        new Rectangle(0, 0, w, h),
+                        new Rectangle(0, 0, bmp.Width, bmp.Height),
+                        GraphicsUnit.Pixel);
 
+                    imgPictureBox.Image = target;
+                }
                 currentBitmapIndexLabel.Text = (currentBitmapIndex + 1) + "/" + currentBitmaps.Length;
             }
         }
@@ -377,20 +394,20 @@ namespace T2Tools
         {
             currentBitmapIndex--;
             if (currentBitmapIndex < 0) currentBitmapIndex = currentBitmaps.Length - 1;
-            imgPage.Invalidate();
+            updateImagePreview();
         }
 
         private void nextBitmapButton_Click(object sender, EventArgs e)
         {
             currentBitmapIndex++;
             if (currentBitmapIndex > currentBitmaps.Length - 1) currentBitmapIndex = 0;
-            imgPage.Invalidate();
+            updateImagePreview();
         }
 
         private void imgZoomInput_Scroll(object sender, EventArgs e)
         {
             currentImgZoom = imgZoomInput.Value;
-            imgPage.Invalidate();
+            updateImagePreview();
         }
         #endregion
 
@@ -446,5 +463,7 @@ namespace T2Tools
             tilesPictureBox.Image = tilemapMaker.MakeTilesetBitmap(selectedItem.Entry, tilesCollisionsCheckbox.Checked);
         }
         #endregion
+
+        
     }
 }
