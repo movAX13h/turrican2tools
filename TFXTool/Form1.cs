@@ -55,7 +55,8 @@ namespace TFXTool
             sampledata = new byte[1];
 
 
-            var def = @"..\..\..\game\unpacked\TITLE.TFX";
+            var def = @"..\..\..\game\unpacked\WORLD1.TFX";
+            def = "last.tfx";
             if(File.Exists(def))
                 Open(def);
 
@@ -80,6 +81,10 @@ namespace TFXTool
         {
             if(player != null)
                 player.Stop();
+
+            var n = "last.tfx";
+            tfx.Save(n);
+            File.WriteAllBytes(Path.ChangeExtension(n, ".sam"), sampledata);
         }
 
         void Open(string path)
@@ -450,17 +455,61 @@ namespace TFXTool
                 contextMenuStrip1.Show((Control)sender, e.Location);
         }
 
+        private void listViewPattern_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+                contextMenuStrip1.Show((Control)sender, e.Location);
+        }
+
         private void removeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var c = contextMenuStrip1.SourceControl;
             if(c is ListView lv)
             {
-                var macro = tfx.Macros[(int)numericUpDownMacro.Value];
+                if(lv == listViewMacro)
+                {
+                    var macro = tfx.Macros[(int)numericUpDownMacro.Value];
 
-                int i = int.Parse(lv.SelectedItems[0].Text);
-                macro.Steps.RemoveAt(i);
+                    int i = int.Parse(lv.SelectedItems[0].Text);
+                    macro.Steps.RemoveAt(i);
 
-                UpdateMacroView(macro);
+                    UpdateMacroView(macro);
+                }
+                else if(lv == listViewPattern)
+                {
+                    var pattern = tfx.Patterns[(int)numericUpDownPattern.Value];
+
+                    int i = int.Parse(lv.SelectedItems[0].Text);
+                    pattern.Steps.RemoveAt(i);
+
+                    UpdatePatternView(pattern);
+                }
+            }
+        }
+
+        private void insertNewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var c = contextMenuStrip1.SourceControl;
+            if(c is ListView lv)
+            {
+                if(lv == listViewMacro)
+                {
+                    var macro = tfx.Macros[(int)numericUpDownMacro.Value];
+
+                    int i = int.Parse(lv.SelectedItems[0].Text);
+                    macro.Steps.Insert(i, new TFXMacroCommand(0));
+
+                    UpdateMacroView(macro);
+                }
+                else if(lv == listViewPattern)
+                {
+                    var pattern = tfx.Patterns[(int)numericUpDownPattern.Value];
+
+                    int i = int.Parse(lv.SelectedItems[0].Text);
+                    pattern.Steps.Insert(i, new TFXPatternCommand(0));
+
+                    UpdatePatternView(pattern);
+                }
             }
         }
 

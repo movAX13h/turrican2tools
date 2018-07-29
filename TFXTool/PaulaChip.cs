@@ -14,13 +14,19 @@ namespace TFXTool
 {
     public class PaulaChip : CodeProcessorNode
     {
+        AudioContext audioContext;
         int numChannels = 8;
         public Channel[] Channels;
         int fcpu = 7159091;
-        float mixVolume = .1f;
+        float mixVolume = .17f;
+        int interruptCounter = 0;
+        double interruptFrequency = 50;
+        public event EventHandler Interrupt;
 
         public PaulaChip(AudioContext audioContext) : base(audioContext)
         {
+            this.audioContext = audioContext;
+
             Channels = new Channel[numChannels];
             for(int i = 0; i < numChannels; ++i)
             {
@@ -31,7 +37,7 @@ namespace TFXTool
             AudioProcess += PaulaChip_AudioProcess;
         }
 
-        private void PaulaChip_AudioProcess(object sender, AudioProcessEventArgs e)
+        void ClockChip(float[] addLeft, float[] addRight, int offset, int numFrames)
         {
             float cpuCyclesPerFrame = 7159091 / 44100f;
 
@@ -51,12 +57,12 @@ namespace TFXTool
                     float vmulRight = vmul * (1 - Math.Max(-channel.Pan, 0));
 
                     int period = channel.Period * 2;
-                    for(int j = 0; j < e.NumFrames; ++j)
+                    for(int j = 0; j < numFrames; ++j)
                     {
 
                         var fv = (sbyte)channel.Data[Math.Min(channel.StartByte + channel.Position, channel.Data.Length - 1)] / 128f;
-                        e.OutAdd[0][j] += fv * vmulLeft;
-                        e.OutAdd[1][j] += fv * vmulRight;
+                        addLeft[offset + j] += fv * vmulLeft;
+                        addRight[offset + j] += fv * vmulRight;
 
                         while(channel.Prp >= period)
                         {
@@ -79,6 +85,21 @@ namespace TFXTool
                             break;
                     }
                 }
+            }
+        }
+
+        private void PaulaChip_AudioProcess(object sender, AudioProcessEventArgs e)
+        {
+            for(int pos = 0, td; pos < e.NumFrames; pos += td)
+            {
+                if(interruptCounter <= 0)
+                {
+                    Interrupt?.Invoke(this, EventArgs.Empty);
+                    interruptCounter = (int)Math.Round(audioContext.Samplerate / interruptFrequency);
+                }
+                td = Math.Min(interruptCounter, e.NumFrames - pos);
+                ClockChip(e.OutAdd[0], e.OutAdd[1], pos, td);
+                interruptCounter -= td;
             }
         }
 

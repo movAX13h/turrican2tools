@@ -24,12 +24,12 @@ namespace TFXTool
             Playroutine.SongEnded += Playroutine_SongEnded;
 
 
-            timer = new Timer();
+            /*timer = new Timer();
             timer.Tick += (s, ee) =>
             {
                 Playroutine.VBI();
 
-            };
+            };*/
 
         }
 
@@ -44,19 +44,26 @@ namespace TFXTool
 
         private void Playroutine_TempoChanged(object sender, EventArgs e)
         {
-            timer.Interval = 1000 / Playroutine.Frequency;
+            //timer.Interval = 1000 / 50;
         }
 
         public void Start()
         {
-            timer.Interval = 1000 / Playroutine.Frequency;
+            //timer.Interval = 1000 / 50;
+            PaulaChip.Interrupt += PaulaChip_Interrupt;
             PaulaChip.Connect(actx.Destination);
-            timer.Start();
+            timer?.Start();
         }
+
+        private void PaulaChip_Interrupt(object sender, EventArgs e)
+        {
+            Playroutine.VBI();
+        }
+
         public void Stop()
         {
             PaulaChip.Disconnect();
-            timer.Stop();
+            timer?.Stop();
         }
     }
 }

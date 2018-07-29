@@ -131,6 +131,7 @@
             this.listViewPattern.UseCompatibleStateImageBehavior = false;
             this.listViewPattern.View = System.Windows.Forms.View.Details;
             this.listViewPattern.DoubleClick += new System.EventHandler(this.listViewPattern_DoubleClick);
+            this.listViewPattern.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewPattern_MouseUp);
             // 
             // columnHeader1
             // 
@@ -460,6 +461,7 @@
             this.insertNewToolStripMenuItem.Name = "insertNewToolStripMenuItem";
             this.insertNewToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.insertNewToolStripMenuItem.Text = "Insert New";
+            this.insertNewToolStripMenuItem.Click += new System.EventHandler(this.insertNewToolStripMenuItem_Click);
             // 
             // comboBoxPreviewNote
             // 
