@@ -191,9 +191,10 @@ namespace TFXTool
 
         private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
         {
-            patternLabel.Text = "Pattern: " + currentPlayback.Playroutine.TrackstepPosition.ToString();
-            
-            
+            patternLabel.InvokeIfRequired(() =>
+            {
+                patternLabel.Text = "Pattern: " + currentPlayback.Playroutine.TrackstepPosition.ToString();
+            });
         }
 
         private void Playroutine_SongEnded(object sender, EventArgs e)

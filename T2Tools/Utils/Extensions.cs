@@ -34,5 +34,17 @@ namespace T2Tools.Utils
                             radius + radius, radius + radius);
         }
 
+        public static void InvokeIfRequired(this Control control, MethodInvoker action)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+
     }
 }

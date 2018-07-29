@@ -23,6 +23,7 @@ namespace T2Tools
         private int currentImgZoom = 3;
 
         private MapMaker mapMaker;
+        private TilemapMaker tilemapMaker;
 
         public MainForm()
         {
@@ -43,7 +44,9 @@ namespace T2Tools
             {
                 MessageBox.Show("Failed to load game data: " + game.Error);
                 return;
-            }            
+            }
+
+            tilemapMaker = new TilemapMaker(game.Assets);
 
             // fill TOC list
             foreach (var entry in game.Assets.Entries.Values)
@@ -136,7 +139,7 @@ namespace T2Tools
                     case TOCEntryType.Tileset:
                     case TOCEntryType.CollisionInfo:
                         tilesCollisionsCheckbox.Checked = item.Entry.Type == TOCEntryType.CollisionInfo;
-                        Bitmap tilesetBitmap = makeTilesetBitmap(item.Entry);
+                        Bitmap tilesetBitmap = tilemapMaker.MakeTilesetBitmap(item.Entry, tilesCollisionsCheckbox.Checked);
                         if (tilesetBitmap != null)
                         {
                             tilesPictureBox.Image = tilesetBitmap;
@@ -438,54 +441,9 @@ namespace T2Tools
         #endregion
 
         #region tiles preview
-        private Bitmap makeTilesetBitmap(TOCEntry entry)
-        {
-            string picName, palName, colName;
-            TOCEntry picEntry, palEntry, colEntry;
-
-            // level number from BLOCK?.PIC or WORLD?.COL file
-            if (!int.TryParse(entry.Name.Substring(5, 1), out int levelNumber))
-                return null;
-            if (levelNumber == 6) levelNumber = 5;
-
-            if (entry.Type == TOCEntryType.CollisionInfo) // get matching block?.pic
-            {
-                colEntry = entry;
-                picName = $"BLOCK{levelNumber}.PIC";
-                if (!game.Assets.Entries.ContainsKey(picName))
-                    return null;
-                picEntry = game.Assets.Entries[picName];
-            }
-            else // get matching world?.col
-            {
-                picEntry = entry;
-
-                // collision entry
-                colName = $"WORLD{levelNumber}.COL";
-                if (!game.Assets.Entries.ContainsKey(colName))
-                    return null;
-                colEntry = game.Assets.Entries[colName];
-            }
-
-            // palette entry
-            palName = $"WORLD{levelNumber}.PAL";
-            if (!game.Assets.Entries.ContainsKey(palName))
-                return null;
-            palEntry = game.Assets.Entries[palName];
-
-            // read col data
-            COLFile colFile = tilesCollisionsCheckbox.Checked ? new COLFile(colEntry.Data) : null;
-
-            try
-            {
-                return TilemapMaker.FromBitmaps(PICConverter.PICToBitmaps(picEntry.Data, palEntry.Data), colFile);
-            }
-            catch { return null; }
-        }
-
         private void tilesCollisionsCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            tilesPictureBox.Image = makeTilesetBitmap(selectedItem.Entry);
+            tilesPictureBox.Image = tilemapMaker.MakeTilesetBitmap(selectedItem.Entry, tilesCollisionsCheckbox.Checked);
         }
         #endregion
     }

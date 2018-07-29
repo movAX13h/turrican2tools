@@ -40,34 +40,35 @@ namespace T2Tools.Turrican
                     {
                         if (i < collisionInfo.Entries.Length)
                         {
-                            if (collisionInfo.Entries[i].A > 0)
+                            var entry = collisionInfo.Entries[i];
+                            if (entry.A > 0)
                             {
-                                brush.Color = colors[collisionInfo.Entries[i].A];
+                                brush.Color = colors[entry.A];
                                 gfx.FillRectangle(brush, 16 * x, 16 * y, 8, 8);
                             }
 
-                            if (collisionInfo.Entries[i].B > 0)
+                            if (entry.B > 0)
                             {
-                                brush.Color = colors[collisionInfo.Entries[i].B];
+                                brush.Color = colors[entry.B];
                                 gfx.FillRectangle(brush, 16 * x + 8, 16 * y, 8, 8);
                             }
 
-                            if (collisionInfo.Entries[i].C > 0)
+                            if (entry.C > 0)
                             {
-                                brush.Color = colors[collisionInfo.Entries[i].C];
+                                brush.Color = colors[entry.C];
                                 gfx.FillRectangle(brush, 16 * x, 16 * y + 8, 8, 8);
                             }
 
-                            if (collisionInfo.Entries[i].D > 0)
+                            if (entry.D > 0)
                             {
-                                brush.Color = colors[collisionInfo.Entries[i].D];
+                                brush.Color = colors[entry.D];
                                 gfx.FillRectangle(brush, 16 * x + 8, 16 * y + 8, 8, 8);
                             }
                         }
                         else
                         {
                             gfx.DrawLine(Pens.Red, 16 * x + 2, 16 * y + 2, 16 * x + 14, 16 * y + 14);
-                            gfx.DrawLine(Pens.Red, 16 * x + 14, 16 * y + 2, 16 * x + 2, 16 * y + 14);
+                            gfx.DrawLine(Pens.Red, 16 * x + 14, 16 * y + 2, 16 * x + 2, 16 * y + 14);                            
                         }
                     }
                 }
@@ -75,5 +76,58 @@ namespace T2Tools.Turrican
 
             return bmp;
         }
+
+        private TOC assets;
+
+        public TilemapMaker(TOC assets)
+        {
+            this.assets = assets;
+        }
+
+        public Bitmap MakeTilesetBitmap(TOCEntry entry, bool collisions) // entry can be COL or PIC
+        {
+            string picName, palName, colName;
+            TOCEntry picEntry, palEntry, colEntry;
+
+            // level number from BLOCK?.PIC or WORLD?.COL file
+            if (!int.TryParse(entry.Name.Substring(5, 1), out int levelNumber))
+                return null;
+            if (levelNumber == 6) levelNumber = 5;
+
+            if (entry.Type == TOCEntryType.CollisionInfo) // get matching block?.pic
+            {
+                colEntry = entry;
+                picName = $"BLOCK{levelNumber}.PIC";
+                if (!assets.Entries.ContainsKey(picName))
+                    return null;
+                picEntry = assets.Entries[picName];
+            }
+            else // get matching world?.col
+            {
+                picEntry = entry;
+
+                // collision entry
+                colName = $"WORLD{levelNumber}.COL";
+                if (!assets.Entries.ContainsKey(colName))
+                    return null;
+                colEntry = assets.Entries[colName];
+            }
+
+            // palette entry
+            palName = $"WORLD{levelNumber}.PAL";
+            if (!assets.Entries.ContainsKey(palName))
+                return null;
+            palEntry = assets.Entries[palName];
+
+            // read col data
+            COLFile colFile = collisions ? new COLFile(colEntry.Data) : null;
+
+            try
+            {
+                return FromBitmaps(PICConverter.PICToBitmaps(picEntry.Data, palEntry.Data), colFile);
+            }
+            catch { return null; }
+        }
+
     }
 }
