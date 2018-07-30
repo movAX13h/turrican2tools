@@ -170,7 +170,7 @@ namespace T2Tools
                         previewTabs.TabPages.Add(entitiesPage);
                         previewTabs.SelectedTab = entitiesPage;
                         EIBFile eibFile = new EIBFile(item.Entry.Data);
-                        entityFileInfo.Text = $"A: {eibFile.A}, B: {eibFile.B}, C: {eibFile.C}";
+                        entityFileInfo.Text = $"D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
                         break;
 
                     case TOCEntryType.PixelFont:
