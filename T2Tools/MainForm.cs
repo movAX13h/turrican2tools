@@ -169,7 +169,15 @@ namespace T2Tools
                     case TOCEntryType.EntitiesList:
                         previewTabs.TabPages.Add(entitiesPage);
                         previewTabs.SelectedTab = entitiesPage;
+                        entitiesList.Items.Clear();
                         EIBFile eibFile = new EIBFile(item.Entry.Data);
+                        foreach(var entry in eibFile.Regions)
+                        {
+                            foreach(var point in entry.Points)
+                            {
+                                entitiesList.Items.Add(new EntityListItem(point));
+                            }
+                        }
                         entityFileInfo.Text = $"D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
                         break;
 

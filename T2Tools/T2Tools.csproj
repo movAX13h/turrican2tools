@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\EntityListItem.cs" />
     <Compile Include="Formats\BOBDecoder.cs" />
     <Compile Include="Formats\BOBFile.cs" />
     <Compile Include="Formats\COLFile.cs" />

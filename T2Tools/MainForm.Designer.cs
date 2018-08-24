@@ -46,6 +46,9 @@
             this.txtPage = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.imgPage = new System.Windows.Forms.TabPage();
+            this.saveStripeButton = new System.Windows.Forms.Button();
+            this.saveSpriteSheetButton = new System.Windows.Forms.Button();
+            this.saveFrameButton = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.imgPictureBox = new System.Windows.Forms.PictureBox();
             this.imgZoomInput = new System.Windows.Forms.TrackBar();
@@ -75,15 +78,11 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.writeExeButton = new System.Windows.Forms.Button();
             this.saveExeDialog = new System.Windows.Forms.SaveFileDialog();
             this.exportButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.saveFrameButton = new System.Windows.Forms.Button();
-            this.saveSpriteSheetButton = new System.Windows.Forms.Button();
-            this.saveStripeButton = new System.Windows.Forms.Button();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -298,6 +297,39 @@
             this.imgPage.Text = "Image";
             this.imgPage.UseVisualStyleBackColor = true;
             // 
+            // saveStripeButton
+            // 
+            this.saveStripeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveStripeButton.Location = new System.Drawing.Point(493, 6);
+            this.saveStripeButton.Name = "saveStripeButton";
+            this.saveStripeButton.Size = new System.Drawing.Size(60, 23);
+            this.saveStripeButton.TabIndex = 6;
+            this.saveStripeButton.Text = "STRIPE";
+            this.saveStripeButton.UseVisualStyleBackColor = true;
+            this.saveStripeButton.Click += new System.EventHandler(this.saveStripeButton_Click);
+            // 
+            // saveSpriteSheetButton
+            // 
+            this.saveSpriteSheetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveSpriteSheetButton.Location = new System.Drawing.Point(559, 6);
+            this.saveSpriteSheetButton.Name = "saveSpriteSheetButton";
+            this.saveSpriteSheetButton.Size = new System.Drawing.Size(94, 23);
+            this.saveSpriteSheetButton.TabIndex = 5;
+            this.saveSpriteSheetButton.Text = "SPRITESHEET";
+            this.saveSpriteSheetButton.UseVisualStyleBackColor = true;
+            this.saveSpriteSheetButton.Click += new System.EventHandler(this.saveSpriteSheetButton_Click);
+            // 
+            // saveFrameButton
+            // 
+            this.saveFrameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveFrameButton.Location = new System.Drawing.Point(427, 6);
+            this.saveFrameButton.Name = "saveFrameButton";
+            this.saveFrameButton.Size = new System.Drawing.Size(60, 23);
+            this.saveFrameButton.TabIndex = 4;
+            this.saveFrameButton.Text = "FRAME";
+            this.saveFrameButton.UseVisualStyleBackColor = true;
+            this.saveFrameButton.Click += new System.EventHandler(this.saveFrameButton_Click);
+            // 
             // panel4
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -324,7 +356,7 @@
             // 
             this.imgZoomInput.AutoSize = false;
             this.imgZoomInput.BackColor = System.Drawing.Color.White;
-            this.imgZoomInput.Location = new System.Drawing.Point(144, 6);
+            this.imgZoomInput.Location = new System.Drawing.Point(2, 6);
             this.imgZoomInput.Maximum = 14;
             this.imgZoomInput.Minimum = 1;
             this.imgZoomInput.Name = "imgZoomInput";
@@ -339,7 +371,7 @@
             this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
-            this.bitmapControlsPanel.Location = new System.Drawing.Point(3, 3);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(116, 3);
             this.bitmapControlsPanel.Name = "bitmapControlsPanel";
             this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
             this.bitmapControlsPanel.TabIndex = 0;
@@ -571,7 +603,6 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4,
             this.columnHeader5});
             this.entitiesList.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.entitiesList.FullRowSelect = true;
@@ -586,30 +617,21 @@
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Text = "ID";
             this.columnHeader1.Width = 101;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Type";
-            this.columnHeader2.Width = 105;
+            this.columnHeader2.Text = "X";
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Size";
-            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Start";
-            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader4.Width = 65;
+            this.columnHeader3.Text = "Y";
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "End";
-            this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeader5.Width = 66;
+            this.columnHeader5.Text = "Info";
+            this.columnHeader5.Width = 200;
             // 
             // writeExeButton
             // 
@@ -644,39 +666,6 @@
             // exportDialog
             // 
             this.exportDialog.Description = "Select a folder to store all raw assets of the game.";
-            // 
-            // saveFrameButton
-            // 
-            this.saveFrameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveFrameButton.Location = new System.Drawing.Point(427, 6);
-            this.saveFrameButton.Name = "saveFrameButton";
-            this.saveFrameButton.Size = new System.Drawing.Size(60, 23);
-            this.saveFrameButton.TabIndex = 4;
-            this.saveFrameButton.Text = "FRAME";
-            this.saveFrameButton.UseVisualStyleBackColor = true;
-            this.saveFrameButton.Click += new System.EventHandler(this.saveFrameButton_Click);
-            // 
-            // saveSpriteSheetButton
-            // 
-            this.saveSpriteSheetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveSpriteSheetButton.Location = new System.Drawing.Point(559, 6);
-            this.saveSpriteSheetButton.Name = "saveSpriteSheetButton";
-            this.saveSpriteSheetButton.Size = new System.Drawing.Size(94, 23);
-            this.saveSpriteSheetButton.TabIndex = 5;
-            this.saveSpriteSheetButton.Text = "SPRITESHEET";
-            this.saveSpriteSheetButton.UseVisualStyleBackColor = true;
-            this.saveSpriteSheetButton.Click += new System.EventHandler(this.saveSpriteSheetButton_Click);
-            // 
-            // saveStripeButton
-            // 
-            this.saveStripeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveStripeButton.Location = new System.Drawing.Point(493, 6);
-            this.saveStripeButton.Name = "saveStripeButton";
-            this.saveStripeButton.Size = new System.Drawing.Size(60, 23);
-            this.saveStripeButton.TabIndex = 6;
-            this.saveStripeButton.Text = "STRIPE";
-            this.saveStripeButton.UseVisualStyleBackColor = true;
-            this.saveStripeButton.Click += new System.EventHandler(this.saveStripeButton_Click);
             // 
             // saveImageDialog
             // 
@@ -782,7 +771,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Label entityFileInfo;
         private System.Windows.Forms.Button exportButton;
