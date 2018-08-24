@@ -170,15 +170,22 @@ namespace T2Tools
                         previewTabs.TabPages.Add(entitiesPage);
                         previewTabs.SelectedTab = entitiesPage;
                         entitiesList.Items.Clear();
-                        EIBFile eibFile = new EIBFile(item.Entry.Data);
-                        foreach(var entry in eibFile.Regions)
+                        try
                         {
-                            foreach(var point in entry.Points)
+                            EIBFile eibFile = new EIBFile(item.Entry.Data);
+                            foreach (var entry in eibFile.Regions)
                             {
-                                entitiesList.Items.Add(new EntityListItem(point));
+                                foreach (var point in entry.Points)
+                                {
+                                    entitiesList.Items.Add(new EntityListItem(point));
+                                }
                             }
+                            entityFileInfo.Text = $"Unknown D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
                         }
-                        entityFileInfo.Text = $"D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         break;
 
                     case TOCEntryType.PixelFont:
