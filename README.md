@@ -9,7 +9,7 @@ by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtu
 
  - load/unpack original game data
  - view/play/export files
- - custom TFMX player by [srtuss](http://srtuss.thrill-project.com/turrican/tfx/visz.html)
+ - [custom TFMX player by srtuss](https://github.com/movAX13h/turrican2tools/tree/master/TFXTool)
  - save sprites and tilesets as PNG
  - modify all files (hex editor)
  - repack game data
@@ -36,11 +36,10 @@ Every compressed block starts with a word N, which states the length of the bloc
 The first byte of this data selects wether LZ compression is used.
 
 If LZ is used, the stream is a series of instructions, with respective payload:
-```
-move   ... decipher a byte from the input stream, and write it to the output buffer
-repeat ... repeat a string that was decompressed before, by performing a string-copy within the output buffer
-fill   ... decipher the given byte, and write it to the output buffer a given number of times
-```
+
+ - **move**: decipher a byte from the input stream, and write it to the output buffer
+ - **repeat**: repeat a string that was decompressed before, by performing a string-copy within the output buffer
+ - **fill**: decipher the given byte, and write it to the output buffer a given number of times
 
 If LZ is not used, the data is an uncompressed block of ciphered bytes.
 
@@ -89,6 +88,6 @@ The game uses the following file types:
 | .ANI | unknown | LINE.ANI, 1368 bytes
 | .DLT | unknown | ANIM2.DLT, 262211 bytes
 
-## Tool used
+## Tools used
 
 DOSBox Debugger, IDAPro, VisualStudio, HEX editors, custom binary visualizers

@@ -55,6 +55,8 @@ namespace T2Tools.Controls
             sizeItem.Text = Entry.Size.ToString();
             startItem.Text = Entry.PackedStart.ToString();
             endItem.Text = Entry.PackedEnd.ToString();
+
+            typeItem.BackColor = Entry.Color;
         }
 
         

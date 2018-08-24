@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 
 namespace T2Tools.Turrican
@@ -44,6 +45,26 @@ namespace T2Tools.Turrican
                     case ".mc":  return TOCEntryType.BossSprite;
                     default:     return TOCEntryType.Unknown;
                 }                
+            }
+        }
+
+        public Color Color
+        {
+            get
+            {
+                switch(Type)
+                {
+                    case TOCEntryType.AnimatedSprite: return Color.Orange;
+                    case TOCEntryType.StaticSprite: return Color.OrangeRed;
+                    case TOCEntryType.BossSprite: return Color.DarkOrange;
+                    case TOCEntryType.Bitmap: return Color.RosyBrown;
+                    case TOCEntryType.CollisionInfo: return Color.HotPink;
+                    case TOCEntryType.EntitiesList: return Color.ForestGreen;
+                    case TOCEntryType.Palette: return Color.Yellow;
+                    case TOCEntryType.Music: return Color.CornflowerBlue;
+                    case TOCEntryType.Sound: return Color.BlueViolet;
+                    default: return Color.White;
+                }
             }
         }
 

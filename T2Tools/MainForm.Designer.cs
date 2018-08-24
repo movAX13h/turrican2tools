@@ -545,9 +545,9 @@
             this.tilesCollisionsCheckbox.AutoSize = true;
             this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
             this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
-            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(69, 17);
+            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(107, 17);
             this.tilesCollisionsCheckbox.TabIndex = 5;
-            this.tilesCollisionsCheckbox.Text = "Collisions";
+            this.tilesCollisionsCheckbox.Text = "Collisions (yellow)";
             this.tilesCollisionsCheckbox.UseVisualStyleBackColor = true;
             this.tilesCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.tilesCollisionsCheckbox_CheckedChanged);
             // 
