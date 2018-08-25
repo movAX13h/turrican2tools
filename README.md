@@ -3,7 +3,7 @@
 Tools for the MS-DOS version of Turrican II, written in C# for .NET
 
 File formats reverse-engineered 
-by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtuss) in 2018. 
+by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtuss), July 2018. 
 
 ## Features
 

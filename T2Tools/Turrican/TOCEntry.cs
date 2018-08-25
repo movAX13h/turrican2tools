@@ -63,6 +63,10 @@ namespace T2Tools.Turrican
                     case TOCEntryType.Palette: return Color.Yellow;
                     case TOCEntryType.Music: return Color.CornflowerBlue;
                     case TOCEntryType.Sound: return Color.BlueViolet;
+                    case TOCEntryType.Map: return Color.DeepSkyBlue;
+                    case TOCEntryType.Tileset: return Color.SkyBlue;
+                    case TOCEntryType.Text: return Color.Teal;
+                    case TOCEntryType.Language: return Color.Thistle;
                     default: return Color.White;
                 }
             }

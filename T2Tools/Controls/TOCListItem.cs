@@ -16,6 +16,7 @@ namespace T2Tools.Controls
                 TOCEntryType.Map,
                 TOCEntryType.Tileset,
                 TOCEntryType.Music,
+                TOCEntryType.Sound,
                 TOCEntryType.CollisionInfo,
                 TOCEntryType.EntitiesList
         };
@@ -47,7 +48,6 @@ namespace T2Tools.Controls
 
         private void updateCaptions()
         {
-            if (!handledTypes.Contains(Entry.Type)) typeItem.BackColor = Color.LightGray;
             ForeColor = Entry.Dirty ? Color.Red : Color.Black;
 
             Text = Entry.Name;
@@ -56,7 +56,10 @@ namespace T2Tools.Controls
             startItem.Text = Entry.PackedStart.ToString();
             endItem.Text = Entry.PackedEnd.ToString();
 
-            typeItem.BackColor = Entry.Color;
+            typeItem.BackColor = handledTypes.Contains(Entry.Type) ? Entry.Color : Color.LightGray;
+
+
+
         }
 
         
