@@ -2,7 +2,7 @@
   "descriptions": [
     {
       "name": "setup.exe",
-      "info": "always started first"
+      "info": "always run first by T2.EXE"
     },
     {
       "name": "intro.exe",

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Threading;
 using T2Tools.Formats;
 
 namespace T2Tools.Turrican

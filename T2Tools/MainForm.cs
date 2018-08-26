@@ -170,15 +170,22 @@ namespace T2Tools
                         previewTabs.TabPages.Add(entitiesPage);
                         previewTabs.SelectedTab = entitiesPage;
                         entitiesList.Items.Clear();
-                        EIBFile eibFile = new EIBFile(item.Entry.Data);
-                        foreach(var entry in eibFile.Regions)
+                        try
                         {
-                            foreach(var point in entry.Points)
+                            EIBFile eibFile = new EIBFile(item.Entry.Data);
+                            foreach (var entry in eibFile.Regions)
                             {
-                                entitiesList.Items.Add(new EntityListItem(point));
+                                foreach (var point in entry.Points)
+                                {
+                                    entitiesList.Items.Add(new EntityListItem(point));
+                                }
                             }
+                            entityFileInfo.Text = $"Unknown D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
                         }
-                        entityFileInfo.Text = $"D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         break;
 
                     case TOCEntryType.PixelFont:
@@ -288,6 +295,8 @@ namespace T2Tools
             float w = sectionsPanel.Width;
             float scale = w / game.NumBytesLoaded;
 
+            bool toggle = false;
+
             foreach (var entry in game.Assets.Entries.Values)
             {
                 start = (int)(scale * entry.PackedStart);
@@ -296,11 +305,14 @@ namespace T2Tools
                 Color col = Color.Red;
                 if (!entry.Dirty)
                 {
-                    int r = 80;
+                    /*int r = 80;
                     int a = r * rand.Next(1, 3);
                     int b = r * rand.Next(1, 3);
                     int c = r * rand.Next(1, 3);
                     col = Color.FromArgb(255, 50 + a, 50 + b, 80 + c);
+                    */
+                    col = toggle ? Color.LightGray : Color.Gray;
+                    toggle = !toggle;
                 }
                 brush.Color = col;
                 e.Graphics.FillRectangle(brush, start, 0, Math.Max(2, end - start), sectionsPanel.Height);
