@@ -62,17 +62,62 @@ namespace T2Tools.Formats
             Height = numRegionsYMinusOne + 1;
             Regions = new EIBRegion[Height, Width];
 
-            int ptr = 20 + Width * Height * 2;
+            int tableLen = (Width + 1) * (Width + 1) * 2;
+            int blockLoc = 6 + tableLen;
+
+            blockLoc = data.Length - dataBlockSize;
+
+            int offsetsLoc = blockLoc - Width * Height * 2;
+
+            if(blockLoc + dataBlockSize != data.Length)
+                throw new Exception("EIB bad size");
+
+            int pos = blockLoc;
+
+            if(false)
+            {
+                int numChunks = 0;
+
+                while(pos < blockLoc + dataBlockSize)
+                {
+                    if(data[pos] == 0xFF)
+                    {
+                        ++pos;
+                        Console.WriteLine();
+                        ++numChunks;
+                        continue;
+                    }
+                    Console.Write(data[pos] + " " + data[pos + 1] + " " + data[pos + 2] + ", ");
+                    pos += 3;
+                }
+                Console.WriteLine(numChunks + " chunks read of " + Width * Height);
+            }
+
+            byte[] block = new byte[dataBlockSize];
+            Array.Copy(data, blockLoc, block, 0, dataBlockSize);
+            short[] offsets = new short[Width * Height];
+            for(int i = 0; i < Width * Height; ++i)
+                offsets[i] = BitConverter.ToInt16(data, offsetsLoc + i * 2);
+
             for(int i = 0; i < Height; ++i)
             {
                 for(int j = 0; j < Width; ++j)
                 {
+                    int pos2 = offsets[i * Width + j];
+
+                    if(pos2 >= block.Length)
+                    {
+                        Regions[i, j] = new EIBRegion { Points = new List<EIBPoint>() };
+                        continue;
+                    }
+
+                    pos = pos2;
                     var region = new EIBRegion { Points = new List<EIBPoint>() };
-                    for(; data[ptr] != 0xFF; ptr += 3)
-                        region.Points.Add(new EIBPoint { ID = data[ptr], LocalX = data[ptr + 1], LocalY = data[ptr + 2] });
-                    if(data[ptr] != 0xFF)
+                    for(; block[pos] != 0xFF; pos += 3)
+                        region.Points.Add(new EIBPoint { ID = block[pos], LocalX = block[pos + 1], LocalY = block[pos + 2] });
+                    if(block[pos] != 0xFF)
                         throw new Exception("expected 0xFF");
-                    ++ptr;
+                    ++pos;
                     Regions[i, j] = region;
                 }
             }
