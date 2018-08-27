@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 // http://amigadev.elowar.com/read/ADCD_2.1/Hardware_Manual_guide/node0060.html
 // http://www.polynominal.com/Commodore-Amiga/commodore-amiga-500-paula.htm
 
-namespace TFXTool
+namespace TFXTool.TFX
 {
     public class PaulaChip : CodeProcessorNode
     {
@@ -39,7 +39,7 @@ namespace TFXTool
 
         void ClockChip(float[] addLeft, float[] addRight, int offset, int numFrames)
         {
-            float cpuCyclesPerFrame = 7159091 / 44100f;
+            float cpuCyclesPerFrame = (float)(7159091 / audioContext.Samplerate);
 
             for(int i = 0; i < numChannels; ++i)
             {

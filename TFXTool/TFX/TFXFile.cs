@@ -6,7 +6,7 @@ using System.Text;
 // specs from:
 // ftp://ftp.modland.com/pub/documents/format_documentation/The%20Final%20Musicsystem%20eXtended%20Professional%20v2.0%20%28.mdat,%20.smpl%29.txt
 
-namespace TFXTool
+namespace TFXTool.TFX
 {
     public class TFXFile
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace TFXTool
+namespace TFXTool.TFX
 {
     class Playback
     {

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TFXTool.TFX;
 
 namespace TFXTool
 {
@@ -724,7 +725,7 @@ namespace TFXTool
             }
         }
 
-        private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
+        private void Playroutine_TrackstepPositionChanged2(object sender, EventArgs e)
         {
             if(lviLastTrackstepHighlight != null)
                 lviLastTrackstepHighlight.BackColor = Color.White;
@@ -734,6 +735,19 @@ namespace TFXTool
             item.EnsureVisible();
 
             lviLastTrackstepHighlight = item;
+               
+        }
+
+        private void Playroutine_TrackstepPositionChanged(object sender, EventArgs e)
+        {
+            if(InvokeRequired)
+            {
+                Invoke(new Action(() => Playroutine_TrackstepPositionChanged2(sender, e)));
+            }
+            else
+            {
+                Playroutine_TrackstepPositionChanged2(sender, e);
+            }
         }
 
         private void checkBoxChX_CheckedChanged(object sender, EventArgs e)
