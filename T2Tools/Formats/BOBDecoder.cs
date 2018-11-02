@@ -17,7 +17,7 @@ namespace T2Tools.Formats
                 //System.IO.File.WriteAllBytes("dp.com", frame.DrawProgram);
 
 
-                var cpu = new DrawProgramCpu { Text = frame.DrawProgram, Data = frame.PixelData };
+                var cpu = new DrawProgramCPU { Text = frame.DrawProgram, Data = frame.PixelData };
                 byte[] screenbuffer = new byte[frame.Width * frame.Height];
                 //byte[] dest = new byte[5000];
 

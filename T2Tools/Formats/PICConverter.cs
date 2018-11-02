@@ -9,7 +9,7 @@ namespace T2Tools.Formats
         public static Bitmap[] PICToBitmaps(byte[] blockPic, byte[] palette)
         {
             if(palette.Length != 768)
-                throw new Exception("blockpic data must be 768 bytes long");
+                throw new Exception("blockpic palette must be 768 bytes long");
 
             //      pixel order (EGA):
             //

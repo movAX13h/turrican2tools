@@ -47,7 +47,6 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.imgPage = new System.Windows.Forms.TabPage();
             this.saveStripeButton = new System.Windows.Forms.Button();
-            this.saveSpriteSheetButton = new System.Windows.Forms.Button();
             this.saveFrameButton = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.imgPictureBox = new System.Windows.Forms.PictureBox();
@@ -64,11 +63,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.mapMakerProgressBar = new System.Windows.Forms.ProgressBar();
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
-            this.mapDetailsLabel = new System.Windows.Forms.Label();
             this.mapCollisionsCheckbox = new System.Windows.Forms.CheckBox();
             this.tfmxPage = new System.Windows.Forms.TabPage();
             this.tfmxPlayButton = new System.Windows.Forms.Button();
             this.tilesPage = new System.Windows.Forms.TabPage();
+            this.saveTilesetButton = new System.Windows.Forms.Button();
             this.tilesCollisionsCheckbox = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tilesPictureBox = new System.Windows.Forms.PictureBox();
@@ -84,6 +83,7 @@
             this.exportButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
+            this.mapDetailsLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -163,7 +163,7 @@
             this.hexEditorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hexEditorPanel.Location = new System.Drawing.Point(3, 3);
             this.hexEditorPanel.Name = "hexEditorPanel";
-            this.hexEditorPanel.Size = new System.Drawing.Size(653, 464);
+            this.hexEditorPanel.Size = new System.Drawing.Size(515, 464);
             this.hexEditorPanel.TabIndex = 1;
             // 
             // panel1
@@ -173,7 +173,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(3, 467);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(653, 25);
+            this.panel1.Size = new System.Drawing.Size(515, 25);
             this.panel1.TabIndex = 0;
             // 
             // applyChangesButton
@@ -193,7 +193,7 @@
             this.hexSelectionLabel.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.hexSelectionLabel.Location = new System.Drawing.Point(30, 4);
             this.hexSelectionLabel.Name = "hexSelectionLabel";
-            this.hexSelectionLabel.Size = new System.Drawing.Size(614, 17);
+            this.hexSelectionLabel.Size = new System.Drawing.Size(476, 17);
             this.hexSelectionLabel.TabIndex = 0;
             this.hexSelectionLabel.Text = "no selection";
             this.hexSelectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -205,7 +205,7 @@
             this.sectionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.sectionsPanel.Location = new System.Drawing.Point(6, 6);
             this.sectionsPanel.Name = "sectionsPanel";
-            this.sectionsPanel.Size = new System.Drawing.Size(962, 23);
+            this.sectionsPanel.Size = new System.Drawing.Size(824, 23);
             this.sectionsPanel.TabIndex = 3;
             this.sectionsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.sectionsPanel_Paint);
             this.sectionsPanel.Resize += new System.EventHandler(this.sectionsPanel_Resize);
@@ -226,7 +226,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.previewTabs);
-            this.splitContainer1.Size = new System.Drawing.Size(1096, 521);
+            this.splitContainer1.Size = new System.Drawing.Size(958, 521);
             this.splitContainer1.SplitterDistance = 425;
             this.splitContainer1.TabIndex = 4;
             // 
@@ -244,7 +244,7 @@
             this.previewTabs.Location = new System.Drawing.Point(0, 0);
             this.previewTabs.Name = "previewTabs";
             this.previewTabs.SelectedIndex = 0;
-            this.previewTabs.Size = new System.Drawing.Size(667, 521);
+            this.previewTabs.Size = new System.Drawing.Size(529, 521);
             this.previewTabs.TabIndex = 5;
             // 
             // hexPage
@@ -254,7 +254,7 @@
             this.hexPage.Location = new System.Drawing.Point(4, 22);
             this.hexPage.Name = "hexPage";
             this.hexPage.Padding = new System.Windows.Forms.Padding(3);
-            this.hexPage.Size = new System.Drawing.Size(659, 495);
+            this.hexPage.Size = new System.Drawing.Size(521, 495);
             this.hexPage.TabIndex = 0;
             this.hexPage.Text = "HEX Editor";
             this.hexPage.UseVisualStyleBackColor = true;
@@ -284,7 +284,6 @@
             // imgPage
             // 
             this.imgPage.Controls.Add(this.saveStripeButton);
-            this.imgPage.Controls.Add(this.saveSpriteSheetButton);
             this.imgPage.Controls.Add(this.saveFrameButton);
             this.imgPage.Controls.Add(this.panel4);
             this.imgPage.Controls.Add(this.imgZoomInput);
@@ -300,33 +299,22 @@
             // saveStripeButton
             // 
             this.saveStripeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveStripeButton.Location = new System.Drawing.Point(493, 6);
+            this.saveStripeButton.Location = new System.Drawing.Point(445, 6);
             this.saveStripeButton.Name = "saveStripeButton";
-            this.saveStripeButton.Size = new System.Drawing.Size(60, 23);
+            this.saveStripeButton.Size = new System.Drawing.Size(92, 23);
             this.saveStripeButton.TabIndex = 6;
-            this.saveStripeButton.Text = "STRIPE";
+            this.saveStripeButton.Text = "EXPORT ALL";
             this.saveStripeButton.UseVisualStyleBackColor = true;
             this.saveStripeButton.Click += new System.EventHandler(this.saveStripeButton_Click);
-            // 
-            // saveSpriteSheetButton
-            // 
-            this.saveSpriteSheetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveSpriteSheetButton.Location = new System.Drawing.Point(559, 6);
-            this.saveSpriteSheetButton.Name = "saveSpriteSheetButton";
-            this.saveSpriteSheetButton.Size = new System.Drawing.Size(94, 23);
-            this.saveSpriteSheetButton.TabIndex = 5;
-            this.saveSpriteSheetButton.Text = "SPRITESHEET";
-            this.saveSpriteSheetButton.UseVisualStyleBackColor = true;
-            this.saveSpriteSheetButton.Click += new System.EventHandler(this.saveSpriteSheetButton_Click);
             // 
             // saveFrameButton
             // 
             this.saveFrameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveFrameButton.Location = new System.Drawing.Point(427, 6);
+            this.saveFrameButton.Location = new System.Drawing.Point(543, 6);
             this.saveFrameButton.Name = "saveFrameButton";
-            this.saveFrameButton.Size = new System.Drawing.Size(60, 23);
+            this.saveFrameButton.Size = new System.Drawing.Size(110, 23);
             this.saveFrameButton.TabIndex = 4;
-            this.saveFrameButton.Text = "FRAME";
+            this.saveFrameButton.Text = "EXPORT FRAME";
             this.saveFrameButton.UseVisualStyleBackColor = true;
             this.saveFrameButton.Click += new System.EventHandler(this.saveFrameButton_Click);
             // 
@@ -337,15 +325,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.AutoScroll = true;
             this.panel4.Controls.Add(this.imgPictureBox);
-            this.panel4.Location = new System.Drawing.Point(0, 34);
+            this.panel4.Location = new System.Drawing.Point(0, 38);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(659, 461);
             this.panel4.TabIndex = 3;
             // 
             // imgPictureBox
             // 
+            this.imgPictureBox.BackgroundImage = global::T2Tools.Properties.Resources.checker;
             this.imgPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPictureBox.Location = new System.Drawing.Point(7, 1);
+            this.imgPictureBox.Location = new System.Drawing.Point(11, 9);
             this.imgPictureBox.Name = "imgPictureBox";
             this.imgPictureBox.Size = new System.Drawing.Size(295, 217);
             this.imgPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -356,7 +345,7 @@
             // 
             this.imgZoomInput.AutoSize = false;
             this.imgZoomInput.BackColor = System.Drawing.Color.White;
-            this.imgZoomInput.Location = new System.Drawing.Point(2, 6);
+            this.imgZoomInput.Location = new System.Drawing.Point(2, 7);
             this.imgZoomInput.Maximum = 14;
             this.imgZoomInput.Minimum = 1;
             this.imgZoomInput.Name = "imgZoomInput";
@@ -371,9 +360,9 @@
             this.bitmapControlsPanel.Controls.Add(this.prevBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.nextBitmapButton);
             this.bitmapControlsPanel.Controls.Add(this.currentBitmapIndexLabel);
-            this.bitmapControlsPanel.Location = new System.Drawing.Point(116, 3);
+            this.bitmapControlsPanel.Location = new System.Drawing.Point(112, 4);
             this.bitmapControlsPanel.Name = "bitmapControlsPanel";
-            this.bitmapControlsPanel.Size = new System.Drawing.Size(135, 29);
+            this.bitmapControlsPanel.Size = new System.Drawing.Size(129, 29);
             this.bitmapControlsPanel.TabIndex = 0;
             // 
             // prevBitmapButton
@@ -388,7 +377,7 @@
             // 
             // nextBitmapButton
             // 
-            this.nextBitmapButton.Location = new System.Drawing.Point(102, 3);
+            this.nextBitmapButton.Location = new System.Drawing.Point(97, 3);
             this.nextBitmapButton.Name = "nextBitmapButton";
             this.nextBitmapButton.Size = new System.Drawing.Size(29, 23);
             this.nextBitmapButton.TabIndex = 1;
@@ -400,7 +389,7 @@
             // 
             this.currentBitmapIndexLabel.Location = new System.Drawing.Point(38, 3);
             this.currentBitmapIndexLabel.Name = "currentBitmapIndexLabel";
-            this.currentBitmapIndexLabel.Size = new System.Drawing.Size(58, 23);
+            this.currentBitmapIndexLabel.Size = new System.Drawing.Size(53, 23);
             this.currentBitmapIndexLabel.TabIndex = 0;
             this.currentBitmapIndexLabel.Text = "0/0";
             this.currentBitmapIndexLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -429,12 +418,12 @@
             // 
             // mapPage
             // 
-            this.mapPage.Controls.Add(this.panel2);
             this.mapPage.Controls.Add(this.mapDetailsLabel);
+            this.mapPage.Controls.Add(this.panel2);
             this.mapPage.Controls.Add(this.mapCollisionsCheckbox);
             this.mapPage.Location = new System.Drawing.Point(4, 22);
             this.mapPage.Name = "mapPage";
-            this.mapPage.Size = new System.Drawing.Size(659, 495);
+            this.mapPage.Size = new System.Drawing.Size(521, 495);
             this.mapPage.TabIndex = 5;
             this.mapPage.Text = "Map";
             this.mapPage.UseVisualStyleBackColor = true;
@@ -447,9 +436,9 @@
             this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.mapMakerProgressPanel);
             this.panel2.Controls.Add(this.mapPictureBox);
-            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Location = new System.Drawing.Point(0, 53);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(659, 495);
+            this.panel2.Size = new System.Drawing.Size(521, 442);
             this.panel2.TabIndex = 3;
             // 
             // mapMakerProgressPanel
@@ -457,7 +446,7 @@
             this.mapMakerProgressPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.mapMakerProgressPanel.Controls.Add(this.label1);
             this.mapMakerProgressPanel.Controls.Add(this.mapMakerProgressBar);
-            this.mapMakerProgressPanel.Location = new System.Drawing.Point(202, 195);
+            this.mapMakerProgressPanel.Location = new System.Drawing.Point(133, 169);
             this.mapMakerProgressPanel.Name = "mapMakerProgressPanel";
             this.mapMakerProgressPanel.Size = new System.Drawing.Size(275, 73);
             this.mapMakerProgressPanel.TabIndex = 1;
@@ -488,15 +477,6 @@
             this.mapPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.mapPictureBox.TabIndex = 2;
             this.mapPictureBox.TabStop = false;
-            // 
-            // mapDetailsLabel
-            // 
-            this.mapDetailsLabel.Location = new System.Drawing.Point(491, 15);
-            this.mapDetailsLabel.Name = "mapDetailsLabel";
-            this.mapDetailsLabel.Size = new System.Drawing.Size(153, 23);
-            this.mapDetailsLabel.TabIndex = 5;
-            this.mapDetailsLabel.Text = "Size...";
-            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // mapCollisionsCheckbox
             // 
@@ -531,6 +511,7 @@
             // 
             // tilesPage
             // 
+            this.tilesPage.Controls.Add(this.saveTilesetButton);
             this.tilesPage.Controls.Add(this.tilesCollisionsCheckbox);
             this.tilesPage.Controls.Add(this.panel3);
             this.tilesPage.Location = new System.Drawing.Point(4, 22);
@@ -540,10 +521,21 @@
             this.tilesPage.Text = "Tiles";
             this.tilesPage.UseVisualStyleBackColor = true;
             // 
+            // saveTilesetButton
+            // 
+            this.saveTilesetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveTilesetButton.Location = new System.Drawing.Point(543, 6);
+            this.saveTilesetButton.Name = "saveTilesetButton";
+            this.saveTilesetButton.Size = new System.Drawing.Size(110, 23);
+            this.saveTilesetButton.TabIndex = 6;
+            this.saveTilesetButton.Text = "EXPORT TILESET";
+            this.saveTilesetButton.UseVisualStyleBackColor = true;
+            this.saveTilesetButton.Click += new System.EventHandler(this.saveTilesetButton_Click);
+            // 
             // tilesCollisionsCheckbox
             // 
             this.tilesCollisionsCheckbox.AutoSize = true;
-            this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(22, 20);
+            this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(15, 10);
             this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
             this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(107, 17);
             this.tilesCollisionsCheckbox.TabIndex = 5;
@@ -558,10 +550,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.AutoScroll = true;
             this.panel3.Controls.Add(this.tilesPictureBox);
-            this.panel3.Location = new System.Drawing.Point(0, 59);
+            this.panel3.Location = new System.Drawing.Point(0, 38);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(660, 436);
+            this.panel3.Size = new System.Drawing.Size(660, 457);
             this.panel3.TabIndex = 1;
             // 
             // tilesPictureBox
@@ -636,7 +628,7 @@
             // writeExeButton
             // 
             this.writeExeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.writeExeButton.Location = new System.Drawing.Point(972, 6);
+            this.writeExeButton.Location = new System.Drawing.Point(834, 6);
             this.writeExeButton.Name = "writeExeButton";
             this.writeExeButton.Size = new System.Drawing.Size(66, 23);
             this.writeExeButton.TabIndex = 5;
@@ -655,7 +647,7 @@
             // exportButton
             // 
             this.exportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exportButton.Location = new System.Drawing.Point(1041, 6);
+            this.exportButton.Location = new System.Drawing.Point(903, 6);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(59, 23);
             this.exportButton.TabIndex = 5;
@@ -674,11 +666,21 @@
             this.saveImageDialog.RestoreDirectory = true;
             this.saveImageDialog.Title = "Save PNG";
             // 
+            // mapDetailsLabel
+            // 
+            this.mapDetailsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapDetailsLabel.Location = new System.Drawing.Point(404, 16);
+            this.mapDetailsLabel.Name = "mapDetailsLabel";
+            this.mapDetailsLabel.Size = new System.Drawing.Size(104, 23);
+            this.mapDetailsLabel.TabIndex = 6;
+            this.mapDetailsLabel.Text = "Size...";
+            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1108, 561);
+            this.ClientSize = new System.Drawing.Size(970, 561);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.writeExeButton);
             this.Controls.Add(this.splitContainer1);
@@ -761,7 +763,6 @@
         private System.Windows.Forms.Button tfmxPlayButton;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox mapCollisionsCheckbox;
-        private System.Windows.Forms.Label mapDetailsLabel;
         private System.Windows.Forms.TabPage tilesPage;
         private System.Windows.Forms.CheckBox tilesCollisionsCheckbox;
         private System.Windows.Forms.Panel panel3;
@@ -778,9 +779,10 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.PictureBox imgPictureBox;
         private System.Windows.Forms.Button saveStripeButton;
-        private System.Windows.Forms.Button saveSpriteSheetButton;
         private System.Windows.Forms.Button saveFrameButton;
         private System.Windows.Forms.SaveFileDialog saveImageDialog;
+        private System.Windows.Forms.Button saveTilesetButton;
+        private System.Windows.Forms.Label mapDetailsLabel;
     }
 }
 

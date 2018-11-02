@@ -14,6 +14,11 @@ by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtu
  - modify all files (hex editor)
  - repack game data
 
+## TODO
+
+ - map entities to IDs
+ - entities in map preview
+ 
 ## EIFS - Executable Integrated File System
 
 All data of the game is packed and appended to the main game executable in form of EIFS blocks. The last EIFS block is read first by the game and contains a TOC for all other files.

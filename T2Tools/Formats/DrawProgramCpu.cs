@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace T2Tools.Formats
 {
-    class DrawProgramCpu
+    class DrawProgramCPU
     {
         public event EventHandler<CpuWriteEvent> Write;
         public event EventHandler EgaSequencerReset;

@@ -31,13 +31,18 @@ namespace T2Tools.Turrican
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
             worker.DoWork += make;
-            worker.ProgressChanged += reportProgress;
-            worker.RunWorkerCompleted += reportResult;
-        }
-        
-        public void Cancel()
-        {
-            if (worker.IsBusy) worker.CancelAsync();
+
+            worker.ProgressChanged += (sender, e) =>
+            {
+                if (!worker.CancellationPending)
+                    progressCallback(e.ProgressPercentage);
+            };
+
+            worker.RunWorkerCompleted += ( sender,  e) =>
+            {
+                if (worker.CancellationPending) resultBitmap.Dispose();
+                else completeCallback(string.IsNullOrEmpty(Error) ? resultBitmap : null);
+            };
         }
 
         public bool Make(TOCEntry entry)
@@ -73,7 +78,7 @@ namespace T2Tools.Turrican
             }
             paletteEntry = assets.Entries[palName];
             
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(); // calls make()
 
             return true;
         }
@@ -82,7 +87,46 @@ namespace T2Tools.Turrican
         {
             try
             {
-                make();
+                worker.ReportProgress(0);
+
+                Map = new PCMFile(mapEntry.Data);
+
+                worker.ReportProgress(10);
+                if (worker.CancellationPending) return;
+
+                Bitmap[] tiles = PICConverter.PICToBitmaps(tilesetEntry.Data, paletteEntry.Data);
+
+                worker.ReportProgress(40);
+                if (worker.CancellationPending) return;
+
+                resultBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
+                Graphics gfx = Graphics.FromImage(resultBitmap);
+
+                int total = Map.Width * Map.Height;
+
+                for (int y = 0; y < Map.Height; y++)
+                {
+                    for (int x = 0; x < Map.Width; x++)
+                    {
+                        int id = x + y * Map.Width;
+                        int tileId = Map.TilesIndices[y, x];
+
+                        // draw cell
+                        Bitmap tile = tiles[tileId];
+                        gfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
+                        
+                        worker.ReportProgress(40 + (int)Math.Round(60f * id / total));
+
+                        if (worker.CancellationPending)
+                        {
+                            Error = "Cancelled";
+                            goto end;
+                        }
+                    }
+                }
+
+                end:
+                gfx.Dispose();
             }
             catch(Exception ex)
             {
@@ -91,58 +135,9 @@ namespace T2Tools.Turrican
             }
         }
 
-        private void make()
-        { 
-            worker.ReportProgress(0);
-
-            Map = new PCMFile(mapEntry.Data);
-
-            worker.ReportProgress(10);
-            if (worker.CancellationPending) return;
-
-            Bitmap[] tiles = PICConverter.PICToBitmaps(tilesetEntry.Data, paletteEntry.Data);
-
-            worker.ReportProgress(40);
-            if (worker.CancellationPending) return;
-
-            resultBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
-            Graphics gfx = Graphics.FromImage(resultBitmap);
-
-            int total = Map.Width * Map.Height;
-
-            for(int y = 0; y < Map.Height; y++)
-            {
-                for (int x = 0; x < Map.Width; x++)
-                {
-                    int id = x + y * Map.Width;
-                    int tileId = Map.TilesIndices[y, x];
-
-                    Bitmap tile = tiles[tileId];
-                    gfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
-                    worker.ReportProgress(40 + (int)Math.Round(60f * id / total));
-
-                    if (worker.CancellationPending)
-                    {
-                        Error = "Cancelled";
-                        goto end;
-                    }
-                }
-            }
-
-            end:
-            gfx.Dispose();
-        }
-
-        private void reportProgress(object sender, ProgressChangedEventArgs e)
+        public void Cancel()
         {
-            if (!worker.CancellationPending)
-                progressCallback(e.ProgressPercentage);
-        }
-
-        private void reportResult(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (worker.CancellationPending) resultBitmap.Dispose();
-            else completeCallback(string.IsNullOrEmpty(Error) ? resultBitmap : null);
+            if (worker.IsBusy) worker.CancelAsync();
         }
 
     }

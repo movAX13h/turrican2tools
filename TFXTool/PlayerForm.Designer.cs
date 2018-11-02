@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlayerForm));
             this.checkBoxMute0 = new System.Windows.Forms.CheckBox();
             this.checkBoxMute1 = new System.Windows.Forms.CheckBox();
             this.checkBoxMute2 = new System.Windows.Forms.CheckBox();
@@ -42,18 +43,18 @@
             this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.nextButton = new System.Windows.Forms.Button();
-            this.prevButton = new System.Windows.Forms.Button();
-            this.patternLabel = new System.Windows.Forms.Label();
             this.songLabel = new System.Windows.Forms.Label();
+            this.patternLabel = new System.Windows.Forms.Label();
             this.light8 = new TFXTool.Light();
+            this.prevButton = new System.Windows.Forms.Button();
             this.light7 = new TFXTool.Light();
+            this.nextButton = new System.Windows.Forms.Button();
             this.light6 = new TFXTool.Light();
+            this.light1 = new TFXTool.Light();
             this.light5 = new TFXTool.Light();
             this.light4 = new TFXTool.Light();
             this.light3 = new TFXTool.Light();
             this.light2 = new TFXTool.Light();
-            this.light1 = new TFXTool.Light();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -228,15 +229,31 @@
             this.panel1.Size = new System.Drawing.Size(244, 99);
             this.panel1.TabIndex = 55;
             // 
-            // nextButton
+            // songLabel
             // 
-            this.nextButton.Location = new System.Drawing.Point(86, 65);
-            this.nextButton.Name = "nextButton";
-            this.nextButton.Size = new System.Drawing.Size(46, 23);
-            this.nextButton.TabIndex = 0;
-            this.nextButton.Text = ">";
-            this.nextButton.UseVisualStyleBackColor = true;
-            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            this.songLabel.Location = new System.Drawing.Point(58, 70);
+            this.songLabel.Name = "songLabel";
+            this.songLabel.Size = new System.Drawing.Size(26, 13);
+            this.songLabel.TabIndex = 1;
+            this.songLabel.Text = "0";
+            this.songLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // patternLabel
+            // 
+            this.patternLabel.AutoSize = true;
+            this.patternLabel.Location = new System.Drawing.Point(150, 70);
+            this.patternLabel.Name = "patternLabel";
+            this.patternLabel.Size = new System.Drawing.Size(44, 13);
+            this.patternLabel.TabIndex = 1;
+            this.patternLabel.Text = "Pattern:";
+            // 
+            // light8
+            // 
+            this.light8.Location = new System.Drawing.Point(211, 8);
+            this.light8.Name = "light8";
+            this.light8.Size = new System.Drawing.Size(23, 18);
+            this.light8.TabIndex = 53;
+            this.light8.Text = "light2";
             // 
             // prevButton
             // 
@@ -248,32 +265,6 @@
             this.prevButton.UseVisualStyleBackColor = true;
             this.prevButton.Click += new System.EventHandler(this.prevButton_Click);
             // 
-            // patternLabel
-            // 
-            this.patternLabel.AutoSize = true;
-            this.patternLabel.Location = new System.Drawing.Point(150, 70);
-            this.patternLabel.Name = "patternLabel";
-            this.patternLabel.Size = new System.Drawing.Size(44, 13);
-            this.patternLabel.TabIndex = 1;
-            this.patternLabel.Text = "Pattern:";
-            // 
-            // songLabel
-            // 
-            this.songLabel.Location = new System.Drawing.Point(58, 70);
-            this.songLabel.Name = "songLabel";
-            this.songLabel.Size = new System.Drawing.Size(26, 13);
-            this.songLabel.TabIndex = 1;
-            this.songLabel.Text = "0";
-            this.songLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // light8
-            // 
-            this.light8.Location = new System.Drawing.Point(211, 8);
-            this.light8.Name = "light8";
-            this.light8.Size = new System.Drawing.Size(23, 18);
-            this.light8.TabIndex = 53;
-            this.light8.Text = "light2";
-            // 
             // light7
             // 
             this.light7.Location = new System.Drawing.Point(182, 8);
@@ -282,6 +273,16 @@
             this.light7.TabIndex = 52;
             this.light7.Text = "light2";
             // 
+            // nextButton
+            // 
+            this.nextButton.Location = new System.Drawing.Point(86, 65);
+            this.nextButton.Name = "nextButton";
+            this.nextButton.Size = new System.Drawing.Size(46, 23);
+            this.nextButton.TabIndex = 0;
+            this.nextButton.Text = ">";
+            this.nextButton.UseVisualStyleBackColor = true;
+            this.nextButton.Click += new System.EventHandler(this.nextButton_Click);
+            // 
             // light6
             // 
             this.light6.Location = new System.Drawing.Point(153, 8);
@@ -289,6 +290,14 @@
             this.light6.Size = new System.Drawing.Size(23, 18);
             this.light6.TabIndex = 51;
             this.light6.Text = "light2";
+            // 
+            // light1
+            // 
+            this.light1.Location = new System.Drawing.Point(8, 8);
+            this.light1.Name = "light1";
+            this.light1.Size = new System.Drawing.Size(23, 18);
+            this.light1.TabIndex = 46;
+            this.light1.Text = "light0";
             // 
             // light5
             // 
@@ -322,14 +331,6 @@
             this.light2.TabIndex = 47;
             this.light2.Text = "light1";
             // 
-            // light1
-            // 
-            this.light1.Location = new System.Drawing.Point(8, 8);
-            this.light1.Name = "light1";
-            this.light1.Size = new System.Drawing.Size(23, 18);
-            this.light1.TabIndex = 46;
-            this.light1.Text = "light0";
-            // 
             // PlayerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -338,6 +339,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.songList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PlayerForm";

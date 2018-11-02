@@ -10,9 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/* written by srtuss */
+
 namespace TFXTool
 {
-    public partial class Form1 : Form
+    public partial class EditorForm : Form
     {
         AudioContext actx;
         TFXFile tfx;
@@ -21,7 +23,7 @@ namespace TFXTool
 
         
 
-        public Form1()
+        public EditorForm()
         {
             InitializeComponent();
 
@@ -56,7 +58,7 @@ namespace TFXTool
 
 
             var def = @"..\..\..\game\unpacked\WORLD1.TFX";
-            def = "last.tfx";
+            //def = "last.tfx";
             if(File.Exists(def))
                 Open(def);
 
@@ -90,7 +92,7 @@ namespace TFXTool
         void Open(string path)
         {
             this.path = path;
-            Text = "TFMX Editor - " + Path.GetFileName(path);
+            Text = "TFMX Editor (experimental) - " + Path.GetFileName(path);
 
             sampledata = File.ReadAllBytes(Path.ChangeExtension(path, ".sam"));
 

@@ -1,10 +1,9 @@
-﻿using Be.Windows.Forms;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using Be.Windows.Forms;
 using T2Tools.Controls;
 using T2Tools.Formats;
 using T2Tools.Turrican;
@@ -38,7 +37,11 @@ namespace T2Tools
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            #if DEBUG
             game = new Game("../../../game/T2.exe");
+            #else
+            game = new Game("T2.exe");
+            #endif
 
             if (!game.Load())
             {
@@ -54,10 +57,18 @@ namespace T2Tools
                 fileList.Items.Add(new TOCListItem(entry));
             }
 
-            if (fileList.Items.Count > 0) fileList.Items[0].Selected = true;
+            // sort list by type and select first item
+            if (fileList.Items.Count > 0)
+            {
+                ListViewColumnSorter sorter = fileList.ListViewItemSorter as ListViewColumnSorter;
+                sorter.SortColumn = 1;
+                sorter.Order = SortOrder.Ascending;
+                fileList.Sort();
+                fileList.Items[0].Selected = true;
+            }
         }
 
-        #region files list
+#region files list
         private void fileSelected(TOCListItem item)
         {
             selectedItem = item;
@@ -74,7 +85,6 @@ namespace T2Tools
             }
 
             mapMaker?.Cancel();
-            mapMaker = new MapMaker(game.Assets, mapProgress, mapComplete);
 
             if (mapPictureBox.Image != null)
             {
@@ -120,7 +130,7 @@ namespace T2Tools
                         currentBitmaps = new Bitmap[vgaBitmaps.Count];
                         imgPage.Text = "Sprite Animation";
                         for (int i = 0; i < vgaBitmaps.Count; i++) currentBitmaps[i] = VGABitmapConverter.ToRGBA(vgaBitmaps[i]);
-                        currentImgZoom = 3;
+                        currentImgZoom = 10;
                         imgZoomInput.Value = currentImgZoom;
                         previewTabs.TabPages.Add(imgPage);
                         previewTabs.SelectedTab = imgPage;
@@ -154,9 +164,10 @@ namespace T2Tools
 
                     case TOCEntryType.Map:
                         previewTabs.TabPages.Add(mapPage);
-                        previewTabs.SelectedTab = mapPage;
+                        previewTabs.SelectedTab = mapPage;                        
                         mapMakerProgressBar.Value = 0;
                         mapMakerProgressPanel.Visible = true;
+                        mapMaker = new MapMaker(game.Assets, mapProgress, mapComplete);
                         if (!mapMaker.Make(item.Entry)) MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
 
@@ -279,9 +290,9 @@ namespace T2Tools
             int numSavedFiled = game.Assets.ExportTo(exportDialog.SelectedPath);
             MessageBox.Show($"Successfully saved {numSavedFiled} files to '{exportDialog.SelectedPath}'.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        #endregion
+#endregion
 
-        #region file regions panel
+#region file regions panel
         private void sectionsPanel_Paint(object sender, PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -330,9 +341,9 @@ namespace T2Tools
         {
             sectionsPanel.Invalidate();
         }
-        #endregion
+#endregion
 
-        #region HEX editor
+#region HEX editor
         private void createHexEditor()
         {
             hexBox = new HexBox();
@@ -379,15 +390,18 @@ namespace T2Tools
             sectionsPanel.Invalidate();
             applyChangesButton.Visible = false;
         }
-        #endregion
+#endregion
 
-        #region image preview
+#region image preview
         private void updateImagePreview()
         {
-            int x, y, w, h;
+            int w, h;
 
             if (currentBitmaps != null)
             {
+                saveFrameButton.Visible = true;
+                saveStripeButton.Visible = currentBitmaps.Length > 1;
+
                 Bitmap bmp = currentBitmaps[currentBitmapIndex];
 
                 w = bmp.Width * currentImgZoom;
@@ -429,9 +443,23 @@ namespace T2Tools
             currentImgZoom = imgZoomInput.Value;
             updateImagePreview();
         }
-        #endregion
 
-        #region map preview
+        private void saveFrameButton_Click(object sender, EventArgs e)
+        {
+            saveImageDialog.FileName = selectedItem.Entry.Name + ".png";
+            if (saveImageDialog.ShowDialog() != DialogResult.OK) return;
+            currentBitmaps[currentBitmapIndex].Save(saveImageDialog.FileName);
+        }
+
+        private void saveStripeButton_Click(object sender, EventArgs e)
+        {
+            saveImageDialog.FileName = selectedItem.Entry.Name + ".png";
+            if (saveImageDialog.ShowDialog() != DialogResult.OK) return;
+            SpritesheetMaker.Make(currentBitmaps).Save(saveImageDialog.FileName);
+        }
+#endregion
+
+#region map preview
         private void mapProgress(int progress)
         {
             mapMakerProgressBar.Value = progress;
@@ -440,6 +468,7 @@ namespace T2Tools
         private void mapComplete(Bitmap bitmap)
         {
             mapMakerProgressPanel.Visible = false;
+
             if (bitmap == null)
             {
                 if (string.IsNullOrEmpty(mapMaker.Error)) return;
@@ -448,14 +477,12 @@ namespace T2Tools
             }
 
             mapPictureBox.Image = bitmap;
-
             mapDetailsLabel.Text = $"Size: {mapMaker.Map.Width}x{mapMaker.Map.Height}";
-
             mapMaker = null;
         }
-        #endregion
+#endregion
 
-        #region music
+#region music
         private void tfmxPlayButton_Click(object sender, EventArgs e)
         {
             playSelectedTFM();
@@ -475,28 +502,22 @@ namespace T2Tools
             TFXTool.PlayerForm form = new TFXTool.PlayerForm(selectedItem.Entry.Name, selectedItem.Entry.Data, samples.Data);
             form.ShowDialog(this);
         }
-        #endregion
+#endregion
 
-        #region tiles preview
+#region tiles preview
         private void tilesCollisionsCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             tilesPictureBox.Image = tilemapMaker.MakeTilesetBitmap(selectedItem.Entry, tilesCollisionsCheckbox.Checked);
         }
-        #endregion
 
-        private void saveFrameButton_Click(object sender, EventArgs e)
+        private void saveTilesetButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("not implemented yet");
+            saveImageDialog.FileName = selectedItem.Entry.Name + ".png";
+            if (saveImageDialog.ShowDialog() != DialogResult.OK) return;
+            tilesPictureBox.Image.Save(saveImageDialog.FileName);
         }
+#endregion
 
-        private void saveStripeButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("not implemented yet");
-        }
 
-        private void saveSpriteSheetButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("not implemented yet");
-        }
     }
 }

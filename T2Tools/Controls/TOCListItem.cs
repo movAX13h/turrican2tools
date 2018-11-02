@@ -57,9 +57,6 @@ namespace T2Tools.Controls
             endItem.Text = Entry.PackedEnd.ToString();
 
             typeItem.BackColor = handledTypes.Contains(Entry.Type) ? Entry.Color : Color.LightGray;
-
-
-
         }
 
         
