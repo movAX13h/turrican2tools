@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TFXTool
+namespace TFXTool.TFX
 {
     class Playroutine
     {
@@ -38,7 +38,7 @@ namespace TFXTool
 
         void Log(string text)
         {
-            Console.WriteLine(text);
+            //Console.WriteLine(text);
         }
 
         /// <summary>
