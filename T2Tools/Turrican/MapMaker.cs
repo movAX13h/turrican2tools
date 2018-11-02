@@ -9,19 +9,24 @@ namespace T2Tools.Turrican
     {
         private BackgroundWorker worker;
         private Action<int> progressCallback;
-        private Action<Bitmap> completeCallback;
+        private Action<bool> completeCallback;
         private TOC assets;
         public string Error { get; private set; } = "";
 
-        private TOCEntry mapEntry;
+        private TOCEntry mapEntry; // map file (for example: L1-1.PCM)
         private TOCEntry tilesetEntry;
         private TOCEntry paletteEntry;
+        private TOCEntry entitiesEntry;
+        private TOCEntry collisionsEntry;
 
-        private Bitmap resultBitmap;
+        public Bitmap TilesBitmap { get; private set; }
+        public Bitmap CollisionsBitmap { get; private set; }
+        public Bitmap EntitiesBitmap { get; private set; }
+        public Bitmap GridBitmap { get; private set; }
 
         public PCMFile Map { get; private set; }
 
-        public MapMaker(TOC assets, Action<int> progressCallback, Action<Bitmap> completeCallback)
+        public MapMaker(TOC assets, Action<int> progressCallback, Action<bool> completeCallback)
         {
             this.assets = assets;
             this.progressCallback = progressCallback;
@@ -40,8 +45,8 @@ namespace T2Tools.Turrican
 
             worker.RunWorkerCompleted += ( sender,  e) =>
             {
-                if (worker.CancellationPending) resultBitmap.Dispose();
-                else completeCallback(string.IsNullOrEmpty(Error) ? resultBitmap : null);
+                if (worker.CancellationPending) TilesBitmap.Dispose();
+                else completeCallback(string.IsNullOrEmpty(Error));
             };
         }
 
@@ -58,8 +63,6 @@ namespace T2Tools.Turrican
                 return false;
             }
 
-            if (levelNumber == 6) levelNumber = 5;
-
             // tileset
             string tilesetName = $"BLOCK{levelNumber}.PIC";
             if (!assets.Entries.ContainsKey(tilesetName))
@@ -68,6 +71,30 @@ namespace T2Tools.Turrican
                 return false;
             }
             tilesetEntry = assets.Entries[tilesetName];
+
+            // entities
+            if (levelNumber < 6)
+            {
+                string eibName = $"WORLD{mapName.Substring(1, 3)}.EIB";
+                if (!assets.Entries.ContainsKey(eibName))
+                {
+                    Error = $"entities {eibName} not found";
+                    return false;
+                }
+                entitiesEntry = assets.Entries[eibName];
+            }
+            else entitiesEntry = null;
+
+            if (levelNumber == 6) levelNumber = 5; // level 6 is using palette of level 5
+
+            // collisions
+            string collisionsName = $"WORLD{levelNumber}.COL";
+            if (!assets.Entries.ContainsKey(collisionsName))
+            {
+                Error = $"collisions {collisionsName} not found";
+                return false;
+            }
+            collisionsEntry = assets.Entries[collisionsName];
 
             // palette 
             string palName = $"WORLD{levelNumber}.PAL";
@@ -79,7 +106,6 @@ namespace T2Tools.Turrican
             paletteEntry = assets.Entries[palName];
             
             worker.RunWorkerAsync(); // calls make()
-
             return true;
         }
 
@@ -91,16 +117,26 @@ namespace T2Tools.Turrican
 
                 Map = new PCMFile(mapEntry.Data);
 
+                COLFile colFile = new COLFile(collisionsEntry.Data);
+                EIBFile entitiesFile = entitiesEntry != null ? new EIBFile(entitiesEntry.Data) : null;
+
                 worker.ReportProgress(10);
                 if (worker.CancellationPending) return;
 
+                // get tileset bitmaps
                 Bitmap[] tiles = PICConverter.PICToBitmaps(tilesetEntry.Data, paletteEntry.Data);
 
                 worker.ReportProgress(40);
                 if (worker.CancellationPending) return;
 
-                resultBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
-                Graphics gfx = Graphics.FromImage(resultBitmap);
+                TilesBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
+                CollisionsBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
+                EntitiesBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
+                GridBitmap = new Bitmap(Game.TileSize * Map.Width, Game.TileSize * Map.Height);
+
+                // draw map tiles and collisions
+                Graphics tilesGfx = Graphics.FromImage(TilesBitmap);
+                Graphics collGfx = Graphics.FromImage(CollisionsBitmap);                
 
                 int total = Map.Width * Map.Height;
 
@@ -113,9 +149,10 @@ namespace T2Tools.Turrican
 
                         // draw cell
                         Bitmap tile = tiles[tileId];
-                        gfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
-                        
-                        worker.ReportProgress(40 + (int)Math.Round(60f * id / total));
+                        tilesGfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
+                        CollisionDrawer.Fill(collGfx, colFile, tileId, x, y);
+
+                        worker.ReportProgress(40 + (int)Math.Round(50f * id / total));
 
                         if (worker.CancellationPending)
                         {
@@ -125,8 +162,19 @@ namespace T2Tools.Turrican
                     }
                 }
 
+                // draw entity info
+                if (entitiesFile != null) EntityDrawer.Draw(EntitiesBitmap, entitiesFile);
+
+                // draw grid
+                Graphics gridGfx = Graphics.FromImage(GridBitmap);
+                Pen pen = new Pen(Color.FromArgb(100, 200, 200, 0), 1);
+                for (int x = 0; x < Map.Width; x++) gridGfx.DrawLine(pen, x * Game.TileSize, 0, x * Game.TileSize, Map.Height * Game.TileSize);
+                for (int y = 0; y < Map.Height; y++) gridGfx.DrawLine(pen, 0, y * Game.TileSize, Map.Width * Game.TileSize, y * Game.TileSize);
+                gridGfx.Dispose();
+
                 end:
-                gfx.Dispose();
+                tilesGfx.Dispose();
+                collGfx.Dispose();                
             }
             catch(Exception ex)
             {

@@ -191,7 +191,7 @@ namespace T2Tools
                                     entitiesList.Items.Add(new EntityListItem(point));
                                 }
                             }
-                            entityFileInfo.Text = $"Unknown D: {eibFile.D}, E: {eibFile.E}, F: {eibFile.F}";
+                            entityFileInfo.Text = $"Unknown variables in file: D={eibFile.D}, E={eibFile.E}, F={eibFile.F}";
                         }
                         catch(Exception ex)
                         {
@@ -459,30 +459,57 @@ namespace T2Tools
         }
 #endregion
 
-#region map preview
+        #region map preview
         private void mapProgress(int progress)
         {
             mapMakerProgressBar.Value = progress;
         }
 
-        private void mapComplete(Bitmap bitmap)
+        private void mapComplete(bool success)
         {
             mapMakerProgressPanel.Visible = false;
 
-            if (bitmap == null)
+            if (!success)
             {
                 if (string.IsNullOrEmpty(mapMaker.Error)) return;
                 MessageBox.Show("Error: " + mapMaker.Error, "Failed to generate preview!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            mapPictureBox.Image = bitmap;
-            mapDetailsLabel.Text = $"Size: {mapMaker.Map.Width}x{mapMaker.Map.Height}";
-            mapMaker = null;
+            updateMapPreview();
         }
-#endregion
 
-#region music
+        private void updateMapPreview()
+        {
+            if (mapCollisionsCheckbox.Checked || entitiesCheckbox.Checked || mapGridCheckbox.Checked)
+            {
+                int w = mapMaker.TilesBitmap.Width;
+                int h = mapMaker.TilesBitmap.Height;
+                var bmp = new Bitmap(w, h);
+                using (var gfx = Graphics.FromImage(bmp))
+                {
+                    gfx.DrawImage(mapMaker.TilesBitmap, 0, 0, w, h);
+                    if (mapCollisionsCheckbox.Checked) gfx.DrawImage(mapMaker.CollisionsBitmap, 0, 0, w, h);
+                    if (entitiesCheckbox.Checked)      gfx.DrawImage(mapMaker.EntitiesBitmap, 0, 0, w, h);
+                    if (mapGridCheckbox.Checked)       gfx.DrawImage(mapMaker.GridBitmap, 0, 0, w, h);
+                }
+
+                mapPictureBox.Image = bmp;
+            }
+            else mapPictureBox.Image = mapMaker.TilesBitmap;
+
+            mapDetailsLabel.Text = $"Size: {mapMaker.Map.Width}x{mapMaker.Map.Height}";
+
+            GC.Collect(); // removes unused bitmaps from memory
+        }
+
+        private void mapCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            updateMapPreview();
+        }
+        #endregion
+
+        #region music
         private void tfmxPlayButton_Click(object sender, EventArgs e)
         {
             playSelectedTFM();
@@ -504,7 +531,7 @@ namespace T2Tools
         }
 #endregion
 
-#region tiles preview
+        #region tiles preview
         private void tilesCollisionsCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             tilesPictureBox.Image = tilemapMaker.MakeTilesetBitmap(selectedItem.Entry, tilesCollisionsCheckbox.Checked);
@@ -516,8 +543,9 @@ namespace T2Tools
             if (saveImageDialog.ShowDialog() != DialogResult.OK) return;
             tilesPictureBox.Image.Save(saveImageDialog.FileName);
         }
-#endregion
 
+        #endregion
 
+       
     }
 }

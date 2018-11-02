@@ -17,11 +17,14 @@ namespace T2Tools.Turrican
                 var sfmnt = StringFormat.GenericDefault;
                 sfmnt.Alignment = StringAlignment.Center;
 
-                // draw a grid
                 int bls = 256;
-                for(var i = 0; i < eib.Height; ++i)
+                
+                // draw a grid
+                /*
+                for (var i = 0; i < eib.Height; ++i)
                     for(int j = 0; j < eib.Width; ++j)
                         g.DrawRectangle(new Pen(Color.AliceBlue), j * bls, i * bls, bls, bls);
+                */
 
                 // draw points
                 for(var i = 0; i < eib.Height; ++i)

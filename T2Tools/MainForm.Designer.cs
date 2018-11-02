@@ -58,6 +58,9 @@
             this.infoPage = new System.Windows.Forms.TabPage();
             this.infoOutput = new System.Windows.Forms.TextBox();
             this.mapPage = new System.Windows.Forms.TabPage();
+            this.mapGridCheckbox = new System.Windows.Forms.CheckBox();
+            this.entitiesCheckbox = new System.Windows.Forms.CheckBox();
+            this.mapDetailsLabel = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.mapMakerProgressPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -83,7 +86,6 @@
             this.exportButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
-            this.mapDetailsLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -265,7 +267,7 @@
             this.txtPage.Location = new System.Drawing.Point(4, 22);
             this.txtPage.Name = "txtPage";
             this.txtPage.Padding = new System.Windows.Forms.Padding(3);
-            this.txtPage.Size = new System.Drawing.Size(659, 495);
+            this.txtPage.Size = new System.Drawing.Size(521, 495);
             this.txtPage.TabIndex = 1;
             this.txtPage.Text = "Text";
             this.txtPage.UseVisualStyleBackColor = true;
@@ -278,7 +280,7 @@
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(653, 489);
+            this.txtOutput.Size = new System.Drawing.Size(515, 489);
             this.txtOutput.TabIndex = 0;
             // 
             // imgPage
@@ -291,7 +293,7 @@
             this.imgPage.Location = new System.Drawing.Point(4, 22);
             this.imgPage.Name = "imgPage";
             this.imgPage.Padding = new System.Windows.Forms.Padding(3);
-            this.imgPage.Size = new System.Drawing.Size(659, 495);
+            this.imgPage.Size = new System.Drawing.Size(521, 495);
             this.imgPage.TabIndex = 3;
             this.imgPage.Text = "Image";
             this.imgPage.UseVisualStyleBackColor = true;
@@ -299,7 +301,7 @@
             // saveStripeButton
             // 
             this.saveStripeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveStripeButton.Location = new System.Drawing.Point(445, 6);
+            this.saveStripeButton.Location = new System.Drawing.Point(423, 7);
             this.saveStripeButton.Name = "saveStripeButton";
             this.saveStripeButton.Size = new System.Drawing.Size(92, 23);
             this.saveStripeButton.TabIndex = 6;
@@ -400,7 +402,7 @@
             this.infoPage.Location = new System.Drawing.Point(4, 22);
             this.infoPage.Name = "infoPage";
             this.infoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.infoPage.Size = new System.Drawing.Size(659, 495);
+            this.infoPage.Size = new System.Drawing.Size(521, 495);
             this.infoPage.TabIndex = 4;
             this.infoPage.Text = "Information";
             this.infoPage.UseVisualStyleBackColor = true;
@@ -413,11 +415,13 @@
             this.infoOutput.Multiline = true;
             this.infoOutput.Name = "infoOutput";
             this.infoOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infoOutput.Size = new System.Drawing.Size(653, 489);
+            this.infoOutput.Size = new System.Drawing.Size(515, 489);
             this.infoOutput.TabIndex = 1;
             // 
             // mapPage
             // 
+            this.mapPage.Controls.Add(this.mapGridCheckbox);
+            this.mapPage.Controls.Add(this.entitiesCheckbox);
             this.mapPage.Controls.Add(this.mapDetailsLabel);
             this.mapPage.Controls.Add(this.panel2);
             this.mapPage.Controls.Add(this.mapCollisionsCheckbox);
@@ -427,6 +431,40 @@
             this.mapPage.TabIndex = 5;
             this.mapPage.Text = "Map";
             this.mapPage.UseVisualStyleBackColor = true;
+            // 
+            // mapGridCheckbox
+            // 
+            this.mapGridCheckbox.AutoSize = true;
+            this.mapGridCheckbox.Checked = true;
+            this.mapGridCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mapGridCheckbox.Location = new System.Drawing.Point(188, 20);
+            this.mapGridCheckbox.Name = "mapGridCheckbox";
+            this.mapGridCheckbox.Size = new System.Drawing.Size(45, 17);
+            this.mapGridCheckbox.TabIndex = 8;
+            this.mapGridCheckbox.Text = "Grid";
+            this.mapGridCheckbox.UseVisualStyleBackColor = true;
+            this.mapGridCheckbox.CheckedChanged += new System.EventHandler(this.mapCheckbox_CheckedChanged);
+            // 
+            // entitiesCheckbox
+            // 
+            this.entitiesCheckbox.AutoSize = true;
+            this.entitiesCheckbox.Location = new System.Drawing.Point(109, 20);
+            this.entitiesCheckbox.Name = "entitiesCheckbox";
+            this.entitiesCheckbox.Size = new System.Drawing.Size(60, 17);
+            this.entitiesCheckbox.TabIndex = 7;
+            this.entitiesCheckbox.Text = "Entities";
+            this.entitiesCheckbox.UseVisualStyleBackColor = true;
+            this.entitiesCheckbox.CheckedChanged += new System.EventHandler(this.mapCheckbox_CheckedChanged);
+            // 
+            // mapDetailsLabel
+            // 
+            this.mapDetailsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapDetailsLabel.Location = new System.Drawing.Point(404, 16);
+            this.mapDetailsLabel.Name = "mapDetailsLabel";
+            this.mapDetailsLabel.Size = new System.Drawing.Size(104, 23);
+            this.mapDetailsLabel.TabIndex = 6;
+            this.mapDetailsLabel.Text = "Size...";
+            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel2
             // 
@@ -487,6 +525,7 @@
             this.mapCollisionsCheckbox.TabIndex = 4;
             this.mapCollisionsCheckbox.Text = "Collisions";
             this.mapCollisionsCheckbox.UseVisualStyleBackColor = true;
+            this.mapCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.mapCheckbox_CheckedChanged);
             // 
             // tfmxPage
             // 
@@ -494,7 +533,7 @@
             this.tfmxPage.Location = new System.Drawing.Point(4, 22);
             this.tfmxPage.Name = "tfmxPage";
             this.tfmxPage.Padding = new System.Windows.Forms.Padding(3);
-            this.tfmxPage.Size = new System.Drawing.Size(659, 495);
+            this.tfmxPage.Size = new System.Drawing.Size(521, 495);
             this.tfmxPage.TabIndex = 6;
             this.tfmxPage.Text = "Music";
             this.tfmxPage.UseVisualStyleBackColor = true;
@@ -516,7 +555,7 @@
             this.tilesPage.Controls.Add(this.panel3);
             this.tilesPage.Location = new System.Drawing.Point(4, 22);
             this.tilesPage.Name = "tilesPage";
-            this.tilesPage.Size = new System.Drawing.Size(659, 495);
+            this.tilesPage.Size = new System.Drawing.Size(521, 495);
             this.tilesPage.TabIndex = 7;
             this.tilesPage.Text = "Tiles";
             this.tilesPage.UseVisualStyleBackColor = true;
@@ -537,9 +576,9 @@
             this.tilesCollisionsCheckbox.AutoSize = true;
             this.tilesCollisionsCheckbox.Location = new System.Drawing.Point(15, 10);
             this.tilesCollisionsCheckbox.Name = "tilesCollisionsCheckbox";
-            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(107, 17);
+            this.tilesCollisionsCheckbox.Size = new System.Drawing.Size(118, 17);
             this.tilesCollisionsCheckbox.TabIndex = 5;
-            this.tilesCollisionsCheckbox.Text = "Collisions (yellow)";
+            this.tilesCollisionsCheckbox.Text = "Collision information";
             this.tilesCollisionsCheckbox.UseVisualStyleBackColor = true;
             this.tilesCollisionsCheckbox.CheckedChanged += new System.EventHandler(this.tilesCollisionsCheckbox_CheckedChanged);
             // 
@@ -572,7 +611,7 @@
             this.entitiesPage.Location = new System.Drawing.Point(4, 22);
             this.entitiesPage.Name = "entitiesPage";
             this.entitiesPage.Padding = new System.Windows.Forms.Padding(3);
-            this.entitiesPage.Size = new System.Drawing.Size(659, 495);
+            this.entitiesPage.Size = new System.Drawing.Size(521, 495);
             this.entitiesPage.TabIndex = 8;
             this.entitiesPage.Text = "Entities";
             this.entitiesPage.UseVisualStyleBackColor = true;
@@ -665,16 +704,6 @@
             this.saveImageDialog.Filter = "PNG Files (*.png)|*.png";
             this.saveImageDialog.RestoreDirectory = true;
             this.saveImageDialog.Title = "Save PNG";
-            // 
-            // mapDetailsLabel
-            // 
-            this.mapDetailsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapDetailsLabel.Location = new System.Drawing.Point(404, 16);
-            this.mapDetailsLabel.Name = "mapDetailsLabel";
-            this.mapDetailsLabel.Size = new System.Drawing.Size(104, 23);
-            this.mapDetailsLabel.TabIndex = 6;
-            this.mapDetailsLabel.Text = "Size...";
-            this.mapDetailsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
@@ -783,6 +812,8 @@
         private System.Windows.Forms.SaveFileDialog saveImageDialog;
         private System.Windows.Forms.Button saveTilesetButton;
         private System.Windows.Forms.Label mapDetailsLabel;
+        private System.Windows.Forms.CheckBox entitiesCheckbox;
+        private System.Windows.Forms.CheckBox mapGridCheckbox;
     }
 }
 

@@ -85,9 +85,9 @@ namespace TFXTool
             if(player != null)
                 player.Stop();
 
-            var n = "last.tfx";
-            tfx.Save(n);
-            File.WriteAllBytes(Path.ChangeExtension(n, ".sam"), sampledata);
+            //var n = "last.tfx";
+            //tfx.Save(n);
+            //File.WriteAllBytes(Path.ChangeExtension(n, ".sam"), sampledata);
         }
 
         void Open(string path)

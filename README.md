@@ -16,8 +16,7 @@ by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtu
 
 ## TODO
 
- - map entities to IDs
- - entities in map preview
+ - map entities to IDs (the boring stuff)
  
 ## EIFS - Executable Integrated File System
 

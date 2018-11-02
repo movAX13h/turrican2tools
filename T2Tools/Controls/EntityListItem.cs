@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using T2Tools.Formats;
-using T2Tools.Turrican;
 
 namespace T2Tools.Controls
 {

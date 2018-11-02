@@ -73,26 +73,7 @@ namespace T2Tools.Formats
                 throw new Exception("EIB bad size");
 
             int pos = blockLoc;
-
-            if(false)
-            {
-                int numChunks = 0;
-
-                while(pos < blockLoc + dataBlockSize)
-                {
-                    if(data[pos] == 0xFF)
-                    {
-                        ++pos;
-                        Console.WriteLine();
-                        ++numChunks;
-                        continue;
-                    }
-                    Console.Write(data[pos] + " " + data[pos + 1] + " " + data[pos + 2] + ", ");
-                    pos += 3;
-                }
-                Console.WriteLine(numChunks + " chunks read of " + Width * Height);
-            }
-
+                        
             byte[] block = new byte[dataBlockSize];
             Array.Copy(data, blockLoc, block, 0, dataBlockSize);
             short[] offsets = new short[Width * Height];

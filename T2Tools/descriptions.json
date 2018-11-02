@@ -15,7 +15,7 @@
     },
     {
       "name": "block6.pic",
-      "info": "using palette of WORLD5.PAL to render this tileset"
+      "info": "using palette of WORLD5.PAL to render this tileset; has no collision data"
     },
     {
       "name": "l6-1.pcm",
