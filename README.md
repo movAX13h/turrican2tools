@@ -81,7 +81,7 @@ The game uses the following file types:
 | .PAL | Palette | Colors for all parts of the game | x |
 | .COL | Collisions | Tile based collision info per world | x |
 | .EIB | Entities | Grid based list of entities for each cell of a stage (IDs are hardcoded in the game) | x |
-| .TFX | Music | [TFMX](https://www.exotica.org.uk/wiki/TFMX) songs by Chris H�lsbeck | x |
+| .TFX | Music | [TFMX](https://www.exotica.org.uk/wiki/TFMX) songs by Chris Hülsbeck | x |
 | .SAM | Sound | raw 8-bit signed mono PCM data, containing every sample, per world | |
 | .LNG | Language file | All strings in 4 languages | x |
 | .TXT | Text | TEXT2.TXT contains the intro text | x |
