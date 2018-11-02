@@ -10,7 +10,7 @@ namespace T2Tools.Turrican
 {
     class CollisionDrawer
     {
-        internal static void Fill(Graphics gfx, COLFile collisionInfo, int tileId, int x, int y)
+        internal static void Draw(Graphics gfx, COLFile collisionInfo, int tileId, int x, int y)
         {
             SolidBrush brush = new SolidBrush(Color.White);
             Dictionary<int, Color> colors = new Dictionary<int, Color>() {

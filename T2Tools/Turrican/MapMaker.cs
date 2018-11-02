@@ -150,7 +150,7 @@ namespace T2Tools.Turrican
                         // draw cell
                         Bitmap tile = tiles[tileId];
                         tilesGfx.DrawImage(tile, x * Game.TileSize, y * Game.TileSize, Game.TileSize, Game.TileSize);
-                        CollisionDrawer.Fill(collGfx, colFile, tileId, x, y);
+                        CollisionDrawer.Draw(collGfx, colFile, tileId, x, y);
 
                         worker.ReportProgress(40 + (int)Math.Round(50f * id / total));
 

@@ -5,6 +5,8 @@ Tools for the MS-DOS version of Turrican II, written in C# for .NET
 File formats reverse-engineered 
 by [movAX13h](https://github.com/movAX13h/) and [srtuss](https://github.com/srtuss), July 2018. 
 
+![Sprites of Turrican II](https://raw.githubusercontent.com/movAX13h/turrican2tools/master/screenshots/sprites.png)
+
 ## Features
 
  - load/unpack original game data
@@ -79,7 +81,7 @@ The game uses the following file types:
 | .PAL | Palette | Colors for all parts of the game | x |
 | .COL | Collisions | Tile based collision info per world | x |
 | .EIB | Entities | Grid based list of entities for each cell of a stage (IDs are hardcoded in the game) | x |
-| .TFX | Music | [TFMX](https://www.exotica.org.uk/wiki/TFMX) songs by Chris Hülsbeck | x |
+| .TFX | Music | [TFMX](https://www.exotica.org.uk/wiki/TFMX) songs by Chris Hï¿½lsbeck | x |
 | .SAM | Sound | raw 8-bit signed mono PCM data, containing every sample, per world | |
 | .LNG | Language file | All strings in 4 languages | x |
 | .TXT | Text | TEXT2.TXT contains the intro text | x |
@@ -95,3 +97,12 @@ The game uses the following file types:
 ## Tools used
 
 DOSBox Debugger, IDAPro, VisualStudio, HEX editors, custom binary visualizers
+
+
+## Screenshots
+
+![Map of Turrican II](https://raw.githubusercontent.com/movAX13h/turrican2tools/master/screenshots/map.png)
+
+![Tileset of Turrican II](https://raw.githubusercontent.com/movAX13h/turrican2tools/master/screenshots/tileset.png)
+
+![TFMX Player by srtuss](https://raw.githubusercontent.com/movAX13h/turrican2tools/master/screenshots/tfmx_player.png)

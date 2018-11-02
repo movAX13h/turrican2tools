@@ -29,7 +29,7 @@ namespace T2Tools.Turrican
 
                     if (collisionInfo != null)
                     {
-                        CollisionDrawer.Fill(gfx, collisionInfo, i, x, y);
+                        CollisionDrawer.Draw(gfx, collisionInfo, i, x, y);
                     }
                 }
             }
