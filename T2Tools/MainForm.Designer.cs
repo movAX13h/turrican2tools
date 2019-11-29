@@ -312,7 +312,7 @@
             // saveFrameButton
             // 
             this.saveFrameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveFrameButton.Location = new System.Drawing.Point(543, 6);
+            this.saveFrameButton.Location = new System.Drawing.Point(307, 7);
             this.saveFrameButton.Name = "saveFrameButton";
             this.saveFrameButton.Size = new System.Drawing.Size(110, 23);
             this.saveFrameButton.TabIndex = 4;
@@ -563,7 +563,7 @@
             // saveTilesetButton
             // 
             this.saveTilesetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveTilesetButton.Location = new System.Drawing.Point(543, 6);
+            this.saveTilesetButton.Location = new System.Drawing.Point(408, 6);
             this.saveTilesetButton.Name = "saveTilesetButton";
             this.saveTilesetButton.Size = new System.Drawing.Size(110, 23);
             this.saveTilesetButton.TabIndex = 6;
