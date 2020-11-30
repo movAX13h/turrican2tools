@@ -86,6 +86,7 @@
             this.exportButton = new System.Windows.Forms.Button();
             this.exportDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.saveImageDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -205,9 +206,9 @@
             this.sectionsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sectionsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sectionsPanel.Location = new System.Drawing.Point(6, 6);
+            this.sectionsPanel.Location = new System.Drawing.Point(78, 6);
             this.sectionsPanel.Name = "sectionsPanel";
-            this.sectionsPanel.Size = new System.Drawing.Size(824, 23);
+            this.sectionsPanel.Size = new System.Drawing.Size(752, 23);
             this.sectionsPanel.TabIndex = 3;
             this.sectionsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.sectionsPanel_Paint);
             this.sectionsPanel.Resize += new System.EventHandler(this.sectionsPanel_Resize);
@@ -705,11 +706,22 @@
             this.saveImageDialog.RestoreDirectory = true;
             this.saveImageDialog.Title = "Save PNG";
             // 
+            // openButton
+            // 
+            this.openButton.Location = new System.Drawing.Point(6, 6);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(66, 23);
+            this.openButton.TabIndex = 6;
+            this.openButton.Text = "OPEN";
+            this.openButton.UseVisualStyleBackColor = true;
+            this.openButton.Click += new System.EventHandler(this.openButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(970, 561);
+            this.Controls.Add(this.openButton);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.writeExeButton);
             this.Controls.Add(this.splitContainer1);
@@ -814,6 +826,7 @@
         private System.Windows.Forms.Label mapDetailsLabel;
         private System.Windows.Forms.CheckBox entitiesCheckbox;
         private System.Windows.Forms.CheckBox mapGridCheckbox;
+        private System.Windows.Forms.Button openButton;
     }
 }
 

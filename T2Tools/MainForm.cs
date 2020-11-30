@@ -32,13 +32,28 @@ namespace T2Tools
             sectionsPanel.DoubleBuffered(true);
             imgPage.DoubleBuffered(true);
 
-            createHexEditor();            
+            createHexEditor();        
+            this.AllowDrop = true;
+              this.DragEnter += new DragEventHandler(MainForm_DragEnter);
+              this.DragDrop += new DragEventHandler(MainForm_DragDrop);
+        }
+         void MainForm_DragEnter(object sender, DragEventArgs e) {
+          if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void MainForm_DragDrop(object sender, DragEventArgs e) {
+          string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+          this.initForm(files[0]); // open first file
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.initForm("../../../game/T2.exe");
+        }
+        private void initForm(string filename)
+        {
             #if DEBUG
-            game = new Game("../../../game/T2.exe");
+            game = new Game(filename);
             #else
             game = new Game("T2.exe");
             #endif
@@ -49,9 +64,12 @@ namespace T2Tools
                 return;
             }
 
+            this.Text = "Turrican II Tools - " + filename;
+
             tilemapMaker = new TilemapMaker(game.Assets);
 
             // fill TOC list
+            fileList.Items.Clear();
             foreach (var entry in game.Assets.Entries.Values)
             {
                 fileList.Items.Add(new TOCListItem(entry));
@@ -122,7 +140,6 @@ namespace T2Tools
                         bitmapControlsPanel.Visible = false;
                         updateImagePreview();
                         break;
-
                     case TOCEntryType.AnimatedSprite:
                         BOBFile bobFile = new BOBFile(item.Entry.Data);
                         BOBDecoder decoder = new BOBDecoder();
@@ -201,9 +218,9 @@ namespace T2Tools
 
                     case TOCEntryType.PixelFont:
                     case TOCEntryType.Sound:
+                        case TOCEntryType.DIR:
+                            case TOCEntryType.DAT:
                     case TOCEntryType.Executable:
-                    case TOCEntryType.DAT:
-                    case TOCEntryType.DIR:
                     case TOCEntryType.Unknown:
                     default:
                         break;
@@ -544,8 +561,32 @@ namespace T2Tools
             tilesPictureBox.Image.Save(saveImageDialog.FileName);
         }
 
+
         #endregion
 
-       
+        private void openButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            {
+                //InitialDirectory = @"D:\",
+                Title = "Browse Turrican EXE files",
+
+                CheckFileExists = true,
+                CheckPathExists = true,
+
+                DefaultExt = "exe",
+                Filter = "Executables (*.exe)|*.exe",
+                FilterIndex = 2,
+                RestoreDirectory = true,
+
+                ReadOnlyChecked = true,
+                ShowReadOnly = true
+            };
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                this.initForm(openFileDialog1.FileName) ;
+            }
+        }
     }
 }
