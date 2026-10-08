@@ -18,7 +18,8 @@ namespace T2Tools.Controls
                 TOCEntryType.Music,
                 TOCEntryType.Sound,
                 TOCEntryType.CollisionInfo,
-                TOCEntryType.EntitiesList
+                TOCEntryType.EntitiesList,
+                TOCEntryType.ComicSlides
         };
 
         public TOCEntry Entry { get; private set; }

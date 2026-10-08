@@ -56,6 +56,7 @@
     <Compile Include="Formats\BOBDecoder.cs" />
     <Compile Include="Formats\BOBFile.cs" />
     <Compile Include="Formats\COLFile.cs" />
+    <Compile Include="Formats\ComicFile.cs" />
     <Compile Include="Formats\DrawProgramCPU.cs" />
     <Compile Include="Formats\EIBFile.cs" />
     <Compile Include="Formats\Palette.cs" />
