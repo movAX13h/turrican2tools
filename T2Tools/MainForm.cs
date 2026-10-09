@@ -218,8 +218,30 @@ namespace T2Tools
 
                     case TOCEntryType.PixelFont:
                     case TOCEntryType.Sound:
-                        case TOCEntryType.DIR:
-                            case TOCEntryType.DAT:
+                    case TOCEntryType.DAT:
+                    case TOCEntryType.DIR:
+                        break;
+                    case TOCEntryType.ComicSlides:
+                        try
+                        {
+                            TOCEntry directoryEntry;
+                            if (!game.Assets.Entries.TryGetValue("COMIC.DIR", out directoryEntry))
+                                throw new InvalidDataException("COMIC.DIR was not found in the loaded assets.");
+
+                            currentBitmaps = ComicFile.Decode(item.Entry.Data, directoryEntry.Data);
+                            currentImgZoom = 2;
+                            imgZoomInput.Value = currentImgZoom;
+                            imgPage.Text = "Comic";
+                            previewTabs.TabPages.Add(imgPage);
+                            previewTabs.SelectedTab = imgPage;
+                            bitmapControlsPanel.Visible = currentBitmaps.Length > 1;
+                            updateImagePreview();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Failed to generate comic preview", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        break;
                     case TOCEntryType.Executable:
                     case TOCEntryType.Unknown:
                     default:

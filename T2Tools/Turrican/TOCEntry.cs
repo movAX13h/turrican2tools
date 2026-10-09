@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -6,7 +7,7 @@ namespace T2Tools.Turrican
 {
     public enum TOCEntryType { Unknown, Gap, Text, Language, StaticSprite, AnimatedSprite,
         Tileset, Bitmap, PixelFont, TextmodeFont, Palette, EntitiesList,
-        Music, Sound, Executable, Map, DAT, DIR, CollisionInfo, BossSprite }
+        Music, Sound, Executable, Map, ComicSlides, DAT, DIR, CollisionInfo, BossSprite }
 
     public class TOCEntry
     {
@@ -22,6 +23,9 @@ namespace T2Tools.Turrican
         {
             get
             {
+                if (string.Equals(Path.GetFileName(Name), "COMIC.DAT", StringComparison.OrdinalIgnoreCase))
+                    return TOCEntryType.ComicSlides;
+
                 switch(Path.GetExtension(Name).ToLower())
                 {
                     case ".txt": return TOCEntryType.Text;
@@ -67,6 +71,7 @@ namespace T2Tools.Turrican
                     case TOCEntryType.Tileset: return Color.SkyBlue;
                     case TOCEntryType.Text: return Color.Teal;
                     case TOCEntryType.Language: return Color.Thistle;
+                    case TOCEntryType.ComicSlides: return Color.MediumTurquoise;
                     default: return Color.White;
                 }
             }
